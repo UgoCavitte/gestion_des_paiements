@@ -1,4 +1,4 @@
-package com.gestion_paiements.gestion_des_paiements.types;
+package com.gestion_paiements.types;
 
 /*
  * This class is used to store the amount and the currency of a money transfer in one place

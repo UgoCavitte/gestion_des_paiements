@@ -1,6 +1,6 @@
-package com.gestion_paiements.gestion_des_paiements.types;
+package com.gestion_paiements.types;
 
-import com.gestion_paiements.gestion_des_paiements.types.payments.PaymentFromClient;
+import com.gestion_paiements.types.payments.PaymentFromClient;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Set;
@@ -21,6 +21,8 @@ public final class Client {
     // Name, surname, etc.
     private String name;
 
+    private String country;
+
     // This must be set separately when the app is being opened
     private Set<PaymentFromClient> payments;
 
@@ -31,9 +33,10 @@ public final class Client {
     /// CONSTRUCTOR
     //////////////////////////////
 
-    public Client(int ID, String name, @Nullable String comment) {
+    public Client(int ID, String name, String country, @Nullable String comment) {
         this.ID = ID;
         this.name = name;
+        this.country = country;
         this.comment = comment;
     }
 
@@ -57,6 +60,14 @@ public final class Client {
         this.name = name;
     }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
     public Set<PaymentFromClient> getPayments() {
         return payments;
     }
@@ -65,11 +76,11 @@ public final class Client {
         this.payments = payments;
     }
 
-    public String getComment() {
+    public @Nullable String getComment() {
         return comment;
     }
 
-    public void setComment(String comment) {
+    public void setComment(@Nullable String comment) {
         this.comment = comment;
     }
 }

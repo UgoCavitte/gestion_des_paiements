@@ -1,4 +1,4 @@
-package com.gestion_paiements.gestion_des_paiements.controllers;
+package com.gestion_paiements.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Tab;

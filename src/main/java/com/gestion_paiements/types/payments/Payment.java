@@ -1,7 +1,7 @@
-package com.gestion_paiements.gestion_des_paiements.types.payments;
+package com.gestion_paiements.types.payments;
 
-import com.gestion_paiements.gestion_des_paiements.types.Amount;
-import com.gestion_paiements.gestion_des_paiements.types.Destination;
+import com.gestion_paiements.types.Amount;
+import com.gestion_paiements.types.Destination;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Date;

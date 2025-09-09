@@ -1,6 +1,6 @@
-package com.gestion_paiements.gestion_des_paiements.types;
+package com.gestion_paiements.types;
 
-import com.gestion_paiements.gestion_des_paiements.types.payments.Payment;
+import com.gestion_paiements.types.payments.Payment;
 
 import java.util.Set;
 

@@ -1,4 +1,4 @@
-package com.gestion_paiements.gestion_des_paiements;
+package com.gestion_paiements;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -11,8 +11,8 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello!");
+        Scene scene = new Scene(fxmlLoader.load(), 1200, 960);
+        stage.setTitle("Gestion des paiements");
         stage.setScene(scene);
         stage.show();
     }

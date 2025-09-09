@@ -1,6 +1,6 @@
-package com.gestion_paiements.gestion_des_paiements.types.payments;
+package com.gestion_paiements.types.payments;
 
-import com.gestion_paiements.gestion_des_paiements.types.Destination;
+import com.gestion_paiements.types.Destination;
 
 public class PaymentFromPlatform extends Payment {
 
