@@ -1,0 +1,31 @@
+GENERAL.
+L'appli est censée servir à la comptabilité.
+Il faut pouvoir indiquer plusieurs comptes (France, Russie).
+Ces comptes doivent pouvoir être alimentés par différentes sources (virements directs, PayPal, Stripe...).
+L'appli doit pouvoir créer des documents (rapports sur les revenus).
+
+PAIEMENTS.
+Les paiements doivent pouvoir contenir les infos suivantes :
+    – somme envoyée ;
+    – devise de paiement ;
+    – somme reçue ;
+    – source ;
+    – direct ou via intermédiaire ;
+    – date d'envoi par le client ;
+    – date de reçu sur l'intermédiaire ou sur le compte ;
+    – raison.
+
+INTERMEDIAIRES.
+Un intermédiaire est une plateforme qui traite les paiements, mais qui ne les envoie pas directement sur le compte.
+Il faut pouvoir grouper les paiements reçus sur ces plateformes en un virement indiqué sur le solde du compte en banque ;
+Ce groupement ne doit pas être automatique, mais indiqué par l'utilisateur.
+
+FISCALITÉ.
+Il faut pouvoir avoir le montant d'impôt/cotisations estimé,
+Et indiquer le vrai montant à la fin de chaque période d'imposition (périodicité variable).
+
+BILAN.
+Il faut pouvoir traiter les deux pays de manière différenciée,
+Mais donner la possibilité à l'utilisateur de grouper les bilans en permettant d'indiquer le cours du taux de change
+Pour des dates précises.
+Les bilans doivent permettre également de visualiser les paiements, intermédiaire ou non, peu importe le pays.

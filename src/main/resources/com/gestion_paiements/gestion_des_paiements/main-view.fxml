@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="734.0" prefWidth="966.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gestion_paiements.gestion_des_paiements.controllers.MainController">
+   <children>
+      <MenuBar layoutY="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <menus>
+            <Menu mnemonicParsing="false" text="Données">
+              <items>
+                  <MenuItem mnemonicParsing="false" onAction="#fermerFenetre" text="Fermer la fenêtre" />
+                <MenuItem mnemonicParsing="false" onAction="#rechargerDonnees" text="Recharger les données" />
+              </items>
+            </Menu>
+          <Menu mnemonicParsing="false" text="Pays">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#ajouterUnPays" text="Ajouter un pays" />
+                  <MenuItem disable="true" mnemonicParsing="false" text="Supprimer un pays" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <HBox prefHeight="186.0" prefWidth="966.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0">
+         <children>
+            <TabPane fx:id="mainTabPane" prefHeight="706.0" prefWidth="546.0" tabClosingPolicy="UNAVAILABLE" HBox.hgrow="ALWAYS" />
+            <Separator orientation="VERTICAL" prefHeight="200.0" HBox.hgrow="ALWAYS" />
+            <AnchorPane prefHeight="706.0" prefWidth="414.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Label layoutX="191.0" layoutY="23.0" text="Client" AnchorPane.topAnchor="0.0">
+                     <padding>
+                        <Insets top="10.0" />
+                     </padding>
+                  </Label>
+                  <TableView fx:id="tableClients" layoutX="108.0" layoutY="73.0" onSort="#onSortClients" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
