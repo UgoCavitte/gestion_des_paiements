@@ -42,7 +42,7 @@ public class ParametersController {
                     contentStackPane.getChildren().add(viewToShow);
                 }
             }
-        });;
+        });
 
         parametersList.getSelectionModel().selectFirst();
     }

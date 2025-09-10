@@ -3,7 +3,9 @@ package com.gestion_paiements.types;
 import com.gestion_paiements.types.payments.PaymentFromClient;
 
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 public abstract class SampleData {
@@ -16,7 +18,7 @@ public abstract class SampleData {
         Product[] products = new Product[2];
         products[0] = new Product("ind", "Cours individuel");
         products[1] = new Product("club", "Séance au club de discussion");
-        instance.setProducts(Set.of(products));
+        instance.setProducts(new HashSet<>(Arrays.stream(products).toList()));
 
         // Client 1
         Client sampleClient = new Client(0, "Michel", "France", null);
@@ -48,7 +50,12 @@ public abstract class SampleData {
         );
         sampleClient2.setPayments(Set.of(paymentFromJacques));
 
-        instance.setSetClients(Set.of(sampleClient, sampleClient2));
+        Client[] clients = {sampleClient, sampleClient2};
+        instance.setSetClients(new HashSet<>(Arrays.stream(clients).toList()));
+
+        // Countries
+        String[] countries = {"France", "Russie", "Ukraine", "Kazakhstan"};
+        instance.setSetCountries(new HashSet<>(Arrays.stream(countries).toList()));
 
     }
 

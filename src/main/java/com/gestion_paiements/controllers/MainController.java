@@ -79,9 +79,6 @@ public class MainController {
 
             stage.showAndWait();
 
-            // Code here will execute only after the dialog is closed.
-            // You can now retrieve data from the ParametersDialog controller.
-
         } catch (IOException e) {
             e.printStackTrace();
         }
