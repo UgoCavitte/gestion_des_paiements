@@ -75,7 +75,11 @@ public class MainController {
             Stage stage = new Stage();
             stage.setTitle("Paramètres");
             stage.initModality(Modality.WINDOW_MODAL);
-            stage.setScene(new Scene(parent));
+
+            Scene scene = new Scene(parent, 600, 400);
+            stage.setScene(scene);
+
+            stage.setResizable(false);
 
             stage.showAndWait();
 
