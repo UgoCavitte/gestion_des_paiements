@@ -1,6 +1,10 @@
 package com.gestion_paiements.types;
 
-public final class Product {
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
+
+public final class Product implements Comparable {
 
     private String shortName;
 
@@ -33,5 +37,16 @@ public final class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public int compareTo(@NotNull Object o) {
+
+        if (o.getClass() != Product.class) {
+            throw new RuntimeException();
+        }
+
+        // Products are sorted by their short name
+        return this.shortName.compareTo(((Product) o).shortName);
     }
 }

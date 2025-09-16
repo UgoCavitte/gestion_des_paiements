@@ -9,7 +9,7 @@ public final class Instance {
 
     private HashSet<Destination> destinations;
 
-    private HashSet<Product> products;
+    private HashSet<Product> setProducts;
 
     private HashSet<Client> setClients;
 
@@ -31,12 +31,12 @@ public final class Instance {
         this.destinations = destinations;
     }
 
-    public HashSet<Product> getProducts() {
-        return products;
+    public HashSet<Product> getSetProducts() {
+        return setProducts;
     }
 
-    public void setProducts(HashSet<Product> Products) {
-        this.products = Products;
+    public void setSetProducts(HashSet<Product> Products) {
+        this.setProducts = Products;
     }
 
     public HashSet<Client> getSetClients() {

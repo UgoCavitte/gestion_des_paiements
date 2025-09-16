@@ -4,18 +4,12 @@ import com.gestion_paiements.types.SampleData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class CountriesController {
-
-    @FXML
-    private Button buttonSubmitCountry;
 
     @FXML
     private ListView<String> listViewCountries;
@@ -25,7 +19,7 @@ public class CountriesController {
 
     // Used to show error messages
     @FXML
-    private TextArea commentSection;
+    private Label commentSection;
 
     // A mutable ObservableList to hold the countries for the ListView
     private ObservableList<String> countryList;
@@ -43,10 +37,12 @@ public class CountriesController {
 
         if (Objects.equals(input, "")) {
             commentSection.setText("Veuillez entrer le nom d'un pays");
+            return;
         }
 
         else if (SampleData.instance.getSetCountries().contains(input)) {
             commentSection.setText("Pays déjà existant");
+            return;
         }
 
         else {

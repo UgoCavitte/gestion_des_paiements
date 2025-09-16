@@ -18,7 +18,7 @@ public abstract class SampleData {
         Product[] products = new Product[2];
         products[0] = new Product("ind", "Cours individuel");
         products[1] = new Product("club", "Séance au club de discussion");
-        instance.setProducts(new HashSet<>(Arrays.stream(products).toList()));
+        instance.setSetProducts(new HashSet<>(Arrays.stream(products).toList()));
 
         // Client 1
         Client sampleClient = new Client(0, "Michel", "France", null);
