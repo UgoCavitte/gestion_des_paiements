@@ -2,6 +2,7 @@ package com.gestion_paiements.controllers;
 
 import com.gestion_paiements.Main;
 import com.gestion_paiements.types.Client;
+import com.gestion_paiements.types.Data;
 import com.gestion_paiements.types.SampleData;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -61,7 +62,7 @@ public class MainController {
         tableClientsColumnCountry.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCountry()));
         tableClientColumnLastPaymentDate.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPayments().stream().sorted().toList().getLast().getDateReceived().toString()));
 
-        List<Client> clients = SampleData.instance.getSetClients().stream().toList();
+        List<Client> clients = Data.instance.getSetClients().stream().toList();
         tableClients.setItems(FXCollections.observableList(clients));
 
     }
@@ -76,7 +77,7 @@ public class MainController {
             stage.setTitle("Paramètres");
             stage.initModality(Modality.WINDOW_MODAL);
 
-            Scene scene = new Scene(parent, 600, 400);
+            Scene scene = new Scene(parent, 1200, 800);
             stage.setScene(scene);
 
             stage.setResizable(false);
