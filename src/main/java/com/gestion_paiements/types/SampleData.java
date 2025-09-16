@@ -10,15 +10,13 @@ import java.util.Set;
 
 public abstract class SampleData {
 
-    public static Instance instance = new Instance();
-
     public static void init() {
 
         // Products
         Product[] products = new Product[2];
         products[0] = new Product("ind", "Cours individuel");
         products[1] = new Product("club", "Séance au club de discussion");
-        instance.setSetProducts(new HashSet<>(Arrays.stream(products).toList()));
+        Data.instance.setSetProducts(new HashSet<>(Arrays.stream(products).toList()));
 
         // Client 1
         Client sampleClient = new Client(0, "Michel", "France", null);
@@ -51,15 +49,15 @@ public abstract class SampleData {
         sampleClient2.setPayments(Set.of(paymentFromJacques));
 
         Client[] clients = {sampleClient, sampleClient2};
-        instance.setSetClients(new HashSet<>(Arrays.stream(clients).toList()));
+        Data.instance.setSetClients(new HashSet<>(Arrays.stream(clients).toList()));
 
         // Countries
         String[] countries = {"France", "Russie", "Ukraine", "Kazakhstan"};
-        instance.setSetCountries(new HashSet<>(Arrays.stream(countries).toList()));
+        Data.instance.setSetCountries(new HashSet<>(Arrays.stream(countries).toList()));
 
         // Currencies
         String[] currencies = {"EUR", "RUB"};
-        instance.setSetCurrencies(new HashSet<>(Arrays.stream(currencies).toList()));
+        Data.instance.setSetCurrencies(new HashSet<>(Arrays.stream(currencies).toList()));
 
     }
 

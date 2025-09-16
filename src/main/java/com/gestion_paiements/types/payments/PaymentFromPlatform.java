@@ -2,7 +2,7 @@ package com.gestion_paiements.types.payments;
 
 import com.gestion_paiements.types.Destination;
 
-public class PaymentFromPlatform extends Payment {
+public final class PaymentFromPlatform extends Payment {
 
     // Sending platform
     private Destination sendingPlatform;

@@ -1,6 +1,6 @@
 package com.gestion_paiements.controllers.parameters;
 
-import com.gestion_paiements.types.SampleData;
+import com.gestion_paiements.types.Data;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -25,7 +25,7 @@ public class CurrenciesController {
 
     @FXML
     private void initialize() {
-        currencyList = FXCollections.observableArrayList(SampleData.instance.getSetCurrencies().stream().sorted().collect(Collectors.toList()));
+        currencyList = FXCollections.observableArrayList(Data.instance.getSetCurrencies().stream().sorted().collect(Collectors.toList()));
         listViewCurrencies.setItems(currencyList);
     }
 
@@ -38,13 +38,13 @@ public class CurrenciesController {
             return;
         }
 
-        else if (SampleData.instance.getSetCurrencies().contains(input)) {
+        else if (Data.instance.getSetCurrencies().contains(input)) {
             commentSection.setText("Devise déjà existante");
             return;
         }
 
         else {
-            SampleData.instance.getSetCurrencies().add(input);
+            Data.instance.getSetCurrencies().add(input);
             currencyList.add(input);
             FXCollections.sort(currencyList);
             commentSection.setText("Devise ajoutée");

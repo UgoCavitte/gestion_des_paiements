@@ -1,7 +1,7 @@
 package com.gestion_paiements.controllers.parameters;
 
+import com.gestion_paiements.types.Data;
 import com.gestion_paiements.types.Product;
-import com.gestion_paiements.types.SampleData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -51,7 +51,7 @@ public class ProductsController {
             return;
         }
 
-        else if (SampleData.instance.getSetProducts().stream().map(Product::getShortName).toList().contains(inputSN)) {
+        else if (Data.instance.getSetProducts().stream().map(Product::getShortName).toList().contains(inputSN)) {
             commentSection.setText("Produit déjà existant");
             return;
         }
@@ -59,7 +59,7 @@ public class ProductsController {
         else {
             Product newProduct = new Product(inputSN, inputD);
 
-            SampleData.instance.getSetProducts().add(newProduct);
+            Data.instance.getSetProducts().add(newProduct);
             productsList.add(newProduct);
             FXCollections.sort(productsList);
             commentSection.setText("Produit ajouté");
