@@ -55,8 +55,8 @@ public abstract class SampleData {
         Data.instance.setSetCountries(new HashSet<>(Arrays.stream(countries).toList()));
 
         // Currencies
-        String[] currencies = {"EUR", "RUB"};
-        Data.instance.setSetCurrencies(new HashSet<>(Arrays.stream(currencies).toList()));
+        Data.instance.getSetCurrencies().add(new Currency("EUR"));
+        Data.instance.getSetCurrencies().add(new Currency("RUB"));
 
     }
 

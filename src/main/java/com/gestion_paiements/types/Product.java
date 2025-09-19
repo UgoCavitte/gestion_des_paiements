@@ -25,7 +25,7 @@ public final class Product implements Comparable {
         System.out.println(Data.instance.getSetProducts());
 
 
-        this.id = IDs.getAvailableID(new HashSet<>(Data.instance.getSetProducts().stream().map(Product::getId).collect(Collectors.toSet())));
+        this.id = IDs.getAvailableID(Data.instance.getSetProducts().stream().map(Product::getId).collect(Collectors.toSet()));
         this.shortName = shortName;
         this.description = description;
     }

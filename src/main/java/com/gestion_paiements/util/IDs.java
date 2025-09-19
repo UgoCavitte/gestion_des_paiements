@@ -2,12 +2,12 @@ package com.gestion_paiements.util;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashSet;
+import java.util.Set;
 
 public abstract class IDs {
 
     // Returns the first available ID
-    public static int getAvailableID(@NotNull HashSet<Integer> usedIDs) {
+    public static int getAvailableID(@NotNull Set<Integer> usedIDs) {
         if (usedIDs.isEmpty()) return 0;
 
         else {
