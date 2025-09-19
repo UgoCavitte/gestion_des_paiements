@@ -7,17 +7,17 @@ import java.util.Set;
 
 public final class Instance {
 
-    private HashSet<Destination> destinations;
+    private HashSet<Destination> destinations = new HashSet<>();
 
-    private HashSet<Product> setProducts;
+    private HashSet<Product> setProducts = new HashSet<>();
 
-    private HashSet<Client> setClients;
+    private HashSet<Client> setClients = new HashSet<>();
 
-    private HashSet<Payment> setPayments;
+    private HashSet<Payment> setPayments = new HashSet<>();
 
-    private HashSet<String> setCountries;
+    private HashSet<String> setCountries = new HashSet<>();
 
-    private HashSet<String> setCurrencies;
+    private HashSet<String> setCurrencies = new HashSet<>();
 
     //////////////////////////////
     /// GETTERS AND SETTERS
