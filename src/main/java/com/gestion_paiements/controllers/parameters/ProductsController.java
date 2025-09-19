@@ -2,6 +2,7 @@ package com.gestion_paiements.controllers.parameters;
 
 import com.gestion_paiements.types.Data;
 import com.gestion_paiements.types.Product;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,6 +31,9 @@ public class ProductsController {
     private TableView<Product> tableViewProducts;
 
     @FXML
+    private TableColumn<Product, Integer> columnID;
+
+    @FXML
     private TableColumn<Product, String> columnSN;
 
     @FXML
@@ -40,10 +44,10 @@ public class ProductsController {
     // A mutable ObservableList to hold the products for the ListView
     private ObservableList<Product> productsList;
 
-    // TODO implement the initialize method
     @FXML
     private void initialize() {
 
+        columnID.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId()).asObject());
         columnSN.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getShortName()));
         columnD.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescription()));
 
@@ -83,7 +87,7 @@ public class ProductsController {
 
             Data.instance.getSetProducts().add(newProduct);
             productsList.add(newProduct);
-            FXCollections.sort(productsList);
+            FXCollections.sort(productsList, Product::compareTo);
             commentSection.setText("Produit ajouté");
         }
 

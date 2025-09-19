@@ -77,8 +77,9 @@
                <children>
                   <TableView fx:id="tableViewProducts" prefHeight="800.0" prefWidth="480.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <columns>
+                        <TableColumn fx:id="columnID" prefWidth="50.0" text="ID" />
                         <TableColumn fx:id="columnSN" prefWidth="100.0" resizable="false" text="Nom" />
-                        <TableColumn fx:id="columnD" prefWidth="374.0" resizable="false" text="Description" />
+                        <TableColumn fx:id="columnD" prefWidth="324.0" resizable="false" text="Description" />
                      </columns></TableView>
                </children>
                 </AnchorPane>

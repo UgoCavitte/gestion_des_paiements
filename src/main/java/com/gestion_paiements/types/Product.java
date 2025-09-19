@@ -2,9 +2,9 @@ package com.gestion_paiements.types;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
-
 public final class Product implements Comparable {
+
+    private int id;
 
     private String shortName;
 
@@ -22,6 +22,14 @@ public final class Product implements Comparable {
     //////////////////////////////
     /// GETTERS AND SETTERS
     //////////////////////////////
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getShortName() {
         return shortName;
