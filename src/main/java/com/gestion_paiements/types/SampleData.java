@@ -51,8 +51,9 @@ public abstract class SampleData {
         Data.instance.setSetClients(new HashSet<>(Arrays.stream(clients).toList()));
 
         // Countries
-        String[] countries = {"France", "Russie", "Ukraine", "Kazakhstan"};
-        Data.instance.setSetCountries(new HashSet<>(Arrays.stream(countries).toList()));
+        Data.instance.getSetCountries().add(new Country("France"));
+        Data.instance.getSetCountries().add(new Country("Russie"));
+        Data.instance.getSetCountries().add(new Country("Ukraine"));
 
         // Currencies
         Data.instance.getSetCurrencies().add(new Currency("EUR"));
