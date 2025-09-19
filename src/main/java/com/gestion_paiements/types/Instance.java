@@ -15,7 +15,7 @@ public final class Instance {
 
     private HashSet<Payment> setPayments = new HashSet<>();
 
-    private HashSet<String> setCountries = new HashSet<>();
+    private HashSet<Country> setCountries = new HashSet<>();
 
     private HashSet<Currency> setCurrencies = new HashSet<>();
 
@@ -55,11 +55,11 @@ public final class Instance {
         this.setPayments = setPayments;
     }
 
-    public HashSet<String> getSetCountries() {
+    public HashSet<Country> getSetCountries() {
         return setCountries;
     }
 
-    public void setSetCountries(HashSet<String> setCountries) {
+    public void setSetCountries(HashSet<Country> setCountries) {
         this.setCountries = setCountries;
     }
 
