@@ -1,13 +1,12 @@
 package com.gestion_paiements.types;
 
 import com.gestion_paiements.util.IDs;
+import com.gestion_paiements.util.withID;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.stream.Collectors;
 
-public final class Product implements Comparable {
+public final class Product implements Comparable, withID {
 
     private int id;
 
@@ -20,12 +19,7 @@ public final class Product implements Comparable {
     //////////////////////////////
 
     public Product(String shortName, String description) {
-
-        System.out.println("Creating a product");
-        System.out.println(Data.instance.getSetProducts());
-
-
-        this.id = IDs.getAvailableID(Data.instance.getSetProducts().stream().map(Product::getId).collect(Collectors.toSet()));
+        this.id = IDs.getAvailableID(Data.instance.getSetProducts());
         this.shortName = shortName;
         this.description = description;
     }
@@ -34,10 +28,12 @@ public final class Product implements Comparable {
     /// GETTERS AND SETTERS
     //////////////////////////////
 
+    @Override
     public int getId() {
         return id;
     }
 
+    @Override
     public void setId(int id) {
         this.id = id;
     }

@@ -1,17 +1,18 @@
 package com.gestion_paiements.types;
 
 import com.gestion_paiements.util.IDs;
+import com.gestion_paiements.util.withID;
 
 import java.util.stream.Collectors;
 
-public final class Country {
+public final class Country implements withID {
 
     private int id;
 
     private String name;
 
     public Country (String name) {
-        this.id = IDs.getAvailableID(Data.instance.getSetCountries().stream().map(Country::getId).collect(Collectors.toSet()));
+        this.id = IDs.getAvailableID(Data.instance.getSetCountries());
         this.name = name;
     }
 
@@ -19,10 +20,12 @@ public final class Country {
     /// GETTERS AND SETTERS
     //////////////////////////////
 
+    @Override
     public int getId() {
         return id;
     }
 
+    @Override
     public void setId(int id) {
         this.id = id;
     }

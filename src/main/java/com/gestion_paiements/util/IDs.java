@@ -7,7 +7,7 @@ import java.util.Set;
 public abstract class IDs {
 
     // Returns the first available ID
-    public static int getAvailableID(@NotNull Set<Integer> usedIDs) {
+    public static int getAvailableID(@NotNull Set<? extends withID> usedIDs) {
         if (usedIDs.isEmpty()) return 0;
 
         else {
@@ -19,5 +19,4 @@ public abstract class IDs {
             }
         }
     }
-
 }

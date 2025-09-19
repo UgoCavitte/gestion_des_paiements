@@ -1,5 +1,6 @@
 package com.gestion_paiements.controllers.parameters;
 
+import com.gestion_paiements.types.Country;
 import com.gestion_paiements.types.Data;
 import com.gestion_paiements.types.SampleData;
 import javafx.collections.FXCollections;
@@ -27,7 +28,7 @@ public class CountriesController {
 
     @FXML
     private void initialize() {
-        countryList = FXCollections.observableArrayList(Data.instance.getSetCountries().stream().sorted().collect(Collectors.toList()));
+        countryList = FXCollections.observableArrayList(Data.instance.getSetCountries().stream().map(Country::getName).sorted().collect(Collectors.toList()));
         listViewCountries.setItems(countryList);
     }
 
@@ -41,13 +42,13 @@ public class CountriesController {
             return;
         }
 
-        else if (Data.instance.getSetCountries().contains(input)) {
+        else if (Data.instance.getSetCountries().stream().map(Country::getName).collect(Collectors.toSet()).contains(input)) {
             commentSection.setText("Pays déjà existant");
             return;
         }
 
         else {
-            Data.instance.getSetCountries().add(input);
+            Data.instance.getSetCountries().add(new Country(input));
             countryList.add(input);
             FXCollections.sort(countryList);
             commentSection.setText("Pays ajouté");
