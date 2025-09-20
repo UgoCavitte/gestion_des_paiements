@@ -10,7 +10,7 @@ import javafx.scene.control.*;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class CountriesController {
+public class ClientsCountriesController {
 
     @FXML
     private ListView<String> listViewCountries;

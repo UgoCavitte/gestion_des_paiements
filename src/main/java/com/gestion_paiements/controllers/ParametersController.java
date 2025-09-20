@@ -28,7 +28,7 @@ public class ParametersController {
         parametersList.getItems().addAll("Countries", "Currencies", "Products");
 
         try {
-            views.put("Countries", FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("countries-view.fxml"))));
+            views.put("Countries", FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("clients-countries-view.fxml"))));
             views.put("Currencies", FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("currencies-view.fxml"))));
             views.put("Products", FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("products-view.fxml"))));
         } catch (IOException e) {
