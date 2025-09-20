@@ -6,7 +6,6 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -31,7 +30,7 @@
       </MenuBar>
       <HBox prefHeight="186.0" prefWidth="966.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0">
          <children>
-            <TabPane fx:id="mainTabPane" prefHeight="706.0" prefWidth="546.0" tabClosingPolicy="UNAVAILABLE" HBox.hgrow="ALWAYS" />
+            <AnchorPane fx:id="mainTabPane" prefHeight="706.0" prefWidth="500.0" />
             <Separator orientation="VERTICAL" prefHeight="200.0" HBox.hgrow="ALWAYS" />
             <AnchorPane prefHeight="706.0" prefWidth="414.0" HBox.hgrow="ALWAYS">
                <children>

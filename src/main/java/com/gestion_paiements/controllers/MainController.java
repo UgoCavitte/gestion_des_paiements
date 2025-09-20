@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -30,7 +31,7 @@ import java.util.List;
 public class MainController {
 
     @FXML
-    private TabPane mainTabPane;
+    private AnchorPane mainTabPane;
 
     //////////////////////////////
     /// TABLEAU CLIENTS
@@ -57,6 +58,19 @@ public class MainController {
     @FXML
     private void initialize() {
 
+        // PANE WITH COUNTRIES
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main-tab-view.fxml"));
+            Parent parent = fxmlLoader.load();
+            mainTabPane.getChildren().clear();
+            mainTabPane.getChildren().add(parent);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        // TABLE VIEW CONTENT
         tableClientsColumnID.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getID()).asObject());
         tableClientsColumnName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
         tableClientsColumnCountry.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCountry()));
