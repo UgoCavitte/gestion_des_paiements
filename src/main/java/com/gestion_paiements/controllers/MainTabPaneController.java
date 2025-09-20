@@ -1,12 +1,16 @@
 package com.gestion_paiements.controllers;
 
+import com.gestion_paiements.Main;
 import com.gestion_paiements.types.Country;
 import com.gestion_paiements.types.Data;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /*
  * This is the general tab controller.
@@ -29,8 +33,15 @@ public class MainTabPaneController {
         tabsCountries.clear();
 
         for (Country country : Data.instance.getSetAccountsCountries()) {
-            tabsCountries.add(new Tab(country.getName()));
-            // TODO This is minimalistic for the moment
+
+            Tab tab = new Tab(country.getName());
+            try {
+                tab.setContent(FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("country-tab-view.fxml"))));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            tabsCountries.add(tab);
         }
 
         tabPaneAccounts.getTabs().clear();
