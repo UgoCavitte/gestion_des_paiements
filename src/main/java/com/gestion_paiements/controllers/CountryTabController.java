@@ -1,11 +1,10 @@
 package com.gestion_paiements.controllers;
 
 import com.gestion_paiements.Main;
-import com.gestion_paiements.types.Country;
-import com.gestion_paiements.types.Data;
-import com.gestion_paiements.types.Destination;
+import com.gestion_paiements.types.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 
@@ -28,9 +27,9 @@ public class CountryTabController {
     @FXML
     private TabPane tabPaneAccounts;
 
-    private Country tabCountry;
+    private WorkingCountry tabCountry;
 
-    public void setTabCountry(Country tabCountry) {
+    public void setTabCountry(WorkingCountry tabCountry) {
         this.tabCountry = tabCountry;
     }
 
@@ -42,7 +41,31 @@ public class CountryTabController {
 
         tabsAccounts.clear();
 
-        for (Destination destination : )
+        for (Destination destination : tabCountry.getAccounts().values()) {
+            Tab tab = new Tab(destination.getName());
+            try {
+
+                FXMLLoader loader;
+
+                if (destination.getDestinationType() == DestinationType.bankAccount ) {
+                    loader = new FXMLLoader(Main.class.getResource( "bank-account-view.fxml"));
+                    // TODO controller
+                }
+
+                else {
+                    loader = new FXMLLoader(Main.class.getResource( "bank-account-view.fxml"));
+                    // TODO controller
+                }
+
+                Parent parent = loader.load();
+                tab.setContent(parent);
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            tabsAccounts.add(tab);
+        }
 
 
     }

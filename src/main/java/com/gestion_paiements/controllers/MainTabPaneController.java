@@ -3,6 +3,7 @@ package com.gestion_paiements.controllers;
 import com.gestion_paiements.Main;
 import com.gestion_paiements.types.Country;
 import com.gestion_paiements.types.Data;
+import com.gestion_paiements.types.WorkingCountry;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -33,14 +34,14 @@ public class MainTabPaneController {
 
         tabsCountries.clear();
 
-        for (Country country : Data.instance.getMapAccountsCountries().values()) {
+        for (WorkingCountry country : Data.instance.getMapAccountsCountries().values()) {
 
             Tab tab = new Tab(country.getName());
             try {
-
                 FXMLLoader loader = new FXMLLoader(Main.class.getResource("country-tab-view.fxml"));
                 CountryTabController controller = new CountryTabController();
                 controller.setTabCountry(country);
+                loader.setController(controller);
                 Parent parent = loader.load();
                 tab.setContent(parent);
             } catch (IOException e) {
