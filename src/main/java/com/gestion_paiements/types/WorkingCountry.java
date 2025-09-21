@@ -1,26 +1,28 @@
 package com.gestion_paiements.types;
 
-import java.util.HashSet;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.HashMap;
 import java.util.Set;
 
 public final class WorkingCountry extends Country {
 
-    HashSet<Destination> accounts = new HashSet<>();
+    HashMap<String, Destination> accounts = new HashMap<>();
 
     public WorkingCountry (String name) {
         super (name);
     }
 
-    public WorkingCountry (String name, Set<Destination> accounts) {
+    public WorkingCountry (String name, @NotNull Set<Destination> accounts) {
         super (name);
-        this.accounts.addAll(accounts);
+        accounts.forEach(a -> this.accounts.put(a.getName(), a));
     }
 
-    public HashSet<Destination> getAccounts() {
+    public HashMap<String, Destination> getAccounts() {
         return accounts;
     }
 
-    public void setAccounts(HashSet<Destination> accounts) {
+    public void setAccounts(HashMap<String, Destination> accounts) {
         this.accounts = accounts;
     }
 }

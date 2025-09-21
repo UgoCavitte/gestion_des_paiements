@@ -3,7 +3,6 @@ module com.gestion_paiements {
     requires javafx.fxml;
     requires org.jetbrains.annotations;
     requires javafx.base;
-    requires com.gestion_paiements;
 
     exports com.gestion_paiements;
     exports com.gestion_paiements.controllers;

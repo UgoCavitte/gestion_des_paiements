@@ -10,8 +10,6 @@ public final class Destination {
 
     private DestinationType destinationType;
 
-    private String country;
-
     // Can be null if it is a bank account
     private @Nullable String name;
 
@@ -19,9 +17,8 @@ public final class Destination {
     /// CONSTRUCTOR
     //////////////////////////////
 
-    public Destination(DestinationType destinationType, String country, @Nullable String name) {
+    public Destination(DestinationType destinationType, @Nullable String name) {
         this.destinationType = destinationType;
-        this.country = country;
         this.name = name;
     }
 
@@ -37,19 +34,11 @@ public final class Destination {
         this.destinationType = destinationType;
     }
 
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getName() {
+    public @Nullable String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(@Nullable String name) {
         this.name = name;
     }
 }

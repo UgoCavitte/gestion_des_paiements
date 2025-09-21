@@ -5,6 +5,7 @@ import com.gestion_paiements.types.Country;
 import com.gestion_paiements.types.Data;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 
@@ -32,11 +33,16 @@ public class MainTabPaneController {
 
         tabsCountries.clear();
 
-        for (Country country : Data.instance.getSetAccountsCountries()) {
+        for (Country country : Data.instance.getMapAccountsCountries().values()) {
 
             Tab tab = new Tab(country.getName());
             try {
-                tab.setContent(FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("country-tab-view.fxml"))));
+
+                FXMLLoader loader = new FXMLLoader(Main.class.getResource("country-tab-view.fxml"));
+                CountryTabController controller = new CountryTabController();
+                controller.setTabCountry(country);
+                Parent parent = loader.load();
+                tab.setContent(parent);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

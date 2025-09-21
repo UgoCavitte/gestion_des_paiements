@@ -3,14 +3,22 @@ package com.gestion_paiements.types;
 import com.gestion_paiements.types.payments.PaymentFromClient;
 
 import java.time.Instant;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public abstract class SampleData {
 
     public static void init() {
+
+        // Accounts countries
+        Data.instance.getMapAccountsCountries().put("France", new WorkingCountry("France"));
+        HashMap<String, Destination> accountsForFrance = new HashMap<>();
+        accountsForFrance.put("LCL", new Destination(DestinationType.bankAccount, "LCL"));
+        accountsForFrance.put("Stripe", new Destination(DestinationType.platform, "Stripe"));
+        Data.instance.getMapAccountsCountries().get("France").setAccounts(accountsForFrance);
+
+        Data.instance.getMapAccountsCountries().put("Russie", new WorkingCountry("Russie"));
+
 
         // Products
         Data.instance.getSetProducts().add(new Product("ind", "Cours individuel"));
@@ -22,7 +30,7 @@ public abstract class SampleData {
         PaymentFromClient paymentFromMichel = new PaymentFromClient(
                 0,
                 sampleClient,
-                new Destination(DestinationType.bankAccount, "France", null),
+                Data.instance.getMapAccountsCountries().get("France").getAccounts().get("LCL"),
                 Date.from(Instant.now()),
                         Date.from(Instant.now()),
                 new Amount(10, "EUR"),
@@ -37,7 +45,7 @@ public abstract class SampleData {
         PaymentFromClient paymentFromJacques = new PaymentFromClient(
                 1,
                 sampleClient2,
-                new Destination(DestinationType.bankAccount, "France", null),
+                new Destination(DestinationType.bankAccount, null),
                 Date.from(Instant.now()),
                 Date.from(Instant.now()),
                 new Amount(10, "EUR"),
@@ -54,10 +62,6 @@ public abstract class SampleData {
         Data.instance.getSetClientsCountries().add(new Country("France"));
         Data.instance.getSetClientsCountries().add(new Country("Russie"));
         Data.instance.getSetClientsCountries().add(new Country("Ukraine"));
-
-        // Accounts countries
-        Data.instance.getSetAccountsCountries().add(new Country("France"));
-        Data.instance.getSetAccountsCountries().add(new Country("Russie"));
 
         // Currencies
         Data.instance.getSetCurrencies().add(new Currency("EUR"));

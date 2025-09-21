@@ -3,6 +3,7 @@ package com.gestion_paiements.controllers;
 import com.gestion_paiements.Main;
 import com.gestion_paiements.types.Country;
 import com.gestion_paiements.types.Data;
+import com.gestion_paiements.types.Destination;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Tab;
@@ -27,6 +28,12 @@ public class CountryTabController {
     @FXML
     private TabPane tabPaneAccounts;
 
+    private Country tabCountry;
+
+    public void setTabCountry(Country tabCountry) {
+        this.tabCountry = tabCountry;
+    }
+
     // This method creates the tabs for each country in which the user has an account
     @FXML
     private void initialize() {
@@ -35,20 +42,9 @@ public class CountryTabController {
 
         tabsAccounts.clear();
 
-        for (Country country : Data.instance.getSetAccountsCountries()) {
+        for (Destination destination : )
 
-            Tab tab = new Tab(country.getName());
-            try {
-                tab.setContent(FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("country-tab-view.fxml"))));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
 
-            tabsAccounts.add(tab);
-        }
-
-        tabPaneAccounts.getTabs().clear();
-        tabPaneAccounts.getTabs().addAll(tabsAccounts);
     }
 
 }
