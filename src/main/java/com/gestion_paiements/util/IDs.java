@@ -13,7 +13,7 @@ public abstract class IDs {
         else {
             // Checks every number until it is not in the set
             for (int testedID = 0; ; testedID++) {
-                if (!usedIDs.contains(testedID)) {
+                if (!usedIDs.stream().map(withID::getId).toList().contains(testedID)) {
                     return testedID;
                 }
             }
