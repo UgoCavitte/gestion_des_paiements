@@ -4,8 +4,6 @@ import com.gestion_paiements.util.IDs;
 import com.gestion_paiements.util.withID;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.stream.Collectors;
-
 public final class Product implements Comparable, withID {
 
     private int id;

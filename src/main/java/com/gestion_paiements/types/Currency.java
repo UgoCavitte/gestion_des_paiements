@@ -3,8 +3,6 @@ package com.gestion_paiements.types;
 import com.gestion_paiements.util.IDs;
 import com.gestion_paiements.util.withID;
 
-import java.util.stream.Collectors;
-
 public final class Currency implements withID {
 
     private int id;

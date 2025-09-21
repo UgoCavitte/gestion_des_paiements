@@ -1,7 +1,6 @@
 package com.gestion_paiements.controllers;
 
 import com.gestion_paiements.Main;
-import com.gestion_paiements.types.Country;
 import com.gestion_paiements.types.Data;
 import com.gestion_paiements.types.WorkingCountry;
 import javafx.fxml.FXML;
@@ -12,7 +11,6 @@ import javafx.scene.control.TabPane;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 /*
  * This is the general tab controller.
@@ -23,7 +21,7 @@ import java.util.Objects;
 public class MainTabPaneController {
 
     // Uses an array list to get them sorted more easily
-    ArrayList<Tab> tabsCountries = new ArrayList<>();
+    final ArrayList<Tab> tabsCountries = new ArrayList<>();
 
     @FXML
     private TabPane tabPaneCountries;

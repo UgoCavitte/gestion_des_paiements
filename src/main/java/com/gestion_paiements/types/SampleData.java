@@ -4,7 +4,6 @@ import com.gestion_paiements.types.payments.PaymentFromClient;
 
 import java.time.Instant;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public abstract class SampleData {
 

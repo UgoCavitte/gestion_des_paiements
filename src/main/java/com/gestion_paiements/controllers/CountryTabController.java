@@ -10,7 +10,6 @@ import javafx.scene.control.TabPane;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 /// This tab contains data on accounts and platforms in a specific country.
 /// This data is controlled by their own tab
@@ -22,7 +21,7 @@ import java.util.Objects;
 public class CountryTabController {
 
     // Uses an array list to get them sorted more easily
-    ArrayList<Tab> tabsAccounts = new ArrayList<>();
+    final ArrayList<Tab> tabsAccounts = new ArrayList<>();
 
     @FXML
     private TabPane tabPaneAccounts;
@@ -36,8 +35,6 @@ public class CountryTabController {
     // This method creates the tabs for each country in which the user has an account
     @FXML
     private void initialize() {
-
-        // TODO Finish this
 
         tabsAccounts.clear();
 
