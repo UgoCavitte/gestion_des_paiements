@@ -3,7 +3,7 @@ package com.gestion_paiements.types;
 import com.gestion_paiements.util.IDs;
 import com.gestion_paiements.util.withID;
 
-public final class Country implements withID {
+public class Country implements withID {
 
     private int id;
 
