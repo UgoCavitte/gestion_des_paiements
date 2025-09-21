@@ -47,7 +47,7 @@ public class CountryTabController {
 
                 FXMLLoader loader;
 
-                if (destination.getDestinationType() == DestinationType.bankAccount ) {
+                if (destination.getDestinationType() == DestinationType.bankAccount) {
                     loader = new FXMLLoader(Main.class.getResource( "bank-account-view.fxml"));
                     BankAccountController controller = new BankAccountController();
                     controller.setAccount(destination);
@@ -55,8 +55,10 @@ public class CountryTabController {
                 }
 
                 else {
-                    loader = new FXMLLoader(Main.class.getResource( "bank-account-view.fxml"));
-                    // TODO controller
+                    loader = new FXMLLoader(Main.class.getResource( "platform-view.fxml"));
+                    PlatformController controller = new PlatformController();
+                    controller.setPlatform(destination);
+                    loader.setController(controller);
                 }
 
                 Parent parent = loader.load();
@@ -68,6 +70,9 @@ public class CountryTabController {
 
             tabsAccounts.add(tab);
         }
+
+        tabPaneAccounts.getTabs().clear();
+        tabPaneAccounts.getTabs().addAll(tabsAccounts);
 
 
     }
