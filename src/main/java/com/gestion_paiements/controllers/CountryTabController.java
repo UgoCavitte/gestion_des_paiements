@@ -49,7 +49,9 @@ public class CountryTabController {
 
                 if (destination.getDestinationType() == DestinationType.bankAccount ) {
                     loader = new FXMLLoader(Main.class.getResource( "bank-account-view.fxml"));
-                    // TODO controller
+                    BankAccountController controller = new BankAccountController();
+                    controller.setAccount(destination);
+                    loader.setController(controller);
                 }
 
                 else {
