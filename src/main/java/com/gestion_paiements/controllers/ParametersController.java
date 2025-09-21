@@ -25,13 +25,13 @@ public class ParametersController {
 
     @FXML
     private void initialize() {
-        parametersList.getItems().addAll("Countries", "Currencies", "Products");
+        parametersList.getItems().addAll("Pays", "Pays de travail", "Devises", "Produits");
 
         try {
-            views.put("Clients countries", FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("clients-countries-view.fxml"))));
-            views.put("Accounts countries", FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("accounts-countries-view.fxml"))));
-            views.put("Currencies", FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("currencies-view.fxml"))));
-            views.put("Products", FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("products-view.fxml"))));
+            views.put("Pays", FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("parameters/clients-countries-view.fxml"))));
+            views.put("Pays de travail", FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("parameters/accounts-countries-view.fxml"))));
+            views.put("Devises", FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("parameters/currencies-view.fxml"))));
+            views.put("Produits", FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("parameters/products-view.fxml"))));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
