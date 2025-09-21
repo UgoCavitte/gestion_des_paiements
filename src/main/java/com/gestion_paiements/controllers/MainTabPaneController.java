@@ -24,7 +24,7 @@ public class MainTabPaneController {
     ArrayList<Tab> tabsCountries = new ArrayList<>();
 
     @FXML
-    private TabPane tabPaneAccounts;
+    private TabPane tabPaneCountries;
 
     // This method creates the tabs for each country in which the user has an account
     @FXML
@@ -44,8 +44,8 @@ public class MainTabPaneController {
             tabsCountries.add(tab);
         }
 
-        tabPaneAccounts.getTabs().clear();
-        tabPaneAccounts.getTabs().addAll(tabsCountries);
+        tabPaneCountries.getTabs().clear();
+        tabPaneCountries.getTabs().addAll(tabsCountries);
     }
 
 }
