@@ -13,7 +13,7 @@ import java.util.Set;
  * - a set of payments.
  */
 
-public final class Client {
+public final class Client extends Sender {
 
     // Used to store data
     private int ID;
@@ -21,7 +21,7 @@ public final class Client {
     // Name, surname, etc.
     private String name;
 
-    private String country;
+    private Country country;
 
     // This must be set separately when the app is being opened
     private Set<PaymentFromClient> payments;
@@ -33,7 +33,7 @@ public final class Client {
     /// CONSTRUCTOR
     //////////////////////////////
 
-    public Client(int ID, String name, String country, @Nullable String comment) {
+    public Client(int ID, String name, Country country, @Nullable String comment) {
         this.ID = ID;
         this.name = name;
         this.country = country;
@@ -60,11 +60,11 @@ public final class Client {
         this.name = name;
     }
 
-    public String getCountry() {
+    public Country getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
+    public void setCountry(Country country) {
         this.country = country;
     }
 
