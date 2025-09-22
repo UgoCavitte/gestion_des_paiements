@@ -29,18 +29,18 @@ public class PlatformController {
 
     private final HashMap<Integer, Set<Month>> monthsByYears = new HashMap<>();
 
-    private Destination account;
+    private Destination platform;
 
-    public void setAccount(Destination account) {
-        this.account = account;
+    public void setPlatform(Destination platform) {
+        this.platform = platform;
     }
 
     // Used to set the columns
     private void initialize () {
         // On commence par les comboBoxes
-        final Set<Integer> availableYears = account.getTransfers().stream().map(p -> p.getDateReceived().getYear()).collect(Collectors.toSet());
+        final Set<Integer> availableYears = platform.getTransfers().stream().map(p -> p.getDateReceived().getYear()).collect(Collectors.toSet());
 
-        if (account.getTransfers().isEmpty()) {
+        if (platform.getTransfers().isEmpty()) {
             int currentYear = Instant.now().atZone(ZoneId.systemDefault()).getYear();
             Month currentMonth = Instant.now().atZone(ZoneId.systemDefault()).getMonth();
 
@@ -51,7 +51,7 @@ public class PlatformController {
 
         else {
             for (Integer year : availableYears) {
-                final Set<Month> monthsForThisYear = account.getTransfers()
+                final Set<Month> monthsForThisYear = platform.getTransfers()
                         .stream().filter(p -> p.getDateReceived().getYear() == year)
                         .map(p -> p.getDateReceived().getMonth())
                         .collect(Collectors.toSet());
