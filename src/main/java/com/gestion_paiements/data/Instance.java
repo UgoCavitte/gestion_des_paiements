@@ -1,4 +1,6 @@
-package com.gestion_paiements.types;
+package com.gestion_paiements.data;
+
+import com.gestion_paiements.types.*;
 
 import java.util.HashMap;
 import java.util.HashSet;

@@ -1,5 +1,7 @@
-package com.gestion_paiements.types;
+package com.gestion_paiements.data;
 
+import com.gestion_paiements.types.*;
+import com.gestion_paiements.types.Currency;
 import com.gestion_paiements.types.payments.PaymentFromClient;
 
 import java.time.Instant;
@@ -73,7 +75,7 @@ public abstract class SampleData {
 
 
         // Currencies
-        Data.instance.getSetCurrencies().add(new Currency("EUR"));
+        Data.instance.getSetCurrencies().add(new com.gestion_paiements.types.Currency("EUR"));
         Data.instance.getSetCurrencies().add(new Currency("RUB"));
 
     }

@@ -1,5 +1,6 @@
 package com.gestion_paiements.controllers.accounts_tables;
 
+import com.gestion_paiements.data.Preferences;
 import com.gestion_paiements.types.*;
 import com.gestion_paiements.types.payments.Payment;
 import com.gestion_paiements.types.payments.PaymentFromClient;
@@ -12,9 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import org.jetbrains.annotations.Nullable;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -54,7 +53,6 @@ public class BankAccountTableController {
 
         System.out.println(payments);
 
-        // TODO initialize table
         paymentsList = FXCollections.observableArrayList(payments);
 
         columnID.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId()).asObject());
@@ -64,8 +62,7 @@ public class BankAccountTableController {
         columnAmountReceived.setCellValueFactory(cellData -> new SimpleStringProperty(Currencies.fromAmountToString(cellData.getValue().getReceivedAmount())));
         columnSender.setCellValueFactory(cellData  -> new SimpleStringProperty(cellData.getValue().getSender().getName()));
         columnBought.setCellValueFactory(cellData -> {
-            if (cellData.getValue() instanceof PaymentFromClient) {
-                PaymentFromClient pfc = (PaymentFromClient) cellData.getValue();
+            if (cellData.getValue() instanceof PaymentFromClient pfc) {
                 return new SimpleObjectProperty<>(PurchasedProducts.fromSetToStrings(pfc.getProducts()));
             }
             else {
@@ -74,15 +71,20 @@ public class BankAccountTableController {
         });
 
         table.getColumns().clear();
-        table.getColumns().add(columnID);
-        table.getColumns().add(columnSender);
-        table.getColumns().add(columnDateSent);
-        table.getColumns().add(columnDateReceived);
-        table.getColumns().add(columnAmountSent);
-        table.getColumns().add(columnAmountReceived);
-        table.getColumns().add(columnBought);
+        if (Preferences.ColumnsToShow.BAId) table.getColumns().add(columnID);
+        if (Preferences.ColumnsToShow.BASender) table.getColumns().add(columnSender);
+        if (Preferences.ColumnsToShow.BADateSent) table.getColumns().add(columnDateSent);
+        if (Preferences.ColumnsToShow.BADateReceived) table.getColumns().add(columnDateReceived);
+        if (Preferences.ColumnsToShow.BAAmountSent) table.getColumns().add(columnAmountSent);
+        if (Preferences.ColumnsToShow.BAAmountReceived) table.getColumns().add(columnAmountReceived);
+        if (Preferences.ColumnsToShow.BAProducts) table.getColumns().add(columnBought);
 
         table.setItems(paymentsList);
+
+    }
+
+    // Used by the initialize method and when the user changes the columns to shows through parameters
+    public void reloadColumns() {
 
     }
 

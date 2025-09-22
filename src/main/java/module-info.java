@@ -6,6 +6,7 @@ module com.gestion_paiements {
     requires javafx.graphics;
 
     exports com.gestion_paiements;
+    exports com.gestion_paiements.data;
     exports com.gestion_paiements.types;
     exports com.gestion_paiements.types.payments;
     exports com.gestion_paiements.controllers;
