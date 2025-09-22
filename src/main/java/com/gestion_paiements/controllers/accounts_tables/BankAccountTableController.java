@@ -32,19 +32,19 @@ public class BankAccountTableController {
     private Set<Payment> payments;
 
     @FXML
-    private TableView table;
+    private TableView<Payment> table;
 
     // A mutable ObservableList to hold the countries for the ListView
     private ObservableList<Payment> paymentsList;
 
     // Columns
-    private TableColumn<Payment, Integer> columnID;
-    private TableColumn<Payment, String> columnDateSent;
-    private TableColumn<Payment, String> columnDateReceived;
-    private TableColumn<Payment, String> columnAmountSent;
-    private TableColumn<Payment, String> columnAmountReceived;
-    private TableColumn<Payment, String> columnSender;
-    private TableColumn<Payment, List<String>> columnBought;
+    private final TableColumn<Payment, Integer> columnID = new TableColumn<>("ID");
+    private final TableColumn<Payment, String> columnDateSent = new TableColumn<>("Date d'envoi");
+    private final TableColumn<Payment, String> columnDateReceived = new TableColumn<>("Date de réception");
+    private final TableColumn<Payment, String> columnAmountSent = new TableColumn<>("Somme envoyée");
+    private final TableColumn<Payment, String> columnAmountReceived = new TableColumn<>("Somme reçue");
+    private final TableColumn<Payment, String> columnSender = new TableColumn<>("Envoyeur");
+    private final TableColumn<Payment, List<String>> columnBought = new TableColumn<>("Produits");
 
     public void setPayments(Set<Payment> payments) {
         this.payments = payments;
@@ -74,7 +74,15 @@ public class BankAccountTableController {
         });
 
         table.getColumns().clear();
-        table.getColumns().addAll();
+        table.getColumns().add(columnID);
+        table.getColumns().add(columnSender);
+        table.getColumns().add(columnDateSent);
+        table.getColumns().add(columnDateReceived);
+        table.getColumns().add(columnAmountSent);
+        table.getColumns().add(columnAmountReceived);
+        table.getColumns().add(columnBought);
+
+        table.setItems(paymentsList);
 
     }
 
