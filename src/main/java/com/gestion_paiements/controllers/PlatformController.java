@@ -1,13 +1,88 @@
 package com.gestion_paiements.controllers;
 
 import com.gestion_paiements.types.Destination;
+import javafx.collections.FXCollections;
+import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
+
+import java.time.Instant;
+import java.time.Month;
+import java.time.ZoneId;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+/// The tab controlled by this controller must contain these pieces of information and functionalities :
+/// - a menu to show the month to show
+/// - a table with entering transfers for each month with all the information about these transfers (maybe make this customizable so the user does not have to see what he does not want to see)
+/// - a button to add an entering transfer ;
+/// - a button to add a transfer to the bank account.
 
 public class PlatformController {
 
-    private Destination platform;
+    @FXML
+    private ComboBox<Month> boxMonth;
 
-    public void setPlatform(Destination platform) {
-        this.platform = platform;
+    @FXML
+    private ComboBox<Integer> boxYear;
+
+    private final HashMap<Integer, Set<Month>> monthsByYears = new HashMap<>();
+
+    private Destination account;
+
+    public void setAccount(Destination account) {
+        this.account = account;
+    }
+
+    // Used to set the columns
+    private void initialize () {
+        // On commence par les comboBoxes
+        final Set<Integer> availableYears = account.getTransfers().stream().map(p -> p.getDateReceived().getYear()).collect(Collectors.toSet());
+
+        if (account.getTransfers().isEmpty()) {
+            int currentYear = Instant.now().atZone(ZoneId.systemDefault()).getYear();
+            Month currentMonth = Instant.now().atZone(ZoneId.systemDefault()).getMonth();
+
+            boxYear.setItems(FXCollections.observableArrayList(List.of(currentYear)));
+
+            monthsByYears.put(currentYear, Set.of(currentMonth));
+        }
+
+        else {
+            for (Integer year : availableYears) {
+                final Set<Month> monthsForThisYear = account.getTransfers()
+                        .stream().filter(p -> p.getDateReceived().getYear() == year)
+                        .map(p -> p.getDateReceived().getMonth())
+                        .collect(Collectors.toSet());
+
+                if (year == Instant.now().atZone(ZoneId.systemDefault()).getYear())
+                    monthsForThisYear.add(Instant.now().atZone(ZoneId.systemDefault()).getMonth());
+
+                monthsByYears.put(year, monthsForThisYear);
+            }
+
+            boxYear.setItems(FXCollections.observableList(monthsByYears.keySet().stream().toList()));
+        }
+
+    }
+
+
+    @FXML
+    void addNewTransfer() {
+
+    }
+
+    @FXML
+    void transferToBankAccount () {
+
+    }
+
+    @FXML
+    void selectionChanged() {
+        boxMonth.setItems(FXCollections.observableList(monthsByYears.get(boxYear.getValue()).stream().toList()));
+
+        // TODO Implement the table
     }
 
 }

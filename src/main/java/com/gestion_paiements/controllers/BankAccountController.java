@@ -12,7 +12,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /// The tab controlled by this controller must contain these pieces of information and functionalities :
-/// - a menu to show the month to show?
+/// - a menu to show the month to show
 /// - a table with entering transfers for each month with all the information about these transfers (maybe make this customizable so the user does not have to see what he does not want to see)
 /// - a button to add an entering transfer.
 
