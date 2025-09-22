@@ -2,6 +2,7 @@ package com.gestion_paiements.types.payments;
 
 import com.gestion_paiements.types.Amount;
 import com.gestion_paiements.types.Destination;
+import com.gestion_paiements.types.Sender;
 import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDate;
@@ -24,6 +25,9 @@ public abstract class Payment {
 
     // Destination (account, platform)
     private Destination destination;
+
+    // Client or platform
+    private Sender sender;
 
     // Any other information if needed
     private @Nullable String comment;
@@ -78,6 +82,14 @@ public abstract class Payment {
 
     public void setDestination(Destination destination) {
         this.destination = destination;
+    }
+
+    public Sender getSender() {
+        return sender;
+    }
+
+    public void setSender(Sender sender) {
+        this.sender = sender;
     }
 
     public @Nullable String getComment() {

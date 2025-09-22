@@ -1,10 +1,7 @@
 package com.gestion_paiements.types;
 
-import com.gestion_paiements.types.payments.Payment;
-
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Set;
 
 public final class Instance {
 

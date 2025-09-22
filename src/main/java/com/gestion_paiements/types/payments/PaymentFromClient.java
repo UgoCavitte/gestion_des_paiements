@@ -11,9 +11,6 @@ import java.util.Set;
 
 public final class PaymentFromClient extends Payment {
 
-    // Sending client
-    private Client sender;
-
     // Product(s) (what did the client paid for?)
     private Set<PurchasedProduct> purchasedProducts;
 
@@ -31,7 +28,7 @@ public final class PaymentFromClient extends Payment {
             Amount receivedAmount,
             Set<PurchasedProduct> purchasedProducts,
             @Nullable String comment) {
-        this.sender = sender;
+        super.setSender(sender);
         this.purchasedProducts = purchasedProducts;
         super.setId(id); // TODO Maybe setting the ID automatically would be better?
         super.setDestination(destination);
@@ -45,14 +42,6 @@ public final class PaymentFromClient extends Payment {
     //////////////////////////////
     /// GETTERS AND SETTERS
     //////////////////////////////
-
-    public Client getSender() {
-        return sender;
-    }
-
-    public void setSender(Client sender) {
-        this.sender = sender;
-    }
 
     public Set<PurchasedProduct> getProducts() {
         return purchasedProducts;

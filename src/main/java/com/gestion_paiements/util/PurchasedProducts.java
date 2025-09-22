@@ -9,7 +9,7 @@ import java.util.Set;
 
 public abstract class PurchasedProducts {
 
-    static List<String> fromSetToStrings (Set<PurchasedProduct> set) {
+    static public List<String> fromSetToStrings (Set<PurchasedProduct> set) {
         return set.stream()
                 .sorted(Comparator.comparing(p -> p.getProduct().getId()))
                 .map(p -> p.getQuantity() + p.getProduct().getShortName()).toList();

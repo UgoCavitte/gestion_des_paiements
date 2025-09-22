@@ -13,18 +13,15 @@ public final class Destination extends Sender {
 
     private DestinationType destinationType;
 
-    // Can be null if it is a bank account
-    private @Nullable String name;
-
     private HashSet<Payment> transfers = new HashSet<>();
 
     //////////////////////////////
     /// CONSTRUCTOR
     //////////////////////////////
 
-    public Destination(DestinationType destinationType, @Nullable String name) {
+    public Destination(DestinationType destinationType, String name) {
         this.destinationType = destinationType;
-        this.name = name;
+        super.setName(name);
     }
 
     //////////////////////////////
@@ -37,14 +34,6 @@ public final class Destination extends Sender {
 
     public void setDestinationType(DestinationType destinationType) {
         this.destinationType = destinationType;
-    }
-
-    public @Nullable String getName() {
-        return name;
-    }
-
-    public void setName(@Nullable String name) {
-        this.name = name;
     }
 
     public HashSet<Payment> getTransfers() {

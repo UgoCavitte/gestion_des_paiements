@@ -18,9 +18,6 @@ public final class Client extends Sender {
     // Used to store data
     private int ID;
 
-    // Name, surname, etc.
-    private String name;
-
     private Country country;
 
     // This must be set separately when the app is being opened
@@ -35,7 +32,7 @@ public final class Client extends Sender {
 
     public Client(int ID, String name, Country country, @Nullable String comment) {
         this.ID = ID;
-        this.name = name;
+        super.setName(name);
         this.country = country;
         this.comment = comment;
     }
@@ -50,14 +47,6 @@ public final class Client extends Sender {
 
     public void setID(int ID) {
         this.ID = ID;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Country getCountry() {
