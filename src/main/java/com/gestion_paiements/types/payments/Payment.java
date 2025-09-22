@@ -5,7 +5,6 @@ import com.gestion_paiements.types.Destination;
 import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public abstract class Payment {
 
