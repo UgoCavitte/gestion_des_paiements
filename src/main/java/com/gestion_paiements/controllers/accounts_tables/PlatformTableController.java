@@ -9,5 +9,5 @@ package com.gestion_paiements.controllers.accounts_tables;
 /// - sender
 /// - bought products
 
-public class PlatformTable {
+public class PlatformTableController {
 }

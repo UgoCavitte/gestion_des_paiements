@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
 
-public final class Destination {
+public final class Destination extends Sender {
 
     private DestinationType destinationType;
 

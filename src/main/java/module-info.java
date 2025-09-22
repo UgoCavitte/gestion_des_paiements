@@ -13,5 +13,6 @@ module com.gestion_paiements {
     exports com.gestion_paiements.controllers.parameters;
     opens com.gestion_paiements to javafx.fxml;
     opens com.gestion_paiements.controllers to javafx.fxml;
+    opens com.gestion_paiements.controllers.accounts_tables to javafx.fxml;
     opens com.gestion_paiements.controllers.parameters to javafx.fxml;
 }

@@ -27,7 +27,7 @@ public abstract class SampleData {
         Product[] products = Data.instance.getSetProducts().toArray(new Product[0]);
 
         // Client 1
-        Client sampleClient = new Client(0, "Michel", "France", null);
+        Client sampleClient = new Client(0, "Michel", new Country("France"), null);
         PaymentFromClient paymentFromMichel = new PaymentFromClient(
                 0,
                 sampleClient,
@@ -42,7 +42,7 @@ public abstract class SampleData {
         sampleClient.setPayments(Set.of(paymentFromMichel));
 
         // Client 2
-        Client sampleClient2 = new Client(1, "Jacques", "Canada", null);
+        Client sampleClient2 = new Client(1, "Jacques", new Country("Russie"), null);
         PaymentFromClient paymentFromJacques = new PaymentFromClient(
                 1,
                 sampleClient2,
@@ -63,6 +63,9 @@ public abstract class SampleData {
         Data.instance.getSetClientsCountries().add(new Country("France"));
         Data.instance.getSetClientsCountries().add(new Country("Russie"));
         Data.instance.getSetClientsCountries().add(new Country("Ukraine"));
+
+        // Payments
+
 
         // Currencies
         Data.instance.getSetCurrencies().add(new Currency("EUR"));

@@ -1,6 +1,7 @@
 package com.gestion_paiements.controllers;
 
 import com.gestion_paiements.Main;
+import com.gestion_paiements.controllers.accounts_tables.BankAccountTableController;
 import com.gestion_paiements.types.Destination;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -96,6 +97,15 @@ public class BankAccountController {
         if (boxMonth.getValue() != null) {
             try {
                 FXMLLoader loader = new FXMLLoader(Main.class.getResource("accounts_tables/table-bank-account.fxml"));
+
+                BankAccountTableController controller = new BankAccountTableController();
+                controller.setPayments(
+                        account.getTransfers().stream()
+                                .filter(p -> p.getDateReceived().getYear() == boxYear.getValue()
+                                        && p.getDateReceived().getMonth() == boxMonth.getValue())
+                                .collect(Collectors.toSet()));
+                loader.setController(controller);
+
                 paneTable.getChildren().clear();
                 paneTable.getChildren().add(loader.load());
             } catch (IOException e) {
