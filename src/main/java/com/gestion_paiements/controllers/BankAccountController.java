@@ -1,10 +1,14 @@
 package com.gestion_paiements.controllers;
 
+import com.gestion_paiements.Main;
 import com.gestion_paiements.types.Destination;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ComboBox;
+import javafx.scene.layout.AnchorPane;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.time.Month;
 import java.time.ZoneId;
@@ -26,6 +30,9 @@ public class BankAccountController {
     @FXML
     private ComboBox<Integer> boxYear;
 
+    @FXML
+    private AnchorPane paneTable;
+
     private final HashMap<Integer, Set<Month>> monthsByYears = new HashMap<>();
 
     private Destination account;
@@ -35,7 +42,7 @@ public class BankAccountController {
     }
 
     // Used to set the columns
-    private void initialize () {
+    public void initialize () {
         // On commence par les comboBoxes
         final Set<Integer> availableYears = account.getTransfers().stream().map(p -> p.getDateReceived().getYear()).collect(Collectors.toSet());
 
@@ -62,6 +69,16 @@ public class BankAccountController {
             }
 
             boxYear.setItems(FXCollections.observableList(monthsByYears.keySet().stream().toList()));
+        }
+
+        // Add the table
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("accounts_tables/empty-table.fxml"));
+            paneTable.getChildren().clear();
+            paneTable.getChildren().add(loader.load());
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
     }
