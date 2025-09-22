@@ -4,7 +4,10 @@ package com.gestion_paiements.types;
  * Can be a platform or a bank account
  */
 
+import com.gestion_paiements.types.payments.Payment;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.HashSet;
 
 public final class Destination {
 
@@ -12,6 +15,8 @@ public final class Destination {
 
     // Can be null if it is a bank account
     private @Nullable String name;
+
+    private HashSet<Payment> transfers = new HashSet<>();
 
     //////////////////////////////
     /// CONSTRUCTOR
@@ -40,5 +45,13 @@ public final class Destination {
 
     public void setName(@Nullable String name) {
         this.name = name;
+    }
+
+    public HashSet<Payment> getTransfers() {
+        return transfers;
+    }
+
+    public void setTransfers(HashSet<Payment> transfers) {
+        this.transfers = transfers;
     }
 }

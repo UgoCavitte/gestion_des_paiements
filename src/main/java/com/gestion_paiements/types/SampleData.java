@@ -3,6 +3,8 @@ package com.gestion_paiements.types;
 import com.gestion_paiements.types.payments.PaymentFromClient;
 
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 
 public abstract class SampleData {
@@ -30,8 +32,8 @@ public abstract class SampleData {
                 0,
                 sampleClient,
                 Data.instance.getMapAccountsCountries().get("France").getAccounts().get("LCL"),
-                Date.from(Instant.now()),
-                        Date.from(Instant.now()),
+                LocalDate.from(Instant.now().atZone(ZoneId.systemDefault())),
+                LocalDate.from(Instant.now().atZone(ZoneId.systemDefault())),
                 new Amount(10, "EUR"),
                 new Amount(9.6, "EUR"),
                 Set.of(new PurchasedProduct(2, products[0])),
@@ -45,8 +47,8 @@ public abstract class SampleData {
                 1,
                 sampleClient2,
                 new Destination(DestinationType.bankAccount, null),
-                Date.from(Instant.now()),
-                Date.from(Instant.now()),
+                LocalDate.from(Instant.now().atZone(ZoneId.systemDefault())),
+                LocalDate.from(Instant.now().atZone(ZoneId.systemDefault())),
                 new Amount(10, "EUR"),
                 new Amount(9.6, "EUR"),
                 Set.of(new PurchasedProduct(2, products[0])),

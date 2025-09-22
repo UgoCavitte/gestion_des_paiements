@@ -6,7 +6,7 @@ import com.gestion_paiements.types.Destination;
 import com.gestion_paiements.types.PurchasedProduct;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Set;
 
 public final class PaymentFromClient extends Payment {
@@ -25,8 +25,8 @@ public final class PaymentFromClient extends Payment {
             int id,
             Client sender,
             Destination destination,
-            Date dateSent,
-            Date dateReceived,
+            LocalDate dateSent,
+            LocalDate dateReceived,
             Amount sentAmount,
             Amount receivedAmount,
             Set<PurchasedProduct> purchasedProducts,

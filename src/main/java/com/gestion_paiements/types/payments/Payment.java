@@ -4,6 +4,7 @@ import com.gestion_paiements.types.Amount;
 import com.gestion_paiements.types.Destination;
 import org.jetbrains.annotations.Nullable;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public abstract class Payment {
@@ -11,9 +12,9 @@ public abstract class Payment {
     // Used to store data
     private int id;
 
-    private Date dateSent;
+    private LocalDate dateSent;
 
-    private Date dateReceived;
+    private LocalDate dateReceived;
 
     // Amount sent by the client or the platform
     private Amount sentAmount;
@@ -40,19 +41,19 @@ public abstract class Payment {
         this.id = id;
     }
 
-    public Date getDateSent() {
+    public LocalDate getDateSent() {
         return dateSent;
     }
 
-    public void setDateSent(Date dateSent) {
+    public void setDateSent(LocalDate dateSent) {
         this.dateSent = dateSent;
     }
 
-    public Date getDateReceived() {
+    public LocalDate getDateReceived() {
         return dateReceived;
     }
 
-    public void setDateReceived(Date dateReceived) {
+    public void setDateReceived(LocalDate dateReceived) {
         this.dateReceived = dateReceived;
     }
 
