@@ -93,6 +93,16 @@ public class BankAccountController {
     void selectionChanged() {
         boxMonth.setItems(FXCollections.observableList(monthsByYears.get(boxYear.getValue()).stream().toList()));
 
+        if (boxMonth.getValue() != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(Main.class.getResource("accounts_tables/table-bank-account.fxml"));
+                paneTable.getChildren().clear();
+                paneTable.getChildren().add(loader.load());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
         // TODO Implement the table
     }
 }
