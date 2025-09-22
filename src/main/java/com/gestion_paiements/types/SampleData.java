@@ -9,6 +9,8 @@ import java.util.*;
 
 public abstract class SampleData {
 
+
+
     public static void init() {
 
         // Accounts countries
@@ -65,6 +67,9 @@ public abstract class SampleData {
         Data.instance.getSetClientsCountries().add(new Country("Ukraine"));
 
         // Payments
+        for (PaymentFromClient p : sampleClient.getPayments()) {
+            Data.instance.getMapAccountsCountries().get("France").getAccounts().get("LCL").getTransfers().add(p);
+        }
 
 
         // Currencies

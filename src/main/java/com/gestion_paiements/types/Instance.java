@@ -8,13 +8,13 @@ import java.util.Set;
 
 public final class Instance {
 
-    private HashSet<Destination> destinations = new HashSet<>();
+    // Data is saved this way:
+    // - Clients are saved with their payments ;
+    // - Destinations are saved without PaymentFromClient elements (they must be added while loading data) ;
 
     private HashSet<Product> setProducts = new HashSet<>();
 
     private HashSet<Client> setClients = new HashSet<>();
-
-    private HashSet<Payment> setPayments = new HashSet<>();
 
     private HashSet<Country> setClientsCountries = new HashSet<>();
 
@@ -25,14 +25,6 @@ public final class Instance {
     //////////////////////////////
     /// GETTERS AND SETTERS
     //////////////////////////////
-
-    public Set<Destination> getDestinations() {
-        return destinations;
-    }
-
-    public void setDestinations(HashSet<Destination> destinations) {
-        this.destinations = destinations;
-    }
 
     public HashSet<Product> getSetProducts() {
         return setProducts;
@@ -48,14 +40,6 @@ public final class Instance {
 
     public void setSetClients(HashSet<Client> setClients) {
         this.setClients = setClients;
-    }
-
-    public HashSet<Payment> getSetPayments() {
-        return setPayments;
-    }
-
-    public void setSetPayments(HashSet<Payment> setPayments) {
-        this.setPayments = setPayments;
     }
 
     public HashSet<Country> getSetClientsCountries() {
