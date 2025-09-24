@@ -35,6 +35,8 @@ public class BankAccountController {
     @FXML
     private AnchorPane paneTable;
 
+    BankAccountTableController controller;
+
     private final HashMap<Integer, Set<Month>> monthsByYears = new HashMap<>();
 
     private Destination account;
@@ -99,8 +101,10 @@ public class BankAccountController {
             try {
                 FXMLLoader loader = new FXMLLoader(Main.class.getResource("accounts_tables/table-bank-account.fxml"));
 
-                BankAccountTableController controller = new BankAccountTableController();
-                RefreshableData.getToRefresh().add(controller); // TODO This will cause memory troubles
+
+                RefreshableData.getToRefresh().remove(controller); // This is to prevent memory overload when user reloads tables too much
+                controller = new BankAccountTableController();
+                RefreshableData.getToRefresh().add(controller); // Replacing the removed element instead of duplicating it
                 controller.setPayments(
                         account.getTransfers().stream()
                                 .filter(p -> p.getDateReceived().getYear() == boxYear.getValue()

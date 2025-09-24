@@ -6,10 +6,9 @@ import java.util.ArrayList;
 
 public abstract class RefreshableData {
 
-    private static ArrayList<Refreshable> toRefresh = new ArrayList<>();
+    private static final ArrayList<Refreshable> toRefresh = new ArrayList<>();
 
     public static void refreshTables() {
-        System.out.println("Refreshing");
         toRefresh.forEach(Refreshable::refreshElement);
     }
 
