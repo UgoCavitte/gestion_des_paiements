@@ -20,7 +20,7 @@ public abstract class SampleData {
         HashMap<String, Destination> accountsForFrance = new HashMap<>();
         accountsForFrance.put("LCL", new Destination(DestinationType.bankAccount, "LCL"));
         accountsForFrance.put("Stripe", new Destination(DestinationType.platform, "Stripe"));
-        Data.instance.getMapAccountsCountries().get("France").setAccounts(accountsForFrance);
+        Data.instance.getMapAccountsCountries().get("France").setAccountsAndPlatforms(accountsForFrance);
 
         Data.instance.getMapAccountsCountries().put("Russie", new WorkingCountry("Russie"));
 
@@ -35,7 +35,7 @@ public abstract class SampleData {
         PaymentFromClient paymentFromMichel = new PaymentFromClient(
                 0,
                 sampleClient,
-                Data.instance.getMapAccountsCountries().get("France").getAccounts().get("LCL"),
+                Data.instance.getMapAccountsCountries().get("France").getAccountsAndPlatforms().get("LCL"),
                 LocalDate.from(Instant.now().atZone(ZoneId.systemDefault())),
                 LocalDate.from(Instant.now().atZone(ZoneId.systemDefault())),
                 new Amount(10, "EUR"),
@@ -43,7 +43,20 @@ public abstract class SampleData {
                 Set.of(new PurchasedProduct(2, products[0])),
                 null
                         );
-        sampleClient.setPayments(Set.of(paymentFromMichel));
+
+        sampleClient.getPayments().add(paymentFromMichel);
+
+        sampleClient.getPayments().add(new PaymentFromClient(
+                1,
+                sampleClient,
+                Data.instance.getMapAccountsCountries().get("France").getAccountsAndPlatforms().get("Stripe"),
+                LocalDate.from(Instant.now().atZone(ZoneId.systemDefault())),
+                LocalDate.from(Instant.now().atZone(ZoneId.systemDefault())),
+                new Amount(20, "EUR"),
+                new Amount(19.2, "EUR"),
+                Set.of(new PurchasedProduct(3, products[1])),
+                null
+        ));
 
         // Client 2
         Client sampleClient2 = new Client(1, "Jacques", new Country("Russie"), null);
@@ -58,7 +71,7 @@ public abstract class SampleData {
                 Set.of(new PurchasedProduct(2, products[0])),
                 null
         );
-        sampleClient2.setPayments(Set.of(paymentFromJacques));
+        sampleClient2.getPayments().add(paymentFromJacques);
 
         Client[] clients = {sampleClient, sampleClient2};
         Data.instance.setSetClients(new HashSet<>(Arrays.stream(clients).toList()));
@@ -70,7 +83,7 @@ public abstract class SampleData {
 
         // Payments
         for (PaymentFromClient p : sampleClient.getPayments()) {
-            Data.instance.getMapAccountsCountries().get("France").getAccounts().get("LCL").getTransfers().add(p);
+            Data.instance.getMapAccountsCountries().get("France").getAccountsAndPlatforms().get("LCL").getTransfers().add(p);
         }
 
 

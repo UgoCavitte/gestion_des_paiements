@@ -35,7 +35,7 @@ public class BankAccountController {
     @FXML
     private AnchorPane paneTable;
 
-    BankAccountTableController controller;
+    private BankAccountTableController controller;
 
     private final HashMap<Integer, Set<Month>> monthsByYears = new HashMap<>();
 

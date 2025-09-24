@@ -7,7 +7,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDate;
 
-public abstract class Payment {
+public abstract class Payment implements Comparable<Payment> {
 
     // Used to store data
     private int id;
@@ -99,4 +99,5 @@ public abstract class Payment {
     public void setComment(@Nullable String comment) {
         this.comment = comment;
     }
+
 }

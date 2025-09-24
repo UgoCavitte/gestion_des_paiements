@@ -50,6 +50,8 @@ public class PlatformTableController implements Refreshable {
     }
 
     public void initialize() {
+        System.out.println("Initializing");
+
         // A mutable ObservableList to hold the countries for the ListView
         ObservableList<Payment> paymentsList = FXCollections.observableArrayList(payments);
 

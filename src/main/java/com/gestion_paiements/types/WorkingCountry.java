@@ -7,22 +7,22 @@ import java.util.Set;
 
 public final class WorkingCountry extends Country {
 
-    HashMap<String, Destination> accounts = new HashMap<>();
+    HashMap<String, Destination> accountsAndPlatforms = new HashMap<>();
 
     public WorkingCountry (String name) {
         super (name);
     }
 
-    public WorkingCountry (String name, @NotNull Set<Destination> accounts) {
+    public WorkingCountry (String name, @NotNull Set<Destination> accountsAndPlatforms) {
         super (name);
-        accounts.forEach(a -> this.accounts.put(a.getName(), a));
+        accountsAndPlatforms.forEach(a -> this.accountsAndPlatforms.put(a.getName(), a));
     }
 
-    public HashMap<String, Destination> getAccounts() {
-        return accounts;
+    public HashMap<String, Destination> getAccountsAndPlatforms() {
+        return accountsAndPlatforms;
     }
 
-    public void setAccounts(HashMap<String, Destination> accounts) {
-        this.accounts = accounts;
+    public void setAccountsAndPlatforms(HashMap<String, Destination> accountsAndPlatforms) {
+        this.accountsAndPlatforms = accountsAndPlatforms;
     }
 }

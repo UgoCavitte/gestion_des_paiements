@@ -4,6 +4,7 @@ import com.gestion_paiements.types.Amount;
 import com.gestion_paiements.types.Client;
 import com.gestion_paiements.types.Destination;
 import com.gestion_paiements.types.PurchasedProduct;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDate;
@@ -51,4 +52,8 @@ public final class PaymentFromClient extends Payment {
         this.purchasedProducts = purchasedProducts;
     }
 
+    @Override
+    public int compareTo(@NotNull Payment other) {
+        return this.getDateReceived().compareTo(other.getDateReceived());
+    }
 }

@@ -38,7 +38,7 @@ public class CountryTabController {
 
         tabsAccounts.clear();
 
-        for (Destination destination : tabCountry.getAccounts().values()) {
+        for (Destination destination : tabCountry.getAccountsAndPlatforms().values()) {
             Tab tab = new Tab(destination.getName());
             try {
 

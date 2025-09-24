@@ -1,6 +1,9 @@
 package com.gestion_paiements.controllers;
 
 import com.gestion_paiements.Main;
+import com.gestion_paiements.controllers.accounts_tables.BankAccountTableController;
+import com.gestion_paiements.controllers.accounts_tables.PlatformTableController;
+import com.gestion_paiements.data.RefreshableData;
 import com.gestion_paiements.types.Destination;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -33,6 +36,8 @@ public class PlatformController {
 
     @FXML
     private AnchorPane paneTable;
+
+    private PlatformTableController controller;
 
     private final HashMap<Integer, Set<Month>> monthsByYears = new HashMap<>();
 
@@ -102,6 +107,18 @@ public class PlatformController {
         if (boxMonth.getValue() != null) {
             try {
                 FXMLLoader loader = new FXMLLoader(Main.class.getResource("accounts_tables/table-platform.fxml"));
+
+                RefreshableData.getToRefresh().remove(controller); // This is to prevent memory overload when user reloads tables too much
+                controller = new PlatformTableController();
+                RefreshableData.getToRefresh().add(controller); // Replacing the removed element instead of duplicating it
+                controller.setPayments(
+                        platform.getTransfers().stream()
+                                .filter(p -> p.getDateReceived().getYear() == boxYear.getValue()
+                                        && p.getDateReceived().getMonth() == boxMonth.getValue())
+                                .collect(Collectors.toSet()));
+
+                loader.setController(controller);
+
                 paneTable.getChildren().clear();
                 paneTable.getChildren().add(loader.load());
             } catch (IOException e) {

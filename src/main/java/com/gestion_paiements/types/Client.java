@@ -3,7 +3,7 @@ package com.gestion_paiements.types;
 import com.gestion_paiements.types.payments.PaymentFromClient;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Set;
+import java.util.HashSet;
 
 /*
  * This is the Client class.
@@ -21,7 +21,7 @@ public final class Client extends Sender {
     private Country country;
 
     // This must be set separately when the app is being opened
-    private Set<PaymentFromClient> payments;
+    private HashSet<PaymentFromClient> payments = new HashSet<>();
 
     // Any other information about the client
     private @Nullable String comment;
@@ -57,11 +57,11 @@ public final class Client extends Sender {
         this.country = country;
     }
 
-    public Set<PaymentFromClient> getPayments() {
+    public HashSet<PaymentFromClient> getPayments() {
         return payments;
     }
 
-    public void setPayments(Set<PaymentFromClient> payments) {
+    public void setPayments(HashSet<PaymentFromClient> payments) {
         this.payments = payments;
     }
 
