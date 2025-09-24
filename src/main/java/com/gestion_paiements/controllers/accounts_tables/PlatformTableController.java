@@ -1,5 +1,6 @@
 package com.gestion_paiements.controllers.accounts_tables;
 
+import com.gestion_paiements.data.Preferences;
 import com.gestion_paiements.types.payments.Payment;
 import com.gestion_paiements.types.payments.PaymentFromClient;
 import com.gestion_paiements.util.Currencies;
@@ -75,7 +76,14 @@ public class PlatformTableController implements Refreshable {
 
     private void setColumns () {
         table.getColumns().clear();
-
+        if (Preferences.ColumnsToShow.PId) table.getColumns().add(columnID);
+        if (Preferences.ColumnsToShow.PSender) table.getColumns().add(columnSender);
+        if (Preferences.ColumnsToShow.PDateSent) table.getColumns().add(columnDateSent);
+        if (Preferences.ColumnsToShow.PDateReceived) table.getColumns().add(columnDateReceived);
+        if (Preferences.ColumnsToShow.PAmountSent) table.getColumns().add(columnAmountSent);
+        if (Preferences.ColumnsToShow.PAmountReceived) table.getColumns().add(columnAmountReceived);
+        if (Preferences.ColumnsToShow.PProducts) table.getColumns().add(columnBought);
+        if (Preferences.ColumnsToShow.PSentToBank) table.getColumns().add(columnSentToBankID);
     }
 
     @Override
