@@ -1,6 +1,7 @@
 package com.gestion_paiements.controllers.parameters;
 
 import com.gestion_paiements.data.Preferences;
+import com.gestion_paiements.data.RefreshableData;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 
@@ -40,36 +41,43 @@ public class ColumnsToShowController {
     @FXML
     void BAAmountReceived() {
         Preferences.ColumnsToShow.BAAmountReceived = BAAmountReceived.isSelected();
+        RefreshableData.refreshTables();
     }
 
     @FXML
     void BAAmountSent() {
         Preferences.ColumnsToShow.BAAmountSent = BAAmountSent.isSelected();
+        RefreshableData.refreshTables();
     }
 
     @FXML
     void BADateReceived() {
         Preferences.ColumnsToShow.BADateReceived = BADateReceived.isSelected();
+        RefreshableData.refreshTables();
     }
 
     @FXML
     void BADateSent() {
         Preferences.ColumnsToShow.BADateSent = BADateSent.isSelected();
+        RefreshableData.refreshTables();
     }
 
     @FXML
     void BAId() {
         Preferences.ColumnsToShow.BAId = BAId.isSelected();
+        RefreshableData.refreshTables();
     }
 
     @FXML
     void BAProducts() {
         Preferences.ColumnsToShow.BAProducts = BAProducts.isSelected();
+        RefreshableData.refreshTables();
     }
 
     @FXML
     void BASender() {
         Preferences.ColumnsToShow.BASender = BASender.isSelected();
+        RefreshableData.refreshTables();
     }
 
 }

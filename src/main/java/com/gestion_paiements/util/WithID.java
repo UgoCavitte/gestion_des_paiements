@@ -1,6 +1,6 @@
 package com.gestion_paiements.util;
 
-public interface withID {
+public interface WithID {
 
     int getId ();
 

@@ -1,10 +1,10 @@
 package com.gestion_paiements.types;
 
 import com.gestion_paiements.util.IDs;
-import com.gestion_paiements.util.withID;
+import com.gestion_paiements.util.WithID;
 import org.jetbrains.annotations.NotNull;
 
-public final class Product implements Comparable, withID {
+public final class Product implements Comparable, WithID {
 
     private int id;
 

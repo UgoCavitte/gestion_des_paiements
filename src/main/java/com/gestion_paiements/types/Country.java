@@ -1,9 +1,9 @@
 package com.gestion_paiements.types;
 
 import com.gestion_paiements.util.IDs;
-import com.gestion_paiements.util.withID;
+import com.gestion_paiements.util.WithID;
 
-public class Country implements withID {
+public class Country implements WithID {
 
     private int id;
 

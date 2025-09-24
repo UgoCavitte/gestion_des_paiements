@@ -2,6 +2,7 @@ package com.gestion_paiements.controllers;
 
 import com.gestion_paiements.Main;
 import com.gestion_paiements.controllers.accounts_tables.BankAccountTableController;
+import com.gestion_paiements.data.RefreshableData;
 import com.gestion_paiements.types.Destination;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -99,6 +100,7 @@ public class BankAccountController {
                 FXMLLoader loader = new FXMLLoader(Main.class.getResource("accounts_tables/table-bank-account.fxml"));
 
                 BankAccountTableController controller = new BankAccountTableController();
+                RefreshableData.getToRefresh().add(controller); // TODO This will cause memory troubles
                 controller.setPayments(
                         account.getTransfers().stream()
                                 .filter(p -> p.getDateReceived().getYear() == boxYear.getValue()

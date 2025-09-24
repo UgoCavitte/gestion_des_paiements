@@ -7,6 +7,7 @@ import com.gestion_paiements.types.payments.PaymentFromClient;
 import com.gestion_paiements.util.Currencies;
 import com.gestion_paiements.util.Dates;
 import com.gestion_paiements.util.PurchasedProducts;
+import com.gestion_paiements.util.Refreshable;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,7 +27,7 @@ import java.util.Set;
 /// - sender (client or platform)
 /// - bought products (if client)
 
-public class BankAccountTableController {
+public class BankAccountTableController implements Refreshable {
 
     private Set<Payment> payments;
 
@@ -51,8 +52,6 @@ public class BankAccountTableController {
 
     public void initialize () {
 
-        System.out.println(payments);
-
         paymentsList = FXCollections.observableArrayList(payments);
 
         columnID.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId()).asObject());
@@ -70,6 +69,13 @@ public class BankAccountTableController {
             }
         });
 
+        setColumns();
+
+        table.setItems(paymentsList);
+
+    }
+
+    private void setColumns() {
         table.getColumns().clear();
         if (Preferences.ColumnsToShow.BAId) table.getColumns().add(columnID);
         if (Preferences.ColumnsToShow.BASender) table.getColumns().add(columnSender);
@@ -78,14 +84,11 @@ public class BankAccountTableController {
         if (Preferences.ColumnsToShow.BAAmountSent) table.getColumns().add(columnAmountSent);
         if (Preferences.ColumnsToShow.BAAmountReceived) table.getColumns().add(columnAmountReceived);
         if (Preferences.ColumnsToShow.BAProducts) table.getColumns().add(columnBought);
-
-        table.setItems(paymentsList);
-
     }
 
-    // Used by the initialize method and when the user changes the columns to shows through parameters
-    public void reloadColumns() {
-
+    @Override
+    public void refreshElement() {
+        setColumns();
+        table.refresh();
     }
-
 }

@@ -9,6 +9,7 @@ module com.gestion_paiements {
     exports com.gestion_paiements.data;
     exports com.gestion_paiements.types;
     exports com.gestion_paiements.types.payments;
+    exports com.gestion_paiements.util;
     exports com.gestion_paiements.controllers;
     exports com.gestion_paiements.controllers.accounts_tables;
     exports com.gestion_paiements.controllers.parameters;
