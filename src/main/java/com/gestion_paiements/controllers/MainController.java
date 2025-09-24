@@ -115,4 +115,9 @@ public class MainController {
     void onSortClients() {
         // TODO
     }
+
+    @FXML
+    private void addNewClient () {
+        // TODO Continue from here
+    }
 }
