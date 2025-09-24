@@ -42,7 +42,7 @@ public class PlatformTableController implements Refreshable {
     private final TableColumn<Payment, String> columnAmountSent = new TableColumn<>("Somme envoyée");
     private final TableColumn<Payment, String> columnAmountReceived = new TableColumn<>("Somme reçue");
     private final TableColumn<Payment, String> columnSender = new TableColumn<>("Envoyeur");
-    private final TableColumn<Payment, List<String>> columnBought = new TableColumn<>("Produits");
+    private final TableColumn<Payment, String> columnBought = new TableColumn<>("Produits");
     private final TableColumn<Payment, String> columnComment = new TableColumn<>("Commentaire");
     private final TableColumn<Payment, String> columnSentToBankID = new TableColumn<>("ID d'envoi sur le compte");
 
@@ -64,10 +64,10 @@ public class PlatformTableController implements Refreshable {
         columnSender.setCellValueFactory(cellData  -> new SimpleStringProperty(cellData.getValue().getSender().getName()));
         columnBought.setCellValueFactory(cellData -> {
             if (cellData.getValue() instanceof PaymentFromClient pfc) {
-                return new SimpleObjectProperty<>(PurchasedProducts.fromSetToStrings(pfc.getProducts()));
+                return new SimpleStringProperty(PurchasedProducts.fromSetToString(pfc.getProducts()));
             }
             else {
-                return null;
+                return new SimpleStringProperty("");
             }
         });
         columnComment.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getComment()));
