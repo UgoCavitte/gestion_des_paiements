@@ -49,7 +49,6 @@ public class BankAccountTableController implements Refreshable {
 
     public void initialize () {
 
-        // A mutable ObservableList to hold the countries for the ListView
         ObservableList<Payment> paymentsList = FXCollections.observableArrayList(payments);
 
         columnID.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId()).asObject());
