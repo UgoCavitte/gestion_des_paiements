@@ -31,7 +31,7 @@ public abstract class SampleData {
         Product[] products = Data.instance.getSetProducts().toArray(new Product[0]);
 
         // Client 1
-        Client sampleClient = new Client(0, "Michel", new Country("France"), null);
+        Client sampleClient = new Client("Michel", new Country("France"), null);
         PaymentFromClient paymentFromMichel = new PaymentFromClient(
                 0,
                 sampleClient,
@@ -59,7 +59,7 @@ public abstract class SampleData {
         ));
 
         // Client 2
-        Client sampleClient2 = new Client(1, "Jacques", new Country("Russie"), null);
+        Client sampleClient2 = new Client( "Jacques", new Country("Russie"), null);
         PaymentFromClient paymentFromJacques = new PaymentFromClient(
                 1,
                 sampleClient2,
