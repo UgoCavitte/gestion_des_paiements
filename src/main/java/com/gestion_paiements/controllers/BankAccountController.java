@@ -110,6 +110,7 @@ public class BankAccountController {
                                 .filter(p -> p.getDateReceived().getYear() == boxYear.getValue()
                                         && p.getDateReceived().getMonth() == boxMonth.getValue())
                                 .collect(Collectors.toSet()));
+
                 loader.setController(controller);
 
                 paneTable.getChildren().clear();

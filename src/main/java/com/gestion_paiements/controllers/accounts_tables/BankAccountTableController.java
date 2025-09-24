@@ -34,9 +34,6 @@ public class BankAccountTableController implements Refreshable {
     @FXML
     private TableView<Payment> table;
 
-    // A mutable ObservableList to hold the countries for the ListView
-    private ObservableList<Payment> paymentsList;
-
     // Columns
     private final TableColumn<Payment, Integer> columnID = new TableColumn<>("ID");
     private final TableColumn<Payment, String> columnDateSent = new TableColumn<>("Date d'envoi");
@@ -52,7 +49,8 @@ public class BankAccountTableController implements Refreshable {
 
     public void initialize () {
 
-        paymentsList = FXCollections.observableArrayList(payments);
+        // A mutable ObservableList to hold the countries for the ListView
+        ObservableList<Payment> paymentsList = FXCollections.observableArrayList(payments);
 
         columnID.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId()).asObject());
         columnDateSent.setCellValueFactory(cellData -> new SimpleStringProperty(Dates.fromDateToString(cellData.getValue().getDateSent())));
