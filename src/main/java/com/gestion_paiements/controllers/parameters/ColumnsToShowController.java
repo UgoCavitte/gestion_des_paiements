@@ -14,6 +14,9 @@ public class ColumnsToShowController {
     private CheckBox BAAmountSent;
 
     @FXML
+    private CheckBox BAComment;
+
+    @FXML
     private CheckBox BADateReceived;
 
     @FXML
@@ -33,6 +36,9 @@ public class ColumnsToShowController {
 
     @FXML
     private CheckBox PAmountSent;
+
+    @FXML
+    private CheckBox PComment;
 
     @FXML
     private CheckBox PDateReceived;
@@ -75,6 +81,12 @@ public class ColumnsToShowController {
     }
 
     @FXML
+    void BAComment () {
+        Preferences.ColumnsToShow.BAComment = BAComment.isSelected();
+        RefreshableData.refreshTables();
+    }
+
+    @FXML
     void BADateReceived() {
         Preferences.ColumnsToShow.BADateReceived = BADateReceived.isSelected();
         RefreshableData.refreshTables();
@@ -113,6 +125,12 @@ public class ColumnsToShowController {
     @FXML
     void PAmountSent() {
         Preferences.ColumnsToShow.PAmountSent = PAmountSent.isSelected();
+        RefreshableData.refreshTables();
+    }
+
+    @FXML
+    void PComment () {
+        Preferences.ColumnsToShow.PComment = PComment.isSelected();
         RefreshableData.refreshTables();
     }
 

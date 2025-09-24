@@ -42,6 +42,7 @@ public class BankAccountTableController implements Refreshable {
     private final TableColumn<Payment, String> columnAmountReceived = new TableColumn<>("Somme reçue");
     private final TableColumn<Payment, String> columnSender = new TableColumn<>("Envoyeur");
     private final TableColumn<Payment, List<String>> columnBought = new TableColumn<>("Produits");
+    private final TableColumn<Payment, String> columnComment = new TableColumn<>("Commentaire");
 
     public void setPayments(Set<Payment> payments) {
         this.payments = payments;
@@ -65,6 +66,7 @@ public class BankAccountTableController implements Refreshable {
                 return null;
             }
         });
+        columnComment.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getComment()));
 
         setColumns();
 
@@ -81,6 +83,7 @@ public class BankAccountTableController implements Refreshable {
         if (Preferences.ColumnsToShow.BAAmountSent) table.getColumns().add(columnAmountSent);
         if (Preferences.ColumnsToShow.BAAmountReceived) table.getColumns().add(columnAmountReceived);
         if (Preferences.ColumnsToShow.BAProducts) table.getColumns().add(columnBought);
+        if (Preferences.ColumnsToShow.BAComment) table.getColumns().add(columnComment);
     }
 
     @Override

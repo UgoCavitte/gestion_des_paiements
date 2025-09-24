@@ -43,6 +43,7 @@ public class PlatformTableController implements Refreshable {
     private final TableColumn<Payment, String> columnAmountReceived = new TableColumn<>("Somme reçue");
     private final TableColumn<Payment, String> columnSender = new TableColumn<>("Envoyeur");
     private final TableColumn<Payment, List<String>> columnBought = new TableColumn<>("Produits");
+    private final TableColumn<Payment, String> columnComment = new TableColumn<>("Commentaire");
     private final TableColumn<Payment, String> columnSentToBankID = new TableColumn<>("ID d'envoi sur le compte");
 
     public void setPayments(Set<Payment> payments) {
@@ -69,6 +70,7 @@ public class PlatformTableController implements Refreshable {
                 return null;
             }
         });
+        columnComment.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getComment()));
         columnSentToBankID.setCellValueFactory(cellData -> new SimpleStringProperty("Pas implémenté")); // TODO Implement this
 
         setColumns();
@@ -85,6 +87,7 @@ public class PlatformTableController implements Refreshable {
         if (Preferences.ColumnsToShow.PAmountSent) table.getColumns().add(columnAmountSent);
         if (Preferences.ColumnsToShow.PAmountReceived) table.getColumns().add(columnAmountReceived);
         if (Preferences.ColumnsToShow.PProducts) table.getColumns().add(columnBought);
+        if (Preferences.ColumnsToShow.PComment) table.getColumns().add(columnComment);
         if (Preferences.ColumnsToShow.PSentToBank) table.getColumns().add(columnSentToBankID);
     }
 

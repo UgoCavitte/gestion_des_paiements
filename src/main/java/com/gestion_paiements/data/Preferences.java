@@ -11,6 +11,7 @@ public abstract class Preferences {
         public static boolean BAAmountReceived = true;
         public static boolean BASender = true;
         public static boolean BAProducts = true;
+        public static boolean BAComment = true;
 
         // Platform
         public static boolean PId = true;
@@ -20,6 +21,7 @@ public abstract class Preferences {
         public static boolean PAmountReceived = true;
         public static boolean PSender = true;
         public static boolean PProducts = true;
+        public static boolean PComment = true;
         public static boolean PSentToBank = true;
     }
 

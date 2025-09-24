@@ -52,6 +52,11 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
                   </CheckBox>
+                  <CheckBox fx:id="BAComment" mnemonicParsing="false" onAction="#BAComment" text="Commentaire">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </CheckBox>
                </children>
             </HBox>
             <Label layoutX="20.0" layoutY="20.0" text="Tableau plateforme" />
@@ -93,6 +98,11 @@
                      </HBox.margin>
                   </CheckBox>
                   <CheckBox fx:id="PIDEnvoiCompte" layoutX="665.0" layoutY="15.0" mnemonicParsing="false" onAction="#PIDEnvoiCompte" text="ID d'envoi">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </CheckBox>
+                  <CheckBox fx:id="PComment" mnemonicParsing="false" onAction="#PComment" text="Commentaire">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
