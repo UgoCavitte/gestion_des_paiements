@@ -59,13 +59,26 @@ public class ColumnsToShowController {
     private CheckBox PSender;
 
     public void initialize() {
+
         BAAmountReceived.setSelected(Preferences.ColumnsToShow.BAAmountReceived);
         BAAmountSent.setSelected(Preferences.ColumnsToShow.BAAmountSent);
+        BAComment.setSelected(Preferences.ColumnsToShow.BAComment);
         BADateReceived.setSelected(Preferences.ColumnsToShow.BADateReceived);
         BADateSent.setSelected(Preferences.ColumnsToShow.BADateSent);
         BAId.setSelected(Preferences.ColumnsToShow.BAId);
         BAProducts.setSelected(Preferences.ColumnsToShow.BAProducts);
         BASender.setSelected(Preferences.ColumnsToShow.BASender);
+
+        PAmountReceived.setSelected(Preferences.ColumnsToShow.PAmountReceived);
+        PAmountSent.setSelected(Preferences.ColumnsToShow.PAmountSent);
+        PComment.setSelected(Preferences.ColumnsToShow.PComment);
+        PDateReceived.setSelected(Preferences.ColumnsToShow.PDateReceived);
+        PDateSent.setSelected(Preferences.ColumnsToShow.PDateSent);
+        PId.setSelected(Preferences.ColumnsToShow.PId);
+        PIDEnvoiCompte.setSelected(Preferences.ColumnsToShow.PSentToBank);
+        PProducts.setSelected(Preferences.ColumnsToShow.PProducts);
+        PSender.setSelected(Preferences.ColumnsToShow.PSender);
+
     }
 
     @FXML
