@@ -1,6 +1,8 @@
 package com.gestion_paiements.types;
 
 import com.gestion_paiements.types.payments.PaymentFromClient;
+import com.gestion_paiements.util.IDs;
+import com.gestion_paiements.util.WithID;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
@@ -13,7 +15,7 @@ import java.util.HashSet;
  * - a set of payments.
  */
 
-public final class Client extends Sender {
+public final class Client extends Sender implements WithID {
 
     // Used to store data
     private int ID;
@@ -30,8 +32,8 @@ public final class Client extends Sender {
     /// CONSTRUCTOR
     //////////////////////////////
 
-    public Client(int ID, String name, Country country, @Nullable String comment) {
-        this.ID = ID;
+    public Client(String name, Country country, @Nullable String comment) {
+        this.ID = IDs.getAvailableID(Data.instance.getSetClients());
         super.setName(name);
         this.country = country;
         this.comment = comment;
@@ -71,5 +73,15 @@ public final class Client extends Sender {
 
     public void setComment(@Nullable String comment) {
         this.comment = comment;
+    }
+
+    @Override
+    public int getId() {
+        return this.ID;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.ID = id;
     }
 }
