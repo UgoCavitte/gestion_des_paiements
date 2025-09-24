@@ -27,7 +27,15 @@ public class ColumnsToShowController {
     @FXML
     private CheckBox BASender;
 
-    // TODO Initialize by setting the checkboxes to their value in memory and refresh the tables when a change is done
+    public void initialize() {
+        BAAmountReceived.setSelected(Preferences.ColumnsToShow.BAAmountReceived);
+        BAAmountSent.setSelected(Preferences.ColumnsToShow.BAAmountSent);
+        BADateReceived.setSelected(Preferences.ColumnsToShow.BADateReceived);
+        BADateSent.setSelected(Preferences.ColumnsToShow.BADateSent);
+        BAId.setSelected(Preferences.ColumnsToShow.BAId);
+        BAProducts.setSelected(Preferences.ColumnsToShow.BAProducts);
+        BASender.setSelected(Preferences.ColumnsToShow.BASender);
+    }
 
     @FXML
     void BAAmountReceived() {
