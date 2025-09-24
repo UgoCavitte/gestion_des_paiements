@@ -101,7 +101,6 @@ public class BankAccountController {
             try {
                 FXMLLoader loader = new FXMLLoader(Main.class.getResource("accounts_tables/table-bank-account.fxml"));
 
-
                 RefreshableData.getToRefresh().remove(controller); // This is to prevent memory overload when user reloads tables too much
                 controller = new BankAccountTableController();
                 RefreshableData.getToRefresh().add(controller); // Replacing the removed element instead of duplicating it
