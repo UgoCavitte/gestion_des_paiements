@@ -27,7 +27,7 @@ public class ClientsCountriesController {
 
     @FXML
     private void initialize() {
-        countryList = FXCollections.observableArrayList(Data.instance.getSetClientsCountries().stream().map(Country::getName).sorted().collect(Collectors.toList()));
+        countryList = FXCollections.observableArrayList(Data.instance.getMapClientsCountries().values().stream().map(Country::getName).sorted().collect(Collectors.toList()));
         listViewCountries.setItems(countryList);
     }
 
@@ -41,13 +41,13 @@ public class ClientsCountriesController {
             return;
         }
 
-        else if (Data.instance.getSetClientsCountries().stream().map(Country::getName).collect(Collectors.toSet()).contains(input)) {
+        else if (Data.instance.getMapClientsCountries().values().stream().map(Country::getName).collect(Collectors.toSet()).contains(input)) {
             commentSection.setText("Pays déjà existant");
             return;
         }
 
         else {
-            Data.instance.getSetClientsCountries().add(new Country(input));
+            Data.instance.getMapClientsCountries().put(input, new Country(input));
             countryList.add(input);
             FXCollections.sort(countryList);
             commentSection.setText("Pays ajouté");

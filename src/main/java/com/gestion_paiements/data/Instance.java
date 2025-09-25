@@ -15,7 +15,7 @@ public final class Instance {
 
     private HashSet<Client> setClients = new HashSet<>();
 
-    private HashSet<Country> setClientsCountries = new HashSet<>();
+    private HashMap<String, Country> mapClientsCountries = new HashMap<>();
 
     private HashMap<String, WorkingCountry> mapAccountsCountries = new HashMap<>();
 
@@ -41,12 +41,12 @@ public final class Instance {
         this.setClients = setClients;
     }
 
-    public HashSet<Country> getSetClientsCountries() {
-        return setClientsCountries;
+    public HashMap<String, Country> getMapClientsCountries() {
+        return mapClientsCountries;
     }
 
-    public void setSetClientsCountries(HashSet<Country> setClientsCountries) {
-        this.setClientsCountries = setClientsCountries;
+    public void setMapClientsCountries(HashMap<String, Country> setClientsCountries) {
+        this.mapClientsCountries = setClientsCountries;
     }
 
     public HashMap<String, WorkingCountry> getMapAccountsCountries() {

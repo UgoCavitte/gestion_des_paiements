@@ -30,7 +30,7 @@ public class AddNewClientController {
     @FXML
     public void initialize() {
         // cbCountry.setItems(FXCollections.observableList(Data.instance.getSetClientsCountries().stream().map(Country::getName).toList()));
-        cbCountry.setItems(FXCollections.observableList(Data.instance.getSetClientsCountries().stream().toList()));
+        cbCountry.setItems(FXCollections.observableList(Data.instance.getMapClientsCountries().values().stream().toList()));
     }
 
     @FXML

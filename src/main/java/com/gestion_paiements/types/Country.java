@@ -3,6 +3,9 @@ package com.gestion_paiements.types;
 import com.gestion_paiements.util.IDs;
 import com.gestion_paiements.util.WithID;
 
+import java.util.HashSet;
+import java.util.stream.Collectors;
+
 public class Country implements WithID {
 
     private int id;
@@ -10,7 +13,7 @@ public class Country implements WithID {
     private String name;
 
     public Country (String name) {
-        this.id = IDs.getAvailableID(Data.instance.getSetClientsCountries());
+        this.id = IDs.getAvailableID(new HashSet<>(Data.instance.getMapClientsCountries().values()));
         this.name = name;
     }
 

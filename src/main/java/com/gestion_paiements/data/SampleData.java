@@ -77,9 +77,9 @@ public abstract class SampleData {
         Data.instance.setSetClients(new HashSet<>(Arrays.stream(clients).toList()));
 
         // Client countries
-        Data.instance.getSetClientsCountries().add(new Country("France"));
-        Data.instance.getSetClientsCountries().add(new Country("Russie"));
-        Data.instance.getSetClientsCountries().add(new Country("Ukraine"));
+        Data.instance.getMapClientsCountries().put("France", new Country("France"));
+        Data.instance.getMapClientsCountries().put("Russie", new Country("Russie"));
+        Data.instance.getMapClientsCountries().put("Ukraine", new Country("Ukraine"));
 
         // Payments
         for (PaymentFromClient p : sampleClient.getPayments()) {
