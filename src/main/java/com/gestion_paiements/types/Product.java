@@ -4,7 +4,7 @@ import com.gestion_paiements.util.IDs;
 import com.gestion_paiements.util.WithID;
 import org.jetbrains.annotations.NotNull;
 
-public final class Product implements Comparable, WithID {
+public final class Product implements Comparable<Product>, WithID {
 
     private int id;
 
@@ -53,13 +53,8 @@ public final class Product implements Comparable, WithID {
     }
 
     @Override
-    public int compareTo(@NotNull Object o) {
-
-        if (o.getClass() != Product.class) {
-            throw new RuntimeException();
-        }
-
+    public int compareTo(@NotNull Product o) {
         // Products are sorted by their short name
-        return this.shortName.compareTo(((Product) o).shortName);
+        return this.shortName.compareTo(o.shortName);
     }
 }
