@@ -23,7 +23,7 @@
                   <Insets bottom="5.0" top="5.0" />
                </VBox.margin>
             </TextField>
-            <Label text="Pays :">
+            <Label text="Pays (ajoutable via les paramètres) :">
                <VBox.margin>
                   <Insets bottom="5.0" top="5.0" />
                </VBox.margin>
