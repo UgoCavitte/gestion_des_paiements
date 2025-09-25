@@ -46,7 +46,8 @@ public class BankAccountController {
     }
 
     // Used to set the columns
-    public void initialize () {
+    @FXML
+    private void initialize () {
         // On commence par les comboBoxes
         final Set<Integer> availableYears = account.getTransfers().stream().map(p -> p.getDateReceived().getYear()).collect(Collectors.toSet());
 

@@ -28,7 +28,7 @@ public class AddNewClientController {
     private TextField tfName;
 
     @FXML
-    public void initialize() {
+    private void initialize() {
         // cbCountry.setItems(FXCollections.observableList(Data.instance.getSetClientsCountries().stream().map(Country::getName).toList()));
         cbCountry.setItems(FXCollections.observableList(Data.instance.getMapClientsCountries().values().stream().toList()));
     }

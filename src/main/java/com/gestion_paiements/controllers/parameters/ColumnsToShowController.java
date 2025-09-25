@@ -58,7 +58,7 @@ public class ColumnsToShowController {
     @FXML
     private CheckBox PSender;
 
-    public void initialize() {
+    private void initialize() {
 
         BAAmountReceived.setSelected(Preferences.ColumnsToShow.BAAmountReceived);
         BAAmountSent.setSelected(Preferences.ColumnsToShow.BAAmountSent);

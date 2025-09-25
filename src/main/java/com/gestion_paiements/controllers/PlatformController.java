@@ -48,7 +48,8 @@ public class PlatformController {
     }
 
     // Used to set the columns
-    public void initialize () {
+    @FXML
+    private void initialize () {
         // On commence par les comboBoxes
         final Set<Integer> availableYears = platform.getTransfers().stream().map(p -> p.getDateReceived().getYear()).collect(Collectors.toSet());
 

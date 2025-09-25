@@ -47,7 +47,8 @@ public class BankAccountTableController implements Refreshable {
         this.payments = payments;
     }
 
-    public void initialize () {
+    @FXML
+    private void initialize () {
 
         ObservableList<Payment> paymentsList = FXCollections.observableArrayList(payments);
 
