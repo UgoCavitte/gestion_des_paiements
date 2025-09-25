@@ -2,12 +2,6 @@ package com.gestion_paiements.controllers;
 
 import com.gestion_paiements.Main;
 import com.gestion_paiements.data.RefreshableData;
-import com.gestion_paiements.types.Client;
-import com.gestion_paiements.types.Data;
-import com.gestion_paiements.util.Refreshable;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

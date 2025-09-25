@@ -4,7 +4,6 @@ import com.gestion_paiements.util.IDs;
 import com.gestion_paiements.util.WithID;
 
 import java.util.HashSet;
-import java.util.stream.Collectors;
 
 public class Country implements WithID {
 

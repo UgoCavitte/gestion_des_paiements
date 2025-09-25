@@ -5,7 +5,6 @@ package com.gestion_paiements.types;
  */
 
 import com.gestion_paiements.types.payments.Payment;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
 

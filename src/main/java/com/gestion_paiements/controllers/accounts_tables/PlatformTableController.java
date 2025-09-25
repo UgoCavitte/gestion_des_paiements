@@ -8,7 +8,6 @@ import com.gestion_paiements.util.Dates;
 import com.gestion_paiements.util.PurchasedProducts;
 import com.gestion_paiements.util.Refreshable;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,7 +15,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-import java.util.List;
 import java.util.Set;
 
 /// This table must show this information, that the user can enable or disable through parameters :

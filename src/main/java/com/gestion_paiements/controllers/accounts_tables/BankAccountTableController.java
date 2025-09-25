@@ -14,7 +14,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-import java.util.List;
 import java.util.Set;
 
 /// This table must show this information, that the user can enable or disable through parameters :

@@ -1,7 +1,6 @@
 package com.gestion_paiements.controllers;
 
 import com.gestion_paiements.Main;
-import com.gestion_paiements.controllers.accounts_tables.BankAccountTableController;
 import com.gestion_paiements.controllers.accounts_tables.PlatformTableController;
 import com.gestion_paiements.data.RefreshableData;
 import com.gestion_paiements.types.Destination;
