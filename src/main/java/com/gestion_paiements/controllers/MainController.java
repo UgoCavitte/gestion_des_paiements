@@ -1,8 +1,10 @@
 package com.gestion_paiements.controllers;
 
 import com.gestion_paiements.Main;
+import com.gestion_paiements.data.RefreshableData;
 import com.gestion_paiements.types.Client;
 import com.gestion_paiements.types.Data;
+import com.gestion_paiements.util.Refreshable;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -10,14 +12,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.List;
 
 /*
  * This controller controls the main pane.
@@ -31,24 +30,8 @@ public class MainController {
     @FXML
     private AnchorPane mainTabPane;
 
-    //////////////////////////////
-    /// TABLEAU CLIENTS
-    //////////////////////////////
-
     @FXML
-    private TableView<Client> tableClients;
-
-    @FXML
-    private TableColumn<Client, Integer> tableClientsColumnID;
-
-    @FXML
-    private TableColumn<Client, String> tableClientsColumnName;
-
-    @FXML
-    private TableColumn<Client, String> tableClientsColumnCountry;
-
-    @FXML
-    private TableColumn<Client, String> tableClientColumnLastPaymentDate;
+    private AnchorPane paneClient;
 
     // This method must :
     // - set TabPanes inside the pane ;
@@ -67,15 +50,20 @@ public class MainController {
             throw new RuntimeException(e);
         }
 
+        // PANE WITH CLIENTS
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("table-clients.fxml"));
 
-        // TABLE VIEW CONTENT
-        tableClientsColumnID.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getID()).asObject());
-        tableClientsColumnName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
-        tableClientsColumnCountry.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCountry().getName()));
-        tableClientColumnLastPaymentDate.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPayments().stream().sorted().toList().getLast().getDateReceived().toString()));
+            TableClientsController controller = new TableClientsController();
+            RefreshableData.getToRefresh().add(controller);
+            loader.setController(controller);
 
-        List<Client> clients = Data.instance.getSetClients().stream().toList();
-        tableClients.setItems(FXCollections.observableList(clients));
+            paneClient.getChildren().clear();
+            paneClient.getChildren().add(loader.load());
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
@@ -109,15 +97,5 @@ public class MainController {
     @FXML
     private void fermerFenetre() {
         // TODO
-    }
-
-    @FXML
-    void onSortClients() {
-        // TODO
-    }
-
-    @FXML
-    private void addNewClient () {
-        // TODO Continue from here
     }
 }
