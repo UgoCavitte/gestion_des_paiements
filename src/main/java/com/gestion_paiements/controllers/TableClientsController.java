@@ -81,6 +81,16 @@ public class TableClientsController implements Refreshable {
         }
     }
 
+    @FXML
+    private void modifyClient () {
+        //
+    }
+
+    @FXML
+    private void deleteClient () {
+        //
+    }
+
     @Override
     public void refreshElement() {
         tableClients.setItems(FXCollections.observableList(Data.instance.getSetClients().stream().toList()));

@@ -33,12 +33,12 @@
                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                             </HBox.margin>
                         </Button>
-                        <Button disable="true" mnemonicParsing="false" text="Modifier">
+                        <Button fx:id="buttonModifyClient" disable="true" mnemonicParsing="false" onAction="#modifyClient" text="Modifier">
                             <HBox.margin>
                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                             </HBox.margin>
                         </Button>
-                        <Button disable="true" mnemonicParsing="false" text="Supprimer">
+                        <Button fx:id="buttonDeleteClient" disable="true" mnemonicParsing="false" onAction="#deleteClient" text="Supprimer">
                             <HBox.margin>
                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                             </HBox.margin>
