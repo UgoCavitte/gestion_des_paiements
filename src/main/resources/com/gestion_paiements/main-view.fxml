@@ -26,9 +26,9 @@
       </MenuBar>
       <HBox prefHeight="186.0" prefWidth="966.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0">
          <children>
-            <AnchorPane fx:id="mainTabPane" prefHeight="706.0" prefWidth="500.0" />
+            <AnchorPane fx:id="mainTabPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="706.0" prefWidth="500.0" />
             <Separator orientation="VERTICAL" prefHeight="200.0" HBox.hgrow="ALWAYS" />
-            <AnchorPane fx:id="paneClient" prefHeight="706.0" prefWidth="414.0" HBox.hgrow="ALWAYS">
+            <AnchorPane fx:id="paneClient" minHeight="-Infinity" minWidth="-Infinity" prefHeight="706.0" prefWidth="460.0">
 
             </AnchorPane>
          </children>
