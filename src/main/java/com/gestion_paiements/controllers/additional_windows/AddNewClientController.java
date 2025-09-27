@@ -16,7 +16,7 @@ import java.util.Objects;
 public class AddNewClientController {
 
     @FXML
-    private ComboBox<Country> cbCountry;
+    private ComboBox<String> cbCountry;
 
     @FXML
     private Label labelMessage;
@@ -29,15 +29,15 @@ public class AddNewClientController {
 
     @FXML
     private void initialize() {
-        // cbCountry.setItems(FXCollections.observableList(Data.instance.getSetClientsCountries().stream().map(Country::getName).toList()));
-        cbCountry.setItems(FXCollections.observableList(Data.instance.getMapClientsCountries().values().stream().toList()));
+        cbCountry.setItems(FXCollections.observableList(Data.instance.getMapClientsCountries().values().stream().map(Country::getName).toList()));
+        // cbCountry.setItems(FXCollections.observableList(Data.instance.getMapClientsCountries().values().stream().toList()));
     }
 
     @FXML
     private void validate() {
 
         String name = tfName.getText().trim();
-        Country country = cbCountry.getValue(); // TODO Make the Set of Countries a Map to solve this problem
+        Country country = Data.instance.getMapClientsCountries().get(cbCountry.getValue());
         String comment = taComment.getText();
 
         if (Objects.equals(name, "")) {
