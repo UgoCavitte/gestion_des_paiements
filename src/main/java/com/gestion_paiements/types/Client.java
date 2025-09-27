@@ -17,7 +17,6 @@ import java.util.HashSet;
 
 public final class Client extends Sender implements WithID {
 
-    // Used to store data
     private int ID;
 
     private Country country;
@@ -42,14 +41,6 @@ public final class Client extends Sender implements WithID {
     //////////////////////////////
     /// GETTERS AND SETTERS
     //////////////////////////////
-
-    public int getID() {
-        return ID;
-    }
-
-    public void setID(int ID) {
-        this.ID = ID;
-    }
 
     public Country getCountry() {
         return country;

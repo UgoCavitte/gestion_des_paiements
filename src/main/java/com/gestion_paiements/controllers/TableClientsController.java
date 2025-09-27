@@ -67,7 +67,6 @@ public class TableClientsController implements Refreshable {
             selectedClient = newS;
             buttonDeleteClient.setDisable(false);
             buttonModifyClient.setDisable(false);
-            System.out.println(selectedClient.getName());
 
         });
 
