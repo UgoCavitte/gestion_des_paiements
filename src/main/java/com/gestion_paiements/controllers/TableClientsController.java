@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Modality;
@@ -20,6 +21,14 @@ import java.io.IOException;
 import java.util.List;
 
 public class TableClientsController implements Refreshable {
+
+    Client selectedClient;
+
+    @FXML
+    private Button buttonDeleteClient;
+
+    @FXML
+    private Button buttonModifyClient;
 
     @FXML
     private TableView<Client> tableClients;
@@ -45,6 +54,21 @@ public class TableClientsController implements Refreshable {
         tableClientColumnLastPaymentDate.setCellValueFactory(cellData -> {
             if (cellData.getValue().getPayments().isEmpty()) return new SimpleStringProperty("");
             return new SimpleStringProperty(cellData.getValue().getPayments().stream().sorted().toList().getLast().getDateReceived().toString());
+        });
+
+        // SELECTION LISTENER
+        tableClients.getSelectionModel().selectedItemProperty().addListener((obs, oldS, newS) -> {
+            if (newS == null) {
+                buttonDeleteClient.setDisable(true);
+                buttonModifyClient.setDisable(true);
+                return;
+            }
+
+            selectedClient = newS;
+            buttonDeleteClient.setDisable(false);
+            buttonModifyClient.setDisable(false);
+            System.out.println(selectedClient.getName());
+
         });
 
         List<Client> clients = Data.instance.getSetClients().stream().toList();
