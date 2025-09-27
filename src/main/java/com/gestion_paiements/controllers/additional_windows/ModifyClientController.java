@@ -42,7 +42,7 @@ public class ModifyClientController {
                 .sorted()
                 .toList()));
 
-        labelID.setText(String.valueOf(selectedClient.getId()));
+        labelID.setText("ID : " + selectedClient.getId());
         tfName.setText(selectedClient.getName());
         taComment.setText(selectedClient.getComment());
         cbCountry.setValue(selectedClient.getCountry().getName());

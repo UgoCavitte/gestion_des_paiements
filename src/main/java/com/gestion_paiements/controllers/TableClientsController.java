@@ -1,6 +1,7 @@
 package com.gestion_paiements.controllers;
 
 import com.gestion_paiements.Main;
+import com.gestion_paiements.controllers.additional_windows.ModifyClientController;
 import com.gestion_paiements.types.Client;
 import com.gestion_paiements.types.Data;
 import com.gestion_paiements.util.Refreshable;
@@ -48,7 +49,7 @@ public class TableClientsController implements Refreshable {
     @FXML
     private void initialize() {
         // TABLE VIEW CONTENT
-        tableClientsColumnID.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getID()).asObject());
+        tableClientsColumnID.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId()).asObject());
         tableClientsColumnName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
         tableClientsColumnCountry.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCountry().getName()));
         tableClientColumnLastPaymentDate.setCellValueFactory(cellData -> {
@@ -90,9 +91,7 @@ public class TableClientsController implements Refreshable {
             stage.setTitle("Ajouter un nouveau client");
             stage.initModality(Modality.WINDOW_MODAL);
 
-            Scene scene = new Scene(parent
-                    //, 1200, 800
-                    );
+            Scene scene = new Scene(parent);
             stage.setScene(scene);
 
             stage.setResizable(false);
@@ -106,7 +105,28 @@ public class TableClientsController implements Refreshable {
 
     @FXML
     private void modifyClient () {
-        //
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("additional_windows/modify-client.fxml"));
+
+            ModifyClientController controller = new ModifyClientController();
+            controller.setSelectedClient(selectedClient);
+            fxmlLoader.setController(controller);
+
+            Parent parent = fxmlLoader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("Modifier un client");
+            stage.initModality(Modality.WINDOW_MODAL);
+
+            Scene scene = new Scene(parent);
+            stage.setScene(scene);
+
+            stage.setResizable(false);
+
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
