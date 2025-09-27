@@ -5,11 +5,10 @@ import com.gestion_paiements.types.Client;
 import com.gestion_paiements.types.Country;
 import com.gestion_paiements.types.Data;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 import java.util.Objects;
 
@@ -34,7 +33,7 @@ public class AddNewClientController {
     }
 
     @FXML
-    private void validate() {
+    private void validate(ActionEvent event) {
 
         String name = tfName.getText().trim();
         Country country = Data.instance.getMapClientsCountries().get(cbCountry.getValue());
@@ -61,6 +60,8 @@ public class AddNewClientController {
         RefreshableData.refreshTables();
 
         // TODO Write in memory
+
+        ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
 
     }
 
