@@ -1,15 +1,16 @@
 package com.gestion_paiements.controllers.additional_windows;
 
+import com.gestion_paiements.data.RefreshableData;
 import com.gestion_paiements.types.Client;
 import com.gestion_paiements.types.Country;
 import com.gestion_paiements.types.Data;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
+
+import java.util.Objects;
 
 public class ModifyClientController {
 
@@ -51,6 +52,37 @@ public class ModifyClientController {
 
     @FXML
     void validate(ActionEvent event) {
+
+        String name = tfName.getText().trim();
+        Country country = Data.instance.getMapClientsCountries().get(cbCountry.getValue());
+        String comment = taComment.getText();
+
+        if (Objects.equals(name, "")) {
+            labelMessage.setText("Veuillez insérer un nom");
+            return;
+        }
+
+        else if (Data.instance.getSetClients().stream().map(Client::getName).toList().contains(name)) {
+            labelMessage.setText("Il existe déjà un client avec ce nom");
+            return;
+        }
+
+        else if (country == null) {
+            labelMessage.setText("Veuillez choisir un pays");
+            return;
+        }
+
+        selectedClient.setName(name);
+        selectedClient.setCountry(country);
+        selectedClient.setComment(comment);
+
+        Data.instance.getSetClients().forEach(c -> System.out.println(c.getName()));
+
+        RefreshableData.refreshTables();
+
+        // TODO Write in memory
+
+        ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
 
     }
 
