@@ -4,7 +4,9 @@ package com.gestion_paiements.types;
  * This class is used to store the amount and the currency of a money transfer in one place
  */
 
-public final class Amount {
+import org.jetbrains.annotations.NotNull;
+
+public final class Amount implements Comparable<Amount> {
 
     private double amount;
 
@@ -37,5 +39,10 @@ public final class Amount {
 
     public void setCurrency(String currency) {
         this.currency = currency;
+    }
+
+    @Override
+    public int compareTo(@NotNull Amount amount) {
+        return Double.compare(this.amount, amount.amount);
     }
 }
