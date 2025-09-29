@@ -75,12 +75,6 @@ public class TableClientsController implements Refreshable {
         tableClients.setItems(FXCollections.observableList(clients));
     }
 
-
-    @FXML
-    void onSortClients() {
-        // TODO
-    }
-
     @FXML
     private void addNewClient () {
         try {

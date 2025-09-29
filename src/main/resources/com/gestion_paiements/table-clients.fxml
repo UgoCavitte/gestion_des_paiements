@@ -18,7 +18,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </padding>
                 </Label>
-                <TableView fx:id="tableClients" minHeight="-Infinity" minWidth="-Infinity" onSort="#onSortClients" prefHeight="608.0" prefWidth="460.0">
+                <TableView fx:id="tableClients" minHeight="-Infinity" minWidth="-Infinity" prefHeight="608.0" prefWidth="460.0">
                     <columns>
                         <TableColumn fx:id="tableClientsColumnID" prefWidth="75.0" text="ID" />
                         <TableColumn fx:id="tableClientsColumnName" prefWidth="75.0" text="Nom" />
