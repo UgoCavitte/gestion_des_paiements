@@ -11,12 +11,10 @@ import javafx.scene.control.TabPane;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Objects;
 
-/*
- * This is the general tab controller.
- * It lets switch between different countries.
- * Inside it, you can either check the main bank account or different sources.
- */
+///  This tab contains the different countries
 
 public class MainTabPaneController {
 
@@ -48,6 +46,8 @@ public class MainTabPaneController {
 
             tabsCountries.add(tab);
         }
+
+        tabsCountries.sort(Comparator.comparing(Tab::getText));
 
         tabPaneCountries.getTabs().clear();
         tabPaneCountries.getTabs().addAll(tabsCountries);

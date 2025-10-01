@@ -10,6 +10,7 @@ import javafx.scene.control.TabPane;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /// This tab contains data on accounts and platforms in a specific country.
 /// This data is controlled by their own tab
@@ -67,6 +68,8 @@ public class CountryTabController {
 
             tabsAccounts.add(tab);
         }
+
+        tabsAccounts.sort(Comparator.comparing(Tab::getText));
 
         tabPaneAccounts.getTabs().clear();
         tabPaneAccounts.getTabs().addAll(tabsAccounts);
