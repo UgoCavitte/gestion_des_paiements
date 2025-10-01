@@ -24,7 +24,7 @@
                         <TableColumn fx:id="tableClientsColumnName" prefWidth="75.0" text="Nom" />
                         <TableColumn fx:id="tableClientsColumnCountry" prefWidth="75.0" text="Pays" />
                         <TableColumn fx:id="tableClientColumnLastPaymentDate" prefWidth="135.0" text="Dernier paiement" />
-                  <TableColumn prefWidth="100.0" text="Commentaire" />
+                        <TableColumn fx:id="tableClientColumnComment" prefWidth="100.0" text="Commentaire" />
                     </columns>
                 </TableView>
                 <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="460.0">
