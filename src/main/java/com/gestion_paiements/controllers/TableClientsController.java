@@ -48,6 +48,9 @@ public class TableClientsController implements Refreshable {
     private TableColumn<Client, String> tableClientColumnLastPaymentDate;
 
     @FXML
+    private TableColumn<Client, String> tableClientColumnComment;
+
+    @FXML
     private void initialize() {
         // TABLE VIEW CONTENT
         tableClientsColumnID.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId()).asObject());
@@ -57,6 +60,7 @@ public class TableClientsController implements Refreshable {
             if (cellData.getValue().getPayments().isEmpty()) return new SimpleStringProperty("");
             return new SimpleStringProperty(cellData.getValue().getPayments().stream().sorted().toList().getLast().getDateReceived().toString());
         });
+        tableClientColumnComment.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getComment()));
 
         // SELECTION LISTENER
         tableClients.getSelectionModel().selectedItemProperty().addListener((obs, oldS, newS) -> {
