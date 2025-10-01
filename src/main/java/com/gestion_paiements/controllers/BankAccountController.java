@@ -11,9 +11,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
-import java.time.Instant;
-import java.time.Month;
-import java.time.ZoneId;
+import java.time.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -48,12 +46,14 @@ public class BankAccountController {
     // Used to set the columns
     @FXML
     private void initialize () {
+        ZonedDateTime now = Instant.now().atZone(ZoneId.systemDefault());
+
         // On commence par les comboBoxes
         final Set<Integer> availableYears = account.getTransfers().stream().map(p -> p.getDateReceived().getYear()).collect(Collectors.toSet());
 
         if (account.getTransfers().isEmpty()) {
-            int currentYear = Instant.now().atZone(ZoneId.systemDefault()).getYear();
-            Month currentMonth = Instant.now().atZone(ZoneId.systemDefault()).getMonth();
+            int currentYear = now.getYear();
+            Month currentMonth = now.getMonth();
 
             boxYear.setItems(FXCollections.observableArrayList(List.of(currentYear)));
 
@@ -67,7 +67,7 @@ public class BankAccountController {
                         .map(p -> p.getDateReceived().getMonth())
                         .collect(Collectors.toSet());
 
-                if (year == Instant.now().atZone(ZoneId.systemDefault()).getYear())
+                if (year == now.getYear())
                     monthsForThisYear.add(Instant.now().atZone(ZoneId.systemDefault()).getMonth());
 
                 monthsByYears.put(year, monthsForThisYear);
@@ -76,9 +76,26 @@ public class BankAccountController {
             boxYear.setItems(FXCollections.observableList(monthsByYears.keySet().stream().toList()));
         }
 
+        // Select the current year and month
+        boxYear.setValue(now.getYear());
+        boxMonth.setItems(FXCollections.observableList(monthsByYears.get(now.getYear()).stream().toList())); // Otherwise the box is empty
+        boxMonth.setValue(now.getMonth());
+
         // Add the table
         try {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("accounts_tables/empty-table.fxml"));
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("accounts_tables/table-bank-account.fxml"));
+
+            RefreshableData.getToRefresh().remove(controller); // This is to prevent memory overload when user reloads tables too much
+            controller = new BankAccountTableController();
+            RefreshableData.getToRefresh().add(controller); // Replacing the removed element instead of duplicating it
+            controller.setPayments(
+                    account.getTransfers().stream()
+                            .filter(p -> p.getDateReceived().getYear() == boxYear.getValue()
+                                    && p.getDateReceived().getMonth() == boxMonth.getValue())
+                            .collect(Collectors.toSet()));
+
+            loader.setController(controller);
+
             paneTable.getChildren().clear();
             paneTable.getChildren().add(loader.load());
         }
