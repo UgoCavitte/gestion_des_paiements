@@ -127,7 +127,7 @@ public class TableClientsController implements Refreshable {
 
             stage.showAndWait();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
