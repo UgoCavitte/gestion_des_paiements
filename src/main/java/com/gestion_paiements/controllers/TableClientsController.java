@@ -21,7 +21,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.List;
 
 public class TableClientsController implements Refreshable {
 
@@ -101,7 +100,7 @@ public class TableClientsController implements Refreshable {
             stage.showAndWait();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
