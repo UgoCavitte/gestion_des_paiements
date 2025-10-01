@@ -1,6 +1,7 @@
 package com.gestion_paiements.data;
 
 import com.gestion_paiements.types.*;
+import com.gestion_paiements.types.payments.Payment;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -20,6 +21,8 @@ public final class Instance {
     private HashMap<String, WorkingCountry> mapAccountsCountries = new HashMap<>();
 
     private HashSet<Currency> setCurrencies = new HashSet<>();
+
+    private HashSet<Payment> setPayments = new HashSet<>();
 
     //////////////////////////////
     /// GETTERS AND SETTERS
@@ -63,5 +66,13 @@ public final class Instance {
 
     public void setSetCurrencies(HashSet<Currency> setCurrencies) {
         this.setCurrencies = setCurrencies;
+    }
+
+    public HashSet<Payment> getSetPayments() {
+        return setPayments;
+    }
+
+    public void setSetPayments(HashSet<Payment> setPayments) {
+        this.setPayments = setPayments;
     }
 }
