@@ -33,7 +33,6 @@ public abstract class SampleData {
         // Client 1
         Client sampleClient = new Client("Michel", new Country("France"), null);
         PaymentFromClient paymentFromMichel = new PaymentFromClient(
-                0,
                 sampleClient,
                 Data.instance.getMapAccountsCountries().get("France").getAccountsAndPlatforms().get("LCL"),
                 LocalDate.from(Instant.now().atZone(ZoneId.systemDefault())),
@@ -47,7 +46,6 @@ public abstract class SampleData {
         sampleClient.getPayments().add(paymentFromMichel);
 
         sampleClient.getPayments().add(new PaymentFromClient(
-                1,
                 sampleClient,
                 Data.instance.getMapAccountsCountries().get("France").getAccountsAndPlatforms().get("Stripe"),
                 LocalDate.from(Instant.now().atZone(ZoneId.systemDefault())),
@@ -61,7 +59,6 @@ public abstract class SampleData {
         // Client 2
         Client sampleClient2 = new Client( "Jacques", new Country("Russie"), null);
         PaymentFromClient paymentFromJacques = new PaymentFromClient(
-                1,
                 sampleClient2,
                 new Destination(DestinationType.bankAccount, null),
                 LocalDate.from(Instant.now().atZone(ZoneId.systemDefault())),

@@ -3,11 +3,12 @@ package com.gestion_paiements.types.payments;
 import com.gestion_paiements.types.Amount;
 import com.gestion_paiements.types.Destination;
 import com.gestion_paiements.types.Sender;
+import com.gestion_paiements.util.WithID;
 import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDate;
 
-public abstract class Payment implements Comparable<Payment> {
+public abstract class Payment implements Comparable<Payment>, WithID {
 
     // Used to store data
     private int id;
@@ -36,10 +37,12 @@ public abstract class Payment implements Comparable<Payment> {
     /// GETTERS AND SETTERS
     //////////////////////////////
 
+    @Override
     public int getId() {
         return id;
     }
 
+    @Override
     public void setId(int id) {
         this.id = id;
     }

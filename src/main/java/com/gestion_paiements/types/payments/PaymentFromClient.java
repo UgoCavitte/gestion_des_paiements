@@ -1,9 +1,7 @@
 package com.gestion_paiements.types.payments;
 
-import com.gestion_paiements.types.Amount;
-import com.gestion_paiements.types.Client;
-import com.gestion_paiements.types.Destination;
-import com.gestion_paiements.types.PurchasedProduct;
+import com.gestion_paiements.types.*;
+import com.gestion_paiements.util.IDs;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -20,7 +18,6 @@ public final class PaymentFromClient extends Payment {
     //////////////////////////////
 
     public PaymentFromClient(
-            int id,
             Client sender,
             Destination destination,
             LocalDate dateSent,
@@ -31,7 +28,7 @@ public final class PaymentFromClient extends Payment {
             @Nullable String comment) {
         super.setSender(sender);
         this.purchasedProducts = purchasedProducts;
-        super.setId(id); // TODO Maybe setting the ID automatically would be better?
+        super.setId(IDs.getAvailableID(Data.instance.getSetPayments())); // TODO Maybe setting the ID automatically would be better?
         super.setDestination(destination);
         super.setDateSent(dateSent);
         super.setDateReceived(dateReceived);
