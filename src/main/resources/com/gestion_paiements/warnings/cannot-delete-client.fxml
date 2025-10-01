@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gestion_paiements.controllers.warnings.CannotDeleteClientController">
+   <children>
+      <Label layoutX="284.0" layoutY="191.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="280.0" text="Ce client a des paiements enregistrés, il est impossible de le supprimer. Vous pouvez toujours le marquer inactif dans son commentaire personnel." wrapText="true" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+      <Button layoutX="226.0" layoutY="160.0" mnemonicParsing="false" onAction="#closeWindowButton" text="Compris !" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+   </children>
+</AnchorPane>

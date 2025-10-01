@@ -72,9 +72,6 @@ public class TableClientsController implements Refreshable {
 
         });
 
-        // List<Client> clients = Data.instance.getSetClients().stream().toList();
-        // tableClients.setItems(FXCollections.observableList(clients));
-
         ObservableList<Client> masterData = FXCollections.observableArrayList(Data.instance.getSetClients().stream().toList());
         SortedList<Client> sortedData = new SortedList<>(masterData);
         sortedData.comparatorProperty().bind(tableClients.comparatorProperty());
@@ -130,9 +127,29 @@ public class TableClientsController implements Refreshable {
         }
     }
 
+    // A client must not be deleted if it has any payment on its name
+    // This method deletes only clients created by mistake (without any payment)
     @FXML
     private void deleteClient () {
-        //
+        if (selectedClient.getPayments().isEmpty()) {
+            Data.instance.getSetClients().remove(selectedClient);
+            refreshElement();
+            return;
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("warnings/cannot-delete-client.fxml"));
+            Parent parent = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Opération impossible");
+            stage.initModality(Modality.WINDOW_MODAL);
+            Scene scene = new Scene(parent);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.showAndWait();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
