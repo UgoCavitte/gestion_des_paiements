@@ -46,7 +46,7 @@ public class AddNewTransferController {
 
     @FXML
     void countrySelected() {
-
+        boxAccount.setItems(FXCollections.observableList(Data.instance.getMapAccountsCountries().get(boxCountry.getValue()).getAccountsAndPlatforms().keySet().stream().toList()));
     }
 
     @FXML
