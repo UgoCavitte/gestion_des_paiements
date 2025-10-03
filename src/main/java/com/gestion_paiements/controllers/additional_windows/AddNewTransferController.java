@@ -1,15 +1,21 @@
 package com.gestion_paiements.controllers.additional_windows;
 
+import com.gestion_paiements.Main;
 import com.gestion_paiements.types.Client;
 import com.gestion_paiements.types.Data;
-import com.gestion_paiements.types.Destination;
+import com.gestion_paiements.types.PurchasedProduct;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+
+import java.io.IOException;
+import java.util.HashSet;
 
 public class AddNewTransferController {
 
@@ -38,10 +44,30 @@ public class AddNewTransferController {
     private TextField fieldAmountSent;
 
     @FXML
+    private AnchorPane paneProducts;
+
+    HashSet<PurchasedProduct> products = new HashSet<>();
+
+    @FXML
     private void initialize () {
         // Boxes
         boxClient.setItems(FXCollections.observableList(Data.instance.getSetClients().stream().map(Client::getName).sorted().toList()));
         boxCountry.setItems(FXCollections.observableList(Data.instance.getMapAccountsCountries().keySet().stream().toList()));
+
+        // Adds the "add products" pane
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("additional_windows/products-adding.fxml"));
+            ProductsAddingController controller = new ProductsAddingController();
+            controller.setCallBack(a -> {
+                System.out.println("Bite");
+                return a;
+            });
+            loader.setController(controller);
+            paneProducts.getChildren().clear();
+            paneProducts.getChildren().add(loader.load());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
