@@ -2,7 +2,6 @@ package com.gestion_paiements.controllers.additional_windows;
 
 import com.gestion_paiements.types.Data;
 import com.gestion_paiements.types.Product;
-import com.gestion_paiements.util.Products;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -75,6 +74,9 @@ public class ProductsAddingController {
         if (remainingProducts.isEmpty()) {
             return;
         }
+
+        // Returns if not all products have been set
+        if (boxes.stream().map(ComboBoxBase::getValue).toList().contains(null)) return;
 
         boxes.forEach(box -> {
             if (box.getValue() != null) box.setDisable(true);
