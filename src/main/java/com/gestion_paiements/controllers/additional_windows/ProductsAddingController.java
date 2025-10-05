@@ -55,6 +55,7 @@ public class ProductsAddingController {
 
         // Sets the "add a new product" button
         addButton = new Button("Ajouter");
+        addButton.setPrefWidth(elementWidth);
         addButton.setOnAction(event -> addProduct());
         addButton.setDisable(true);
         hBox.getChildren().add(addButton);
@@ -97,6 +98,7 @@ public class ProductsAddingController {
         hBox.getChildren().add(boxToAdd);
         hBox.getChildren().add(addButton);
 
+        // TODO Implement the callBack
         callBack.apply(null);
     }
 }
