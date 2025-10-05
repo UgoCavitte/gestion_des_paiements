@@ -109,11 +109,16 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>
                   </Label>
-                  <TextArea fx:id="areaComment" prefHeight="200.0" prefWidth="200.0" promptText="Commentaire">
+                  <TextArea fx:id="areaComment" prefHeight="150.0" prefWidth="200.0" promptText="Commentaire">
                      <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>
                   </TextArea>
+                  <Label fx:id="labelError" textFill="RED">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </Label>
                   <Button mnemonicParsing="false" onAction="#validate" text="Valider">
                      <VBox.margin>
                         <Insets left="116.0" right="115.0" top="30.0" />

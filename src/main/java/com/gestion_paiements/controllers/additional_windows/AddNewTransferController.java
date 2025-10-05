@@ -8,10 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
@@ -46,6 +43,9 @@ public class AddNewTransferController {
 
     @FXML
     private AnchorPane paneProducts;
+
+    @FXML
+    private Label labelError;
 
     ProductsAddingController controller;
 
@@ -84,9 +84,11 @@ public class AddNewTransferController {
         // Controls that the products were set correctly
         for (PurchasedProduct p : list) {
             if (p.getProduct() == null) {
+                labelError.setText("Un produit a mal été sélectionné.");
                 return;
             }
             if (p.getQuantity() <= 0) {
+                labelError.setText("La quantité d'un produit a mal été entrée.");
                 return;
             }
         }
