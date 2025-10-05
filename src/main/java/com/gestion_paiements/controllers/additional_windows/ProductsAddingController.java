@@ -41,7 +41,7 @@ public class ProductsAddingController {
         ComboBox<String> firstBox = new ComboBox<>(FXCollections.observableList(Data.instance.getSetProducts().stream().map(Product::getShortName).toList()));
         firstBox.setOnAction(e -> {
             ComboBox<String> source = (ComboBox<String>) e.getSource();
-            chosenProducts.add(Products.fromStringToProduct((source.getValue())));
+            // chosenProducts.add(Products.fromStringToProduct((source.getValue())));
             addButton.setDisable(false);
         });
         firstBox.setPrefWidth(80);
