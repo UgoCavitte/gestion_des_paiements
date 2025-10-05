@@ -16,6 +16,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.List;
 
 public class AddNewTransferController {
 
@@ -46,7 +47,7 @@ public class AddNewTransferController {
     @FXML
     private AnchorPane paneProducts;
 
-    HashSet<PurchasedProduct> products = new HashSet<>();
+    ProductsAddingController controller;
 
     @FXML
     private void initialize () {
@@ -57,11 +58,7 @@ public class AddNewTransferController {
         // Adds the "add products" pane
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("additional_windows/products-adding.fxml"));
-            ProductsAddingController controller = new ProductsAddingController();
-            controller.setCallBack(a -> {
-                System.out.println("Bite");
-                return a;
-            });
+            controller = new ProductsAddingController();
             loader.setController(controller);
             paneProducts.getChildren().clear();
             paneProducts.getChildren().add(loader.load());
@@ -82,7 +79,7 @@ public class AddNewTransferController {
 
     @FXML
     void validate(ActionEvent event) {
-
+        List<PurchasedProduct> list = controller.validate();
     }
 
 }

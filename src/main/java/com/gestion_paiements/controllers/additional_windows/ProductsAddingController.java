@@ -2,6 +2,8 @@ package com.gestion_paiements.controllers.additional_windows;
 
 import com.gestion_paiements.types.Data;
 import com.gestion_paiements.types.Product;
+import com.gestion_paiements.types.PurchasedProduct;
+import com.gestion_paiements.util.Products;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -27,14 +29,6 @@ public class ProductsAddingController {
     private final ArrayList<TextField> fields = new ArrayList<>();
 
     private final ArrayList<ComboBox<String>> boxes = new ArrayList<>();
-
-    private Function<Void, Void> callBack;
-
-    private final ArrayList<Product> chosenProducts = new ArrayList<>();
-
-    public void setCallBack(Function<Void, Void> callBack) {
-        this.callBack = callBack;
-    }
 
     @FXML
     private void initialize() {
@@ -98,7 +92,17 @@ public class ProductsAddingController {
         hBox.getChildren().add(boxToAdd);
         hBox.getChildren().add(addButton);
 
-        // TODO Implement the callBack
-        callBack.apply(null);
+    }
+
+    public List<PurchasedProduct> validate () {
+        ArrayList<PurchasedProduct> list = new ArrayList<>();
+        for (int i = 0; i < boxes.size(); i++) {
+            list.add(new PurchasedProduct(
+                    Integer.parseInt(fields.get(i).getText()),
+                    Products.fromStringToProduct(boxes.get(i).getValue())
+            ));
+        }
+
+        return list;
     }
 }
