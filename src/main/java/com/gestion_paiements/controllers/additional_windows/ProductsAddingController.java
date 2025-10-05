@@ -44,13 +44,15 @@ public class ProductsAddingController {
             chosenProducts.add(Products.fromStringToProduct((source.getValue())));
             addButton.setDisable(false);
         });
+        firstBox.setPrefWidth(80);
         boxes.add(firstBox);
 
         TextField firstField = new TextField("1");
+        firstField.setPrefWidth(80);
         fields.add(firstField);
 
         VBox boxToAdd = new VBox(firstBox, firstField);
-        boxToAdd.setPrefWidth(60);
+        boxToAdd.setPrefWidth(80);
         hBox.getChildren().add(boxToAdd);
 
         // Sets the "add a new product" button
