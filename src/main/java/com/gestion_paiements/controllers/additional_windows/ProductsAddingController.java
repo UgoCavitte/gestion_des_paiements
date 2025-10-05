@@ -64,10 +64,6 @@ public class ProductsAddingController {
 
     private void addProduct() {
 
-        boxes.forEach(box -> {
-            if (box.getValue() != null) box.setDisable(true);
-        });
-
         // List of the remaining available products
         List<String> remainingProducts = Data.instance.getSetProducts()
                         .stream()
@@ -75,9 +71,14 @@ public class ProductsAddingController {
                 .filter(p -> !boxes.stream().map(ComboBoxBase::getValue).toList().contains(p))
                 .toList();
 
-        System.out.println(remainingProducts);
+        // Check if there still are products to possibly add
+        if (remainingProducts.isEmpty()) {
+            return;
+        }
 
-        // TODO check if it is even possible
+        boxes.forEach(box -> {
+            if (box.getValue() != null) box.setDisable(true);
+        });
 
         // Adds the next column
         ComboBox<String> cb = new ComboBox<>(FXCollections.observableList(remainingProducts));
