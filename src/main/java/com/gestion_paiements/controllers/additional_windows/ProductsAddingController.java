@@ -17,6 +17,8 @@ import java.util.function.Function;
 
 public class ProductsAddingController {
 
+    final int elementWidth = 80;
+
     @FXML
     private HBox hBox;
 
@@ -38,20 +40,17 @@ public class ProductsAddingController {
     private void initialize() {
         // Sets the first ComboBox
         ComboBox<String> firstBox = new ComboBox<>(FXCollections.observableList(Data.instance.getSetProducts().stream().map(Product::getShortName).toList()));
-        firstBox.setOnAction(e -> {
-            // ComboBox<String> source = (ComboBox<String>) e.getSource();
-            // chosenProducts.add(Products.fromStringToProduct((source.getValue())));
-            addButton.setDisable(false);
-        });
-        firstBox.setPrefWidth(80);
+        firstBox.setOnAction(e -> addButton.setDisable(false)
+        );
+        firstBox.setPrefWidth(elementWidth);
         boxes.add(firstBox);
 
         TextField firstField = new TextField("1");
-        firstField.setPrefWidth(80);
+        firstField.setPrefWidth(elementWidth);
         fields.add(firstField);
 
         VBox boxToAdd = new VBox(firstBox, firstField);
-        boxToAdd.setPrefWidth(80);
+        boxToAdd.setPrefWidth(elementWidth);
         hBox.getChildren().add(boxToAdd);
 
         // Sets the "add a new product" button
@@ -85,15 +84,15 @@ public class ProductsAddingController {
         // Adds the next column
         ComboBox<String> cb = new ComboBox<>(FXCollections.observableList(remainingProducts));
         cb.setOnAction(e -> addButton.setDisable(false));
-        cb.setPrefWidth(80);
+        cb.setPrefWidth(elementWidth);
         boxes.add(cb);
 
         TextField tf = new TextField("1");
-        tf.setPrefWidth(80);
+        tf.setPrefWidth(elementWidth);
         fields.add(tf);
 
         VBox boxToAdd = new VBox(cb, tf);
-        boxToAdd.setPrefWidth(80);
+        boxToAdd.setPrefWidth(elementWidth);
         hBox.getChildren().remove(addButton);
         hBox.getChildren().add(boxToAdd);
         hBox.getChildren().add(addButton);
