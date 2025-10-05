@@ -80,6 +80,17 @@ public class AddNewTransferController {
     @FXML
     void validate(ActionEvent event) {
         List<PurchasedProduct> list = controller.validate();
+
+        // Controls that the products were set correctly
+        for (PurchasedProduct p : list) {
+            if (p.getProduct() == null) {
+                return;
+            }
+            if (p.getQuantity() <= 0) {
+                return;
+            }
+        }
+
     }
 
 }
