@@ -96,7 +96,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>
                      <children>
-                        <AnchorPane fx:id="paneProducts" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="290.0" />
+                        <AnchorPane fx:id="paneProducts" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="290.0" />
                      </children>
                   </HBox>
                   <Label text="Commentaire">

@@ -7,7 +7,9 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +22,13 @@ public class ProductsAddingController {
 
     private Button addButton;
 
-    ArrayList<ComboBox<String>> boxes = new ArrayList<>();
+    private final ArrayList<TextField> fields = new ArrayList<>();
+
+    private final ArrayList<ComboBox<String>> boxes = new ArrayList<>();
 
     private Function<Void, Void> callBack;
 
-    ArrayList<Product> chosenProducts = new ArrayList<>();
+    private final ArrayList<Product> chosenProducts = new ArrayList<>();
 
     public void setCallBack(Function<Void, Void> callBack) {
         this.callBack = callBack;
@@ -40,7 +44,13 @@ public class ProductsAddingController {
             addButton.setDisable(false);
         });
         boxes.add(firstBox);
-        hBox.getChildren().add(firstBox);
+
+        TextField firstField = new TextField("1");
+        fields.add(firstField);
+
+        VBox boxToAdd = new VBox(firstBox, firstField);
+        boxToAdd.setPrefWidth(60);
+        hBox.getChildren().add(boxToAdd);
 
         // Sets the "add a new product" button
         addButton = new Button("Ajouter");
