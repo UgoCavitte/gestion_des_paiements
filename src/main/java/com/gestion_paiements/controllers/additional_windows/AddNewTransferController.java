@@ -12,8 +12,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 
 public class AddNewTransferController {
 
@@ -79,8 +79,18 @@ public class AddNewTransferController {
 
     @FXML
     void validate(ActionEvent event) {
-        List<PurchasedProduct> list = controller.validate();
 
+        labelError.setText("");
+
+        // Client
+        Client client = Data.instance.getSetClients().stream().filter(c -> Objects.equals(c.getName(), boxClient.getValue())).findFirst().orElse(null);
+        if (client == null) {
+            labelError.setText("Il y a un problème avec la sélection du client.");
+            return;
+        }
+
+        // Products
+        List<PurchasedProduct> list = controller.validate();
         // Controls that the products were set correctly
         for (PurchasedProduct p : list) {
             if (p.getProduct() == null) {
