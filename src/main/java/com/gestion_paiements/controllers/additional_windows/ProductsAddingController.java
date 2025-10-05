@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ComboBoxBase;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -67,7 +68,13 @@ public class ProductsAddingController {
 
         // List of the remaining available products
         List<String> remainingProducts = Data.instance.getSetProducts()
-                        .stream().map(Product::getShortName).toList(); // TODO remove already used products
+                        .stream()
+                .map(Product::getShortName)
+                .filter(p -> !boxes.stream().map(ComboBoxBase::getValue).toList().contains(p))
+                .toList();
+
+        System.out.println(remainingProducts);
+
 
         callBack.apply(null);
     }
