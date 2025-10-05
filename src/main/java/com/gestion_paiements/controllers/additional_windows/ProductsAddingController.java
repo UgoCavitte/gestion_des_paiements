@@ -40,7 +40,7 @@ public class ProductsAddingController {
         // Sets the first ComboBox
         ComboBox<String> firstBox = new ComboBox<>(FXCollections.observableList(Data.instance.getSetProducts().stream().map(Product::getShortName).toList()));
         firstBox.setOnAction(e -> {
-            ComboBox<String> source = (ComboBox<String>) e.getSource();
+            // ComboBox<String> source = (ComboBox<String>) e.getSource();
             // chosenProducts.add(Products.fromStringToProduct((source.getValue())));
             addButton.setDisable(false);
         });
@@ -77,6 +77,23 @@ public class ProductsAddingController {
 
         System.out.println(remainingProducts);
 
+        // TODO check if it is even possible
+
+        // Adds the next column
+        ComboBox<String> cb = new ComboBox<>(FXCollections.observableList(remainingProducts));
+        cb.setOnAction(e -> addButton.setDisable(false));
+        cb.setPrefWidth(80);
+        boxes.add(cb);
+
+        TextField tf = new TextField("1");
+        tf.setPrefWidth(80);
+        fields.add(tf);
+
+        VBox boxToAdd = new VBox(cb, tf);
+        boxToAdd.setPrefWidth(80);
+        hBox.getChildren().remove(addButton);
+        hBox.getChildren().add(boxToAdd);
+        hBox.getChildren().add(addButton);
 
         callBack.apply(null);
     }
