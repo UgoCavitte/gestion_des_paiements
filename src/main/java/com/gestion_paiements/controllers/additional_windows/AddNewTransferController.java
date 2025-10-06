@@ -3,6 +3,7 @@ package com.gestion_paiements.controllers.additional_windows;
 import com.gestion_paiements.Main;
 import com.gestion_paiements.types.Client;
 import com.gestion_paiements.types.Data;
+import com.gestion_paiements.types.Destination;
 import com.gestion_paiements.types.PurchasedProduct;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -12,6 +13,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,10 +33,10 @@ public class AddNewTransferController {
     private ComboBox<String> boxCountry;
 
     @FXML
-    private DatePicker dateReceived;
+    private DatePicker pickerDateReceived;
 
     @FXML
-    private DatePicker dateSent;
+    private DatePicker pickerDateSent;
 
     @FXML
     private TextField fieldAmountReceived;
@@ -74,7 +77,7 @@ public class AddNewTransferController {
 
     @FXML
     void dateSentSelected() {
-        if (dateReceived.getValue() == null) dateReceived.setValue(dateSent.getValue());
+        if (pickerDateReceived.getValue() == null) pickerDateReceived.setValue(pickerDateSent.getValue());
     }
 
     @FXML
@@ -88,6 +91,35 @@ public class AddNewTransferController {
             labelError.setText("Il y a un problème avec la sélection du client.");
             return;
         }
+
+        // Compte destinataire
+        if (boxCountry.getValue() == null) {
+            labelError.setText("Aucun pays sélectionné.");
+            return;
+        }
+        if (boxAccount.getValue() == null) {
+            labelError.setText("Aucun compte sélectionné.");
+            return;
+        }
+        Destination destination = Data.instance.
+                getMapAccountsCountries().get(boxCountry.getValue()).
+                getAccountsAndPlatforms().get(boxAccount.getValue());
+
+        // Dates
+        LocalDate dateSent = pickerDateSent.getValue();
+        LocalDate dateReceived = pickerDateReceived.getValue();
+        if (dateSent == null) {
+            labelError.setText("Aucune date d'envoi sélectionnée.");
+            return;
+        }
+        if (dateReceived == null) {
+            labelError.setText("Aucune date de réception sélectionnée.");
+            return;
+        }
+
+        // Amounts
+        double amountSent = Double.parseDouble(fieldAmountSent.getText());
+        double amountReceived = Double.parseDouble(fieldAmountReceived.getText());
 
         // Products
         List<PurchasedProduct> list = controller.validate();

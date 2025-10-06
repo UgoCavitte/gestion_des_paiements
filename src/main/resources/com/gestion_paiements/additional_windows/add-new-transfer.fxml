@@ -55,7 +55,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>
                   </Label>
-                  <DatePicker fx:id="dateSent" onAction="#dateSentSelected">
+                  <DatePicker fx:id="pickerDateSent" onAction="#dateSentSelected">
                      <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>
@@ -65,7 +65,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>
                   </Label>
-                  <DatePicker fx:id="dateReceived">
+                  <DatePicker fx:id="pickerDateReceived">
                      <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>
