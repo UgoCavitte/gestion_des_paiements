@@ -12,13 +12,15 @@ public final class Destination extends Sender {
 
     private DestinationType destinationType;
 
+    private Currency currency;
+
     private HashSet<Payment> transfers = new HashSet<>();
 
     //////////////////////////////
     /// CONSTRUCTOR
     //////////////////////////////
 
-    public Destination(DestinationType destinationType, String name) {
+    public Destination(DestinationType destinationType, Currency currency, String name) {
         this.destinationType = destinationType;
         super.setName(name);
     }
@@ -33,6 +35,14 @@ public final class Destination extends Sender {
 
     public void setDestinationType(DestinationType destinationType) {
         this.destinationType = destinationType;
+    }
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
     }
 
     public HashSet<Payment> getTransfers() {

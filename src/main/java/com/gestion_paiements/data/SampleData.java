@@ -15,11 +15,18 @@ public abstract class SampleData {
 
     public static void init() {
 
+
+        // Currencies
+        Currency eur = new Currency("EUR");
+        Currency rub = new Currency("RUB");
+        Data.instance.getSetCurrencies().add(eur);
+        Data.instance.getSetCurrencies().add(rub);
+
         // Accounts countries
         Data.instance.getMapAccountsCountries().put("France", new WorkingCountry("France"));
         HashMap<String, Destination> accountsForFrance = new HashMap<>();
-        accountsForFrance.put("LCL", new Destination(DestinationType.bankAccount, "LCL"));
-        accountsForFrance.put("Stripe", new Destination(DestinationType.platform, "Stripe"));
+        accountsForFrance.put("LCL", new Destination(DestinationType.bankAccount, eur, "LCL"));
+        accountsForFrance.put("Stripe", new Destination(DestinationType.platform, eur, "Stripe"));
         Data.instance.getMapAccountsCountries().get("France").setAccountsAndPlatforms(accountsForFrance);
 
         Data.instance.getMapAccountsCountries().put("Russie", new WorkingCountry("Russie"));
@@ -39,7 +46,7 @@ public abstract class SampleData {
                 LocalDate.from(Instant.now().atZone(ZoneId.systemDefault())),
                 new Amount(10, "EUR"),
                 new Amount(9.6, "EUR"),
-                Set.of(new PurchasedProduct(2, products[0])),
+                List.of(new PurchasedProduct(2, products[0])),
                 null
                         );
 
@@ -52,7 +59,7 @@ public abstract class SampleData {
                 LocalDate.from(Instant.now().atZone(ZoneId.systemDefault())),
                 new Amount(20, "EUR"),
                 new Amount(19.2, "EUR"),
-                Set.of(new PurchasedProduct(3, products[1])),
+                List.of(new PurchasedProduct(3, products[1])),
                 null
         ));
 
@@ -60,12 +67,12 @@ public abstract class SampleData {
         Client sampleClient2 = new Client( "Jacques", new Country("Russie"), null);
         PaymentFromClient paymentFromJacques = new PaymentFromClient(
                 sampleClient2,
-                new Destination(DestinationType.bankAccount, null),
+                new Destination(DestinationType.bankAccount, eur, null),
                 LocalDate.from(Instant.now().atZone(ZoneId.systemDefault())),
                 LocalDate.from(Instant.now().atZone(ZoneId.systemDefault())),
                 new Amount(10, "EUR"),
                 new Amount(9.6, "EUR"),
-                Set.of(new PurchasedProduct(2, products[0])),
+                List.of(new PurchasedProduct(2, products[0])),
                 null
         );
         sampleClient2.getPayments().add(paymentFromJacques);
@@ -84,9 +91,6 @@ public abstract class SampleData {
         }
 
 
-        // Currencies
-        Data.instance.getSetCurrencies().add(new com.gestion_paiements.types.Currency("EUR"));
-        Data.instance.getSetCurrencies().add(new Currency("RUB"));
 
     }
 
