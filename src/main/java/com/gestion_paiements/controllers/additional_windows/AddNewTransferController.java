@@ -3,6 +3,7 @@ package com.gestion_paiements.controllers.additional_windows;
 import com.gestion_paiements.Main;
 import com.gestion_paiements.types.*;
 import com.gestion_paiements.types.payments.PaymentFromClient;
+import com.gestion_paiements.util.Currencies;
 import com.gestion_paiements.util.Destinations;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -141,8 +142,18 @@ public class AddNewTransferController {
             labelError.setText("Aucune somme reçue indiquée.");
             return;
         }
-        double amountSent = new Amount();
-        double amountReceived = Double.parseDouble(fieldAmountReceived.getText());
+        if (cbCurrencySent.getValue() == null) {
+            labelError.setText("Aucune devise d'envoi sélectionnée.");
+            return;
+        }
+        Amount amountSent = new Amount(
+                Double.parseDouble(fieldAmountSent.getText()),
+                Currencies.fromStringToCurrency(cbCurrencySent.getValue())
+        );
+        Amount amountReceived = new Amount(
+                Double.parseDouble(fieldAmountReceived.getText()),
+                Currencies.fromStringToCurrency(labelCurrencyReceived.getText())
+        );
 
         // Comment
         String comment = areaComment.getText();
