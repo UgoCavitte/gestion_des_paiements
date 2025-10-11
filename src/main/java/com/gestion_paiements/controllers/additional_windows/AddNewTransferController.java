@@ -1,10 +1,9 @@
 package com.gestion_paiements.controllers.additional_windows;
 
 import com.gestion_paiements.Main;
-import com.gestion_paiements.types.Client;
-import com.gestion_paiements.types.Data;
-import com.gestion_paiements.types.Destination;
-import com.gestion_paiements.types.PurchasedProduct;
+import com.gestion_paiements.types.*;
+import com.gestion_paiements.types.payments.PaymentFromClient;
+import com.gestion_paiements.util.Destinations;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,7 +13,6 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,6 +29,12 @@ public class AddNewTransferController {
 
     @FXML
     private ComboBox<String> boxCountry;
+
+    @FXML
+    private ComboBox<String> cbCurrencySent; // TODO Set this
+
+    @FXML
+    private Label labelCurrencyReceived;
 
     @FXML
     private DatePicker pickerDateReceived;
@@ -76,6 +80,17 @@ public class AddNewTransferController {
     }
 
     @FXML
+    void accountSelected () {
+        if (boxAccount.getValue() == null) {
+            labelCurrencyReceived.setText("");
+            return;
+        }
+
+        labelCurrencyReceived.setText(Destinations.fromStringToDestination(boxAccount.getValue()).getCurrency().getName());
+
+    }
+
+    @FXML
     void dateSentSelected() {
         if (pickerDateReceived.getValue() == null) pickerDateReceived.setValue(pickerDateSent.getValue());
     }
@@ -118,8 +133,19 @@ public class AddNewTransferController {
         }
 
         // Amounts
-        double amountSent = Double.parseDouble(fieldAmountSent.getText());
+        if (Objects.equals(fieldAmountSent.getText(), "")) {
+            labelError.setText("Aucune somme envoyée indiquée.");
+            return;
+        }
+        if (Objects.equals(fieldAmountReceived.getText(), "")) {
+            labelError.setText("Aucune somme reçue indiquée.");
+            return;
+        }
+        double amountSent = new Amount();
         double amountReceived = Double.parseDouble(fieldAmountReceived.getText());
+
+        // Comment
+        String comment = areaComment.getText();
 
         // Products
         List<PurchasedProduct> list = controller.validate();
@@ -134,6 +160,17 @@ public class AddNewTransferController {
                 return;
             }
         }
+
+        PaymentFromClient payment = new PaymentFromClient(
+                client,
+                destination,
+                dateSent,
+                dateReceived,
+                amountSent,
+                amountReceived,
+                list,
+                comment
+        );
 
     }
 

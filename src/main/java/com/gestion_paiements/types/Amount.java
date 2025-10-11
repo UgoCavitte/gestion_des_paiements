@@ -10,13 +10,13 @@ public final class Amount implements Comparable<Amount> {
 
     private double amount;
 
-    private String currency;
+    private Currency currency;
 
     //////////////////////////////
     /// CONSTRUCTOR
     //////////////////////////////
 
-    public Amount(double amount, String currency) {
+    public Amount(double amount, Currency currency) {
         this.amount = amount;
         this.currency = currency;
     }
@@ -33,11 +33,11 @@ public final class Amount implements Comparable<Amount> {
         this.amount = amount;
     }
 
-    public String getCurrency() {
+    public Currency getCurrency() {
         return currency;
     }
 
-    public void setCurrency(String currency) {
+    public void setCurrency(Currency currency) {
         this.currency = currency;
     }
 

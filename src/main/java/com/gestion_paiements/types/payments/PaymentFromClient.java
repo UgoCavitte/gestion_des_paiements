@@ -6,12 +6,12 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 
 public final class PaymentFromClient extends Payment {
 
     // Product(s) (what did the client paid for?)
-    private Set<PurchasedProduct> purchasedProducts;
+    private List<PurchasedProduct> purchasedProducts;
 
     //////////////////////////////
     /// CONSTRUCTOR
@@ -24,7 +24,7 @@ public final class PaymentFromClient extends Payment {
             LocalDate dateReceived,
             Amount sentAmount,
             Amount receivedAmount,
-            Set<PurchasedProduct> purchasedProducts,
+            List<PurchasedProduct> purchasedProducts,
             @Nullable String comment) {
         super.setSender(sender);
         this.purchasedProducts = purchasedProducts;
@@ -41,11 +41,11 @@ public final class PaymentFromClient extends Payment {
     /// GETTERS AND SETTERS
     //////////////////////////////
 
-    public Set<PurchasedProduct> getProducts() {
+    public List<PurchasedProduct> getProducts() {
         return purchasedProducts;
     }
 
-    public void setProducts(Set<PurchasedProduct> purchasedProducts) {
+    public void setProducts(List<PurchasedProduct> purchasedProducts) {
         this.purchasedProducts = purchasedProducts;
     }
 
