@@ -22,6 +22,7 @@ public final class Destination extends Sender {
 
     public Destination(DestinationType destinationType, Currency currency, String name) {
         this.destinationType = destinationType;
+        this.currency = currency;
         super.setName(name);
     }
 
