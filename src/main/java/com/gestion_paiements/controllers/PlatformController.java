@@ -4,6 +4,7 @@ import com.gestion_paiements.Main;
 import com.gestion_paiements.controllers.accounts_tables.PlatformTableController;
 import com.gestion_paiements.data.RefreshableData;
 import com.gestion_paiements.types.Destination;
+import com.gestion_paiements.types.WorkingCountry;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -44,6 +45,12 @@ public class PlatformController {
 
     public void setPlatform(Destination platform) {
         this.platform = platform;
+    }
+
+    private WorkingCountry country;
+
+    public void setCountry(WorkingCountry country) {
+        this.country = country;
     }
 
     // Used to set the columns
@@ -111,11 +118,10 @@ public class PlatformController {
                 RefreshableData.getToRefresh().remove(controller); // This is to prevent memory overload when user reloads tables too much
                 controller = new PlatformTableController();
                 RefreshableData.getToRefresh().add(controller); // Replacing the removed element instead of duplicating it
-                controller.setPayments(
-                        platform.getTransfers().stream()
-                                .filter(p -> p.getDateReceived().getYear() == boxYear.getValue()
-                                        && p.getDateReceived().getMonth() == boxMonth.getValue())
-                                .collect(Collectors.toSet()));
+                controller.setDestination(platform);
+                controller.setCountry(country);
+                controller.setYear(boxYear.getValue());
+                controller.setMonth(boxMonth.getValue());
 
                 loader.setController(controller);
 
