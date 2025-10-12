@@ -33,7 +33,7 @@ public class AddNewTransferController {
     private ComboBox<String> boxCountry;
 
     @FXML
-    private ComboBox<String> cbCurrencySent; // TODO Set this
+    private ComboBox<String> boxCurrencySent; // TODO Set this
 
     @FXML
     private Label labelCurrencyReceived;
@@ -62,7 +62,8 @@ public class AddNewTransferController {
     private void initialize () {
         // Boxes
         boxClient.setItems(FXCollections.observableList(Data.instance.getSetClients().stream().map(Client::getName).sorted().toList()));
-        boxCountry.setItems(FXCollections.observableList(Data.instance.getMapAccountsCountries().keySet().stream().toList()));
+        boxCountry.setItems(FXCollections.observableList(Data.instance.getMapAccountsCountries().keySet().stream().sorted().toList()));
+        boxCurrencySent.setItems(FXCollections.observableList(Data.instance.getSetCurrencies().stream().map(Currency::getName).sorted().toList()));
 
         // Adds the "add products" pane
         try {
@@ -143,13 +144,13 @@ public class AddNewTransferController {
             labelError.setText("Aucune somme reçue indiquée.");
             return;
         }
-        if (cbCurrencySent.getValue() == null) {
+        if (boxCurrencySent.getValue() == null) {
             labelError.setText("Aucune devise d'envoi sélectionnée.");
             return;
         }
         Amount amountSent = new Amount(
                 Double.parseDouble(fieldAmountSent.getText()),
-                Currencies.fromStringToCurrency(cbCurrencySent.getValue())
+                Currencies.fromStringToCurrency(boxCurrencySent.getValue())
         );
         Amount amountReceived = new Amount(
                 Double.parseDouble(fieldAmountReceived.getText()),
