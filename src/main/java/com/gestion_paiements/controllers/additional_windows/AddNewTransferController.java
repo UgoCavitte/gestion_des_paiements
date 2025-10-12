@@ -1,6 +1,7 @@
 package com.gestion_paiements.controllers.additional_windows;
 
 import com.gestion_paiements.Main;
+import com.gestion_paiements.data.RefreshableData;
 import com.gestion_paiements.types.*;
 import com.gestion_paiements.types.payments.PaymentFromClient;
 import com.gestion_paiements.util.Currencies;
@@ -190,6 +191,8 @@ public class AddNewTransferController {
         destination.getTransfers().add(payment);
         Data.instance.getSetPayments().add(payment);
         // TODO Write to DB
+
+        RefreshableData.refreshTables();
 
         // Close window
         ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();

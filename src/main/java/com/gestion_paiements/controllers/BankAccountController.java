@@ -4,6 +4,7 @@ import com.gestion_paiements.Main;
 import com.gestion_paiements.controllers.accounts_tables.BankAccountTableController;
 import com.gestion_paiements.data.RefreshableData;
 import com.gestion_paiements.types.Destination;
+import com.gestion_paiements.types.WorkingCountry;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -45,6 +46,12 @@ public class BankAccountController {
 
     public void setAccount(Destination account) {
         this.account = account;
+    }
+
+    private WorkingCountry country;
+
+    public void setCountry(WorkingCountry country) {
+        this.country = country;
     }
 
     // Used to set the columns
@@ -92,11 +99,10 @@ public class BankAccountController {
             RefreshableData.getToRefresh().remove(controller); // This is to prevent memory overload when user reloads tables too much
             controller = new BankAccountTableController();
             RefreshableData.getToRefresh().add(controller); // Replacing the removed element instead of duplicating it
-            controller.setPayments(
-                    account.getTransfers().stream()
-                            .filter(p -> p.getDateReceived().getYear() == boxYear.getValue()
-                                    && p.getDateReceived().getMonth() == boxMonth.getValue())
-                            .collect(Collectors.toSet()));
+            controller.setCountry(country);
+            controller.setDestination(account);
+            controller.setYear(boxYear.getValue());
+            controller.setMonth(boxMonth.getValue());
 
             loader.setController(controller);
 
@@ -142,11 +148,10 @@ public class BankAccountController {
                 RefreshableData.getToRefresh().remove(controller); // This is to prevent memory overload when user reloads tables too much
                 controller = new BankAccountTableController();
                 RefreshableData.getToRefresh().add(controller); // Replacing the removed element instead of duplicating it
-                controller.setPayments(
-                        account.getTransfers().stream()
-                                .filter(p -> p.getDateReceived().getYear() == boxYear.getValue()
-                                        && p.getDateReceived().getMonth() == boxMonth.getValue())
-                                .collect(Collectors.toSet()));
+                controller.setCountry(country);
+                controller.setDestination(account);
+                controller.setYear(boxYear.getValue());
+                controller.setMonth(boxMonth.getValue());
 
                 loader.setController(controller);
 

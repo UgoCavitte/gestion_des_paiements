@@ -44,8 +44,8 @@ public abstract class SampleData {
                 Data.instance.getMapAccountsCountries().get("France").getAccountsAndPlatforms().get("LCL"),
                 LocalDate.from(Instant.now().atZone(ZoneId.systemDefault())),
                 LocalDate.from(Instant.now().atZone(ZoneId.systemDefault())),
-                new Amount(10, "EUR"),
-                new Amount(9.6, "EUR"),
+                new Amount(10, eur),
+                new Amount(9.6, eur),
                 List.of(new PurchasedProduct(2, products[0])),
                 null
                         );
@@ -57,8 +57,8 @@ public abstract class SampleData {
                 Data.instance.getMapAccountsCountries().get("France").getAccountsAndPlatforms().get("Stripe"),
                 LocalDate.from(Instant.now().atZone(ZoneId.systemDefault())),
                 LocalDate.from(Instant.now().atZone(ZoneId.systemDefault())),
-                new Amount(20, "EUR"),
-                new Amount(19.2, "EUR"),
+                new Amount(20, eur),
+                new Amount(19.2, eur),
                 List.of(new PurchasedProduct(3, products[1])),
                 null
         ));
@@ -70,8 +70,8 @@ public abstract class SampleData {
                 new Destination(DestinationType.bankAccount, eur, null),
                 LocalDate.from(Instant.now().atZone(ZoneId.systemDefault())),
                 LocalDate.from(Instant.now().atZone(ZoneId.systemDefault())),
-                new Amount(10, "EUR"),
-                new Amount(9.6, "EUR"),
+                new Amount(10, eur),
+                new Amount(9.6, eur),
                 List.of(new PurchasedProduct(2, products[0])),
                 null
         );

@@ -4,11 +4,11 @@ import com.gestion_paiements.types.PurchasedProduct;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Set;
+import java.util.List;
 
 public abstract class PurchasedProducts {
 
-    static public @NotNull String fromSetToString(@NotNull Set<PurchasedProduct> set) {
+    static public @NotNull String fromListToString(@NotNull List<PurchasedProduct> set) {
         if (set.isEmpty()) return "";
 
         ArrayList<PurchasedProduct> list = new ArrayList<>(set);

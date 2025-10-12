@@ -49,6 +49,7 @@ public class CountryTabController {
                     loader = new FXMLLoader(Main.class.getResource( "bank-account-view.fxml"));
                     BankAccountController controller = new BankAccountController();
                     controller.setAccount(destination);
+                    controller.setCountry(tabCountry);
                     loader.setController(controller);
                 }
 

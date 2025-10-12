@@ -1,6 +1,9 @@
 package com.gestion_paiements.controllers.accounts_tables;
 
 import com.gestion_paiements.data.Preferences;
+import com.gestion_paiements.types.Data;
+import com.gestion_paiements.types.Destination;
+import com.gestion_paiements.types.WorkingCountry;
 import com.gestion_paiements.types.payments.Payment;
 import com.gestion_paiements.types.payments.PaymentFromClient;
 import com.gestion_paiements.util.Currencies;
@@ -9,12 +12,13 @@ import com.gestion_paiements.util.PurchasedProducts;
 import com.gestion_paiements.util.Refreshable;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+import java.time.Month;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /// This table must show this information, that the user can enable or disable through parameters :
 /// - id
@@ -27,7 +31,27 @@ import java.util.Set;
 
 public class BankAccountTableController implements Refreshable {
 
-    private Set<Payment> payments;
+    // private Set<Payment> payments;
+    private WorkingCountry country;
+    private Destination destination;
+    private int year;
+    private Month month;
+
+    public void setCountry(WorkingCountry country) {
+        this.country = country;
+    }
+
+    public void setDestination(Destination destination) {
+        this.destination = destination;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public void setMonth(Month month) {
+        this.month = month;
+    }
 
     @FXML
     private TableView<Payment> table;
@@ -42,14 +66,8 @@ public class BankAccountTableController implements Refreshable {
     private final TableColumn<Payment, String> columnBought = new TableColumn<>("Produits");
     private final TableColumn<Payment, String> columnComment = new TableColumn<>("Commentaire");
 
-    public void setPayments(Set<Payment> payments) {
-        this.payments = payments;
-    }
-
     @FXML
     private void initialize () {
-
-        ObservableList<Payment> paymentsList = FXCollections.observableArrayList(payments);
 
         columnID.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId()).asObject());
         columnDateSent.setCellValueFactory(cellData -> new SimpleStringProperty(Dates.fromDateToString(cellData.getValue().getDateSent())));
@@ -59,7 +77,7 @@ public class BankAccountTableController implements Refreshable {
         columnSender.setCellValueFactory(cellData  -> new SimpleStringProperty(cellData.getValue().getSender().getName()));
         columnBought.setCellValueFactory(cellData -> {
             if (cellData.getValue() instanceof PaymentFromClient pfc) {
-                return new SimpleStringProperty(PurchasedProducts.fromSetToString(pfc.getProducts()));
+                return new SimpleStringProperty(PurchasedProducts.fromListToString(pfc.getProducts()));
             }
             else {
                 return new SimpleStringProperty("");
@@ -68,8 +86,7 @@ public class BankAccountTableController implements Refreshable {
         columnComment.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getComment()));
 
         setColumns();
-
-        table.setItems(paymentsList);
+        setItems();
 
     }
 
@@ -85,8 +102,19 @@ public class BankAccountTableController implements Refreshable {
         if (Preferences.ColumnsToShow.BAComment) table.getColumns().add(columnComment);
     }
 
+    private void setItems() {
+        table.getItems().clear();
+        Set<Payment> payments = Data.instance
+                .getMapAccountsCountries().get(country.getName())
+                .getAccountsAndPlatforms().get(destination.getName()).getTransfers()
+                .stream().filter(p -> p.getDateReceived().getYear() == year && p.getDateReceived().getMonth() == month)
+                .collect(Collectors.toSet());
+        table.setItems(FXCollections.observableArrayList(payments));
+    }
+
     @Override
     public void refreshElement() {
+        setItems();
         setColumns();
         table.refresh();
     }

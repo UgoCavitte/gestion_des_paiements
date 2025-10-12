@@ -63,7 +63,7 @@ public class PlatformTableController implements Refreshable {
         columnSender.setCellValueFactory(cellData  -> new SimpleStringProperty(cellData.getValue().getSender().getName()));
         columnBought.setCellValueFactory(cellData -> {
             if (cellData.getValue() instanceof PaymentFromClient pfc) {
-                return new SimpleStringProperty(PurchasedProducts.fromSetToString(pfc.getProducts()));
+                return new SimpleStringProperty(PurchasedProducts.fromListToString(pfc.getProducts()));
             }
             else {
                 return new SimpleStringProperty("");
