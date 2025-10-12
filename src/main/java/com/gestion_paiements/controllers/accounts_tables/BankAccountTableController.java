@@ -31,14 +31,9 @@ import java.util.stream.Collectors;
 
 public class BankAccountTableController implements Refreshable {
 
-    private WorkingCountry country;
     private Destination destination;
     private int year;
     private Month month;
-
-    public void setCountry(WorkingCountry country) {
-        this.country = country;
-    }
 
     public void setDestination(Destination destination) {
         this.destination = destination;
@@ -104,9 +99,9 @@ public class BankAccountTableController implements Refreshable {
     private void setItems() {
         table.getItems().clear();
         Set<Payment> payments = Data.instance
-                .getMapAccountsCountries().get(country.getName())
-                .getAccountsAndPlatforms().get(destination.getName()).getTransfers()
-                .stream().filter(p -> p.getDateReceived().getYear() == year && p.getDateReceived().getMonth() == month)
+                .getSetPayments()
+                .stream().filter(p -> p.getDestination() == destination)
+                .filter(p -> p.getDateReceived().getYear() == year && p.getDateReceived().getMonth() == month)
                 .collect(Collectors.toSet());
         table.setItems(FXCollections.observableArrayList(payments));
     }

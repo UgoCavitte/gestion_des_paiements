@@ -47,12 +47,6 @@ public class PlatformController {
         this.platform = platform;
     }
 
-    private WorkingCountry country;
-
-    public void setCountry(WorkingCountry country) {
-        this.country = country;
-    }
-
     // Used to set the columns
     @FXML
     private void initialize () {
@@ -119,7 +113,6 @@ public class PlatformController {
                 controller = new PlatformTableController();
                 RefreshableData.getToRefresh().add(controller); // Replacing the removed element instead of duplicating it
                 controller.setDestination(platform);
-                controller.setCountry(country);
                 controller.setYear(boxYear.getValue());
                 controller.setMonth(boxMonth.getValue());
 

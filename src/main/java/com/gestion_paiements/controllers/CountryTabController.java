@@ -49,7 +49,6 @@ public class CountryTabController {
                     loader = new FXMLLoader(Main.class.getResource( "bank-account-view.fxml"));
                     BankAccountController controller = new BankAccountController();
                     controller.setAccount(destination);
-                    controller.setCountry(tabCountry);
                     loader.setController(controller);
                 }
 
@@ -57,7 +56,6 @@ public class CountryTabController {
                     loader = new FXMLLoader(Main.class.getResource( "platform-view.fxml"));
                     PlatformController controller = new PlatformController();
                     controller.setPlatform(destination);
-                    controller.setCountry(tabCountry);
                     loader.setController(controller);
                 }
 

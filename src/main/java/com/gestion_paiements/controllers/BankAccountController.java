@@ -48,12 +48,6 @@ public class BankAccountController {
         this.account = account;
     }
 
-    private WorkingCountry country;
-
-    public void setCountry(WorkingCountry country) {
-        this.country = country;
-    }
-
     // Used to set the columns
     @FXML
     private void initialize () {
@@ -99,7 +93,6 @@ public class BankAccountController {
             RefreshableData.getToRefresh().remove(controller); // This is to prevent memory overload when user reloads tables too much
             controller = new BankAccountTableController();
             RefreshableData.getToRefresh().add(controller); // Replacing the removed element instead of duplicating it
-            controller.setCountry(country);
             controller.setDestination(account);
             controller.setYear(boxYear.getValue());
             controller.setMonth(boxMonth.getValue());
@@ -148,7 +141,6 @@ public class BankAccountController {
                 RefreshableData.getToRefresh().remove(controller); // This is to prevent memory overload when user reloads tables too much
                 controller = new BankAccountTableController();
                 RefreshableData.getToRefresh().add(controller); // Replacing the removed element instead of duplicating it
-                controller.setCountry(country);
                 controller.setDestination(account);
                 controller.setYear(boxYear.getValue());
                 controller.setMonth(boxMonth.getValue());
