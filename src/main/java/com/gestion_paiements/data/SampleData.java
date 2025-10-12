@@ -11,10 +11,7 @@ import java.util.*;
 
 public abstract class SampleData {
 
-
-
     public static void init() {
-
 
         // Currencies
         Currency eur = new Currency("EUR");
@@ -22,68 +19,70 @@ public abstract class SampleData {
         Data.instance.getSetCurrencies().add(eur);
         Data.instance.getSetCurrencies().add(rub);
 
-        // Accounts countries
-        Data.instance.getMapAccountsCountries().put("France", new WorkingCountry("France"));
-        HashMap<String, Destination> accountsForFrance = new HashMap<>();
-        accountsForFrance.put("LCL", new Destination(DestinationType.bankAccount, eur, "LCL"));
-        accountsForFrance.put("Stripe", new Destination(DestinationType.platform, eur, "Stripe"));
-        Data.instance.getMapAccountsCountries().get("France").setAccountsAndPlatforms(accountsForFrance);
 
-        Data.instance.getMapAccountsCountries().put("Russie", new WorkingCountry("Russie"));
+        // Working countries
+        WorkingCountry France = new WorkingCountry("France");
+        Data.instance.getMapAccountsCountries().put(France.getName(), France);
+        WorkingCountry Russie = new WorkingCountry("Russie");
+        Data.instance.getMapAccountsCountries().put(Russie.getName(), Russie);
+
+
+        // Accounts countries
+        Destination LCL = new Destination(DestinationType.bankAccount, eur, "LCL");
+        Destination Stripe = new Destination(DestinationType.platform, eur, "Stripe");
+        France.getAccountsAndPlatforms().put(LCL.getName(), LCL);
+        France.getAccountsAndPlatforms().put(Stripe.getName(), Stripe);
 
 
         // Products
-        Data.instance.getSetProducts().add(new Product("ind", "Cours individuel"));
-        Data.instance.getSetProducts().add(new Product("club", "Séance au club de discussion"));
-        Product[] products = Data.instance.getSetProducts().toArray(new Product[0]);
+        Product ind = new Product("ind", "Cours individuel");
+        Product club = new Product("club", "Séance au club de discussion");
+        Data.instance.getSetProducts().add(ind);
+        Data.instance.getSetProducts().add(club);
+
+
+        // Client countries
+        Country FranceClient = new Country("France");
+        Country RussieClient = new Country("Russie");
+        Country UkraineClient = new Country("Ukraine");
+
 
         // Client 1
-        Client sampleClient = new Client("Michel", new Country("France"), null);
+        Client sampleClient = new Client("Michel", FranceClient, null);
+        Data.instance.getSetClients().add(sampleClient);
         PaymentFromClient paymentFromMichel = new PaymentFromClient(
                 sampleClient,
-                Data.instance.getMapAccountsCountries().get("France").getAccountsAndPlatforms().get("LCL"),
+                LCL,
                 LocalDate.from(Instant.now().atZone(ZoneId.systemDefault())),
                 LocalDate.from(Instant.now().atZone(ZoneId.systemDefault())),
                 new Amount(10, eur),
                 new Amount(9.6, eur),
-                List.of(new PurchasedProduct(2, products[0])),
+                List.of(new PurchasedProduct(2, ind)),
                 null
                         );
 
+        Data.instance.getSetPayments().add(paymentFromMichel);
         sampleClient.getPayments().add(paymentFromMichel);
 
-        sampleClient.getPayments().add(new PaymentFromClient(
-                sampleClient,
-                Data.instance.getMapAccountsCountries().get("France").getAccountsAndPlatforms().get("Stripe"),
-                LocalDate.from(Instant.now().atZone(ZoneId.systemDefault())),
-                LocalDate.from(Instant.now().atZone(ZoneId.systemDefault())),
-                new Amount(20, eur),
-                new Amount(19.2, eur),
-                List.of(new PurchasedProduct(3, products[1])),
-                null
-        ));
 
         // Client 2
-        Client sampleClient2 = new Client( "Jacques", new Country("Russie"), null);
+        Client sampleClient2 = new Client( "Jacques", RussieClient, null);
+        Data.instance.getSetClients().add(sampleClient2);
         PaymentFromClient paymentFromJacques = new PaymentFromClient(
                 sampleClient2,
-                new Destination(DestinationType.bankAccount, eur, null),
+                LCL,
                 LocalDate.from(Instant.now().atZone(ZoneId.systemDefault())),
                 LocalDate.from(Instant.now().atZone(ZoneId.systemDefault())),
                 new Amount(10, eur),
                 new Amount(9.6, eur),
-                List.of(new PurchasedProduct(2, products[0])),
+                List.of(new PurchasedProduct(2, club)),
                 null
         );
+
+        Data.instance.getSetPayments().add(paymentFromJacques);
         sampleClient2.getPayments().add(paymentFromJacques);
 
-        Client[] clients = {sampleClient, sampleClient2};
-        Data.instance.setSetClients(new HashSet<>(Arrays.stream(clients).toList()));
 
-        // Client countries
-        Data.instance.getMapClientsCountries().put("France", new Country("France"));
-        Data.instance.getMapClientsCountries().put("Russie", new Country("Russie"));
-        Data.instance.getMapClientsCountries().put("Ukraine", new Country("Ukraine"));
 
         // Payments
         for (PaymentFromClient p : sampleClient.getPayments()) {

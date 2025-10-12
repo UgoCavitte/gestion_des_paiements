@@ -28,13 +28,14 @@ public final class PaymentFromClient extends Payment {
             @Nullable String comment) {
         super.setSender(sender);
         this.purchasedProducts = purchasedProducts;
-        super.setId(IDs.getAvailableID(Data.instance.getSetPayments())); // TODO Maybe setting the ID automatically would be better?
         super.setDestination(destination);
         super.setDateSent(dateSent);
         super.setDateReceived(dateReceived);
         super.setSentAmount(sentAmount);
         super.setReceivedAmount(receivedAmount);
         super.setComment(comment);
+
+        super.setId(IDs.getAvailableID(Data.instance.getSetPayments()));
     }
 
     //////////////////////////////
