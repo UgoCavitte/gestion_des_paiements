@@ -31,7 +31,6 @@ import java.util.stream.Collectors;
 
 public class BankAccountTableController implements Refreshable {
 
-    // private Set<Payment> payments;
     private WorkingCountry country;
     private Destination destination;
     private int year;
