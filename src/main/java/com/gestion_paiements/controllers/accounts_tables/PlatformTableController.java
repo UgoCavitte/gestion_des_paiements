@@ -1,6 +1,9 @@
 package com.gestion_paiements.controllers.accounts_tables;
 
 import com.gestion_paiements.data.Preferences;
+import com.gestion_paiements.types.Data;
+import com.gestion_paiements.types.Destination;
+import com.gestion_paiements.types.WorkingCountry;
 import com.gestion_paiements.types.payments.Payment;
 import com.gestion_paiements.types.payments.PaymentFromClient;
 import com.gestion_paiements.util.Currencies;
@@ -15,7 +18,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+import java.time.Month;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /// This table must show this information, that the user can enable or disable through parameters :
 /// - id
@@ -28,7 +33,26 @@ import java.util.Set;
 
 public class PlatformTableController implements Refreshable {
 
-    private Set<Payment> payments;
+    private WorkingCountry country;
+    private Destination destination;
+    private int year;
+    private Month month;
+
+    public void setCountry(WorkingCountry country) {
+        this.country = country;
+    }
+
+    public void setDestination(Destination destination) {
+        this.destination = destination;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public void setMonth(Month month) {
+        this.month = month;
+    }
 
     @FXML
     private TableView<Payment> table;
@@ -44,16 +68,8 @@ public class PlatformTableController implements Refreshable {
     private final TableColumn<Payment, String> columnComment = new TableColumn<>("Commentaire");
     private final TableColumn<Payment, String> columnSentToBankID = new TableColumn<>("ID d'envoi sur le compte");
 
-    public void setPayments(Set<Payment> payments) {
-        this.payments = payments;
-    }
-
     @FXML
     private void initialize() {
-        System.out.println("Initializing");
-
-        // A mutable ObservableList to hold the countries for the ListView
-        ObservableList<Payment> paymentsList = FXCollections.observableArrayList(payments);
 
         columnID.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId()).asObject());
         columnDateSent.setCellValueFactory(cellData -> new SimpleStringProperty(Dates.fromDateToString(cellData.getValue().getDateSent())));
@@ -73,8 +89,7 @@ public class PlatformTableController implements Refreshable {
         columnSentToBankID.setCellValueFactory(cellData -> new SimpleStringProperty("Pas implémenté")); // TODO Implement this
 
         setColumns();
-
-        table.setItems(paymentsList);
+        setItems();
     }
 
     private void setColumns () {
@@ -90,8 +105,20 @@ public class PlatformTableController implements Refreshable {
         if (Preferences.ColumnsToShow.PSentToBank) table.getColumns().add(columnSentToBankID);
     }
 
+    private void setItems () {
+        table.getItems().clear();
+        Set<Payment> payments = Data.instance
+                .getMapAccountsCountries().get(country.getName())
+                .getAccountsAndPlatforms().get(destination.getName())
+                .getTransfers()
+                .stream().filter(p -> p.getDateReceived().getYear() == year && p.getDateReceived().getMonth() == month)
+                .collect(Collectors.toSet());
+        table.setItems(FXCollections.observableArrayList(payments));
+    }
+
     @Override
     public void refreshElement() {
+        setItems();
         setColumns();
         table.refresh();
     }
