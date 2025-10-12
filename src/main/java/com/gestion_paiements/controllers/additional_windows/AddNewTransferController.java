@@ -183,6 +183,12 @@ public class AddNewTransferController {
                 comment
         );
 
+        // Writing
+        client.getPayments().add(payment);
+        destination.getTransfers().add(payment);
+        Data.instance.getSetPayments().add(payment);
+        // TODO Write to DB
+
     }
 
 }
