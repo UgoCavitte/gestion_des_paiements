@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -188,6 +189,9 @@ public class AddNewTransferController {
         destination.getTransfers().add(payment);
         Data.instance.getSetPayments().add(payment);
         // TODO Write to DB
+
+        // Close window
+        ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
 
     }
 
