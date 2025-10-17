@@ -3,14 +3,16 @@ package com.gestion_paiements.controllers;
 import com.gestion_paiements.Main;
 import com.gestion_paiements.controllers.accounts_tables.BankAccountTableController;
 import com.gestion_paiements.data.RefreshableData;
+import com.gestion_paiements.types.Data;
 import com.gestion_paiements.types.Destination;
-import com.gestion_paiements.types.WorkingCountry;
+import com.gestion_paiements.types.payments.Payment;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -37,6 +39,15 @@ public class BankAccountController {
 
     @FXML
     private AnchorPane paneTable;
+
+    @FXML
+    private Label labelAverage;
+
+    @FXML
+    private Label labelCount;
+
+    @FXML
+    private Label labelTotal;
 
     private BankAccountTableController controller;
 
@@ -86,6 +97,8 @@ public class BankAccountController {
         boxMonth.setItems(FXCollections.observableList(monthsByYears.get(now.getYear()).stream().toList())); // Otherwise the box is empty
         boxMonth.setValue(now.getMonth());
 
+        setLabels();
+
         // Add the table
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("accounts_tables/table-bank-account.fxml"));
@@ -130,6 +143,21 @@ public class BankAccountController {
         }
     }
 
+    void setLabels() {
+        List<Payment> list = Data.instance.getSetPayments().stream()
+                .filter(p -> p.getDestination() == account)
+                .filter(p -> p.getDateReceived().getYear() == boxYear.getValue() && p.getDateReceived().getMonth() == boxMonth.getValue())
+                .toList();
+
+        int count = list.size();
+        double total = list.stream().map(p -> p.getReceivedAmount().getAmount()).reduce(0.0, Double::sum);
+        double average = total / count;
+
+        labelCount.setText(String.valueOf(count));
+        labelTotal.setText(String.valueOf(total));
+        labelAverage.setText(String.valueOf(average));
+    }
+
     @FXML
     void selectionChanged() {
         boxMonth.setItems(FXCollections.observableList(monthsByYears.get(boxYear.getValue()).stream().toList()));
@@ -152,6 +180,9 @@ public class BankAccountController {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
+            setLabels();
+
         }
     }
 }
