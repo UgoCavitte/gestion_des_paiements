@@ -18,7 +18,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </padding>
                 </Label>
-                <TableView fx:id="tableClients" minHeight="-Infinity" minWidth="-Infinity" prefHeight="608.0" prefWidth="460.0">
+                <TableView fx:id="tableClients" minHeight="-Infinity" minWidth="-Infinity" prefHeight="608.0" prefWidth="460.0" VBox.vgrow="ALWAYS">
                     <columns>
                         <TableColumn fx:id="tableClientsColumnID" prefWidth="75.0" text="ID" />
                         <TableColumn fx:id="tableClientsColumnName" prefWidth="75.0" text="Nom" />
@@ -27,7 +27,7 @@
                         <TableColumn fx:id="tableClientColumnComment" prefWidth="100.0" text="Commentaire" />
                     </columns>
                 </TableView>
-                <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="460.0">
+                <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="460.0" VBox.vgrow="ALWAYS">
                     <children>
                         <Button mnemonicParsing="false" onAction="#addNewClient" text="Ajouter">
                             <HBox.margin>

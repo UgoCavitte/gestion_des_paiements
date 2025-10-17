@@ -41,6 +41,7 @@ public class CountryTabController {
 
         for (Destination destination : tabCountry.getAccountsAndPlatforms().values()) {
             Tab tab = new Tab(destination.getName());
+
             try {
 
                 FXMLLoader loader;
