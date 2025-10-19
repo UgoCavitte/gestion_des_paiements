@@ -63,9 +63,11 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding></HBox>
             <Separator VBox.vgrow="NEVER" />
-            <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="38.0" minWidth="500.0" VBox.vgrow="NEVER">
+            <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="38.0" minWidth="500.0" spacing="10.0" VBox.vgrow="NEVER">
                <children>
-                  <Button mnemonicParsing="false" onAction="#addNewTransfer" text="Entrer un nouveau paiement" textAlignment="CENTER" />
+                  <Button mnemonicParsing="false" onAction="#addNewTransfer" text="Nouveau paiement" textAlignment="CENTER" />
+                  <Button alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#modify" text="Modifier" HBox.hgrow="NEVER" />
+                  <Button alignment="CENTER" disable="true" layoutX="296.0" layoutY="14.0" mnemonicParsing="false" onAction="#delete" text="Supprimer" />
                </children>
             </HBox>
          </children>
