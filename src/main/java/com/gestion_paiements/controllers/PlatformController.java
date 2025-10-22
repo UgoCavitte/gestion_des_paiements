@@ -4,7 +4,6 @@ import com.gestion_paiements.Main;
 import com.gestion_paiements.controllers.accounts_tables.PlatformTableController;
 import com.gestion_paiements.data.RefreshableData;
 import com.gestion_paiements.types.Destination;
-import com.gestion_paiements.types.WorkingCountry;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

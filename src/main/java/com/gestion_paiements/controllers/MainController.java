@@ -79,7 +79,7 @@ public class MainController {
             stage.showAndWait();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException();
         }
     }
 

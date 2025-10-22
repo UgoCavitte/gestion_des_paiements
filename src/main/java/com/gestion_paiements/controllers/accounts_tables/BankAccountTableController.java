@@ -3,7 +3,6 @@ package com.gestion_paiements.controllers.accounts_tables;
 import com.gestion_paiements.data.Preferences;
 import com.gestion_paiements.types.Data;
 import com.gestion_paiements.types.Destination;
-import com.gestion_paiements.types.WorkingCountry;
 import com.gestion_paiements.types.payments.Payment;
 import com.gestion_paiements.types.payments.PaymentFromClient;
 import com.gestion_paiements.util.Currencies;
@@ -115,9 +114,7 @@ public class BankAccountTableController implements Refreshable {
     }
 
     private void setListener () {
-        table.getSelectionModel().selectedItemProperty().addListener((obs, oldS, newS) -> {
-            callBackSelection.apply(newS);
-        });
+        table.getSelectionModel().selectedItemProperty().addListener((obs, oldS, newS) -> callBackSelection.apply(newS));
     }
 
     @Override
