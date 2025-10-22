@@ -4,6 +4,7 @@ import com.gestion_paiements.Main;
 import com.gestion_paiements.controllers.accounts_tables.BankAccountTableController;
 import com.gestion_paiements.controllers.additional_windows.ModifyPaymentController;
 import com.gestion_paiements.data.RefreshableData;
+import com.gestion_paiements.types.Client;
 import com.gestion_paiements.types.Data;
 import com.gestion_paiements.types.Destination;
 import com.gestion_paiements.types.payments.Payment;
@@ -245,6 +246,13 @@ public class BankAccountController {
 
     @FXML
     void delete () {
-        //
+        // TODO Check the payment type
+        selectedPayment.getDestination().getTransfers().remove(selectedPayment);
+        ((Client) selectedPayment.getSender()).getPayments().remove(selectedPayment);
+        Data.instance.getSetPayments().remove(selectedPayment);
+
+        RefreshableData.refreshTables();
+
+        // TODO Write to memory
     }
 }
