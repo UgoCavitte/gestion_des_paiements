@@ -28,8 +28,8 @@ public abstract class SampleData {
 
 
         // Accounts countries
-        Destination LCL = new Destination(DestinationType.bankAccount, eur, "LCL");
-        Destination Stripe = new Destination(DestinationType.platform, eur, "Stripe");
+        Destination LCL = new Destination(DestinationType.bankAccount, France, eur, "LCL");
+        Destination Stripe = new Destination(DestinationType.platform, France, eur, "Stripe");
         France.getAccountsAndPlatforms().put(LCL.getName(), LCL);
         France.getAccountsAndPlatforms().put(Stripe.getName(), Stripe);
 

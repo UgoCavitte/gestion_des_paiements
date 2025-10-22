@@ -12,6 +12,8 @@ public final class Destination extends Sender {
 
     private DestinationType destinationType;
 
+    private WorkingCountry country;
+
     private Currency currency;
 
     private HashSet<Payment> transfers = new HashSet<>();
@@ -20,8 +22,9 @@ public final class Destination extends Sender {
     /// CONSTRUCTOR
     //////////////////////////////
 
-    public Destination(DestinationType destinationType, Currency currency, String name) {
+    public Destination(DestinationType destinationType, WorkingCountry country, Currency currency, String name) {
         this.destinationType = destinationType;
+        this.country = country;
         this.currency = currency;
         super.setName(name);
     }
@@ -52,5 +55,13 @@ public final class Destination extends Sender {
 
     public void setTransfers(HashSet<Payment> transfers) {
         this.transfers = transfers;
+    }
+
+    public WorkingCountry getCountry() {
+        return country;
+    }
+
+    public void setCountry(WorkingCountry country) {
+        this.country = country;
     }
 }
