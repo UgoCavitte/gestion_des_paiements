@@ -51,6 +51,11 @@ public final class PaymentFromClient extends Payment {
     }
 
     @Override
+    public Client getSender() {
+        return (Client) super.getSender();
+    }
+
+    @Override
     public int compareTo(@NotNull Payment other) {
         return this.getDateReceived().compareTo(other.getDateReceived());
     }
