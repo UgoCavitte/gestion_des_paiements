@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -58,6 +59,14 @@ public class BankAccountController {
     public void setAccount(Destination account) {
         this.account = account;
     }
+
+    @FXML
+    private Button buttonDelete;
+
+    @FXML
+    private Button buttonModify;
+
+    private Payment selectedPayment;
 
     // Used to set the columns
     @FXML
@@ -110,6 +119,8 @@ public class BankAccountController {
             controller.setYear(boxYear.getValue());
             controller.setMonth(boxMonth.getValue());
 
+            // Selection listener callback
+            controller.setCallBackSelection(this::selectionCallBack);
             loader.setController(controller);
 
             paneTable.getChildren().clear();
@@ -184,5 +195,30 @@ public class BankAccountController {
             setLabels();
 
         }
+    }
+
+    private Void selectionCallBack(Payment p) {
+
+        if (p == null) {
+            buttonDelete.setDisable(true);
+            buttonModify.setDisable(true);
+            return null;
+        }
+
+        buttonModify.setDisable(false);
+        buttonDelete.setDisable(false);
+
+        selectedPayment = p;
+        return null;
+    }
+
+    @FXML
+    void modify () {
+        System.out.println(selectedPayment.getReceivedAmount().getAmount());
+    }
+
+    @FXML
+    void delete () {
+        //
     }
 }

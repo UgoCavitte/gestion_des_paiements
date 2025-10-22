@@ -66,8 +66,8 @@
             <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="38.0" minWidth="500.0" spacing="10.0" VBox.vgrow="NEVER">
                <children>
                   <Button mnemonicParsing="false" onAction="#addNewTransfer" text="Nouveau paiement" textAlignment="CENTER" />
-                  <Button alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#modify" text="Modifier" HBox.hgrow="NEVER" />
-                  <Button alignment="CENTER" disable="true" layoutX="296.0" layoutY="14.0" mnemonicParsing="false" onAction="#delete" text="Supprimer" />
+                  <Button fx:id="buttonModify" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#modify" text="Modifier" HBox.hgrow="NEVER" />
+                  <Button fx:id="buttonDelete" alignment="CENTER" disable="true" layoutX="296.0" layoutY="14.0" mnemonicParsing="false" onAction="#delete" text="Supprimer" />
                </children>
             </HBox>
          </children>
