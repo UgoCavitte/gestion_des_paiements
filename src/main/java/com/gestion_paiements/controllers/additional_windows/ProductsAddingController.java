@@ -20,6 +20,12 @@ public class ProductsAddingController {
 
     final int elementWidth = 80;
 
+    private List<PurchasedProduct> initialList;
+
+    public void setInitialList(List<PurchasedProduct> initialList) {
+        this.initialList = initialList;
+    }
+
     @FXML
     private HBox hBox;
 
@@ -31,27 +37,53 @@ public class ProductsAddingController {
 
     @FXML
     private void initialize() {
-        // Sets the first ComboBox
-        ComboBox<String> firstBox = new ComboBox<>(FXCollections.observableList(Data.instance.getSetProducts().stream().map(Product::getShortName).toList()));
-        firstBox.setOnAction(e -> addButton.setDisable(false)
-        );
-        firstBox.setPrefWidth(elementWidth);
-        boxes.add(firstBox);
+        // If we are creating and not modifying
+        if (initialList == null) {
+            ComboBox<String> firstBox = new ComboBox<>(FXCollections.observableList(Data.instance.getSetProducts().stream().map(Product::getShortName).toList()));
+            firstBox.setOnAction(e -> addButton.setDisable(false));
+            firstBox.setPrefWidth(elementWidth);
+            boxes.add(firstBox);
 
-        TextField firstField = new TextField("1");
-        firstField.setPrefWidth(elementWidth);
-        fields.add(firstField);
+            TextField firstField = new TextField("1");
+            firstField.setPrefWidth(elementWidth);
+            fields.add(firstField);
 
-        VBox boxToAdd = new VBox(firstBox, firstField);
-        boxToAdd.setPrefWidth(elementWidth);
-        hBox.getChildren().add(boxToAdd);
+            VBox boxToAdd = new VBox(firstBox, firstField);
+            boxToAdd.setPrefWidth(elementWidth);
+            hBox.getChildren().add(boxToAdd);
 
-        // Sets the "add a new product" button
-        addButton = new Button("Ajouter");
-        addButton.setPrefWidth(elementWidth);
-        addButton.setOnAction(event -> addProduct());
-        addButton.setDisable(true);
-        hBox.getChildren().add(addButton);
+            // Sets the "add a new product" button
+            addButton = new Button("Ajouter");
+            addButton.setPrefWidth(elementWidth);
+            addButton.setOnAction(event -> addProduct());
+            addButton.setDisable(true);
+            hBox.getChildren().add(addButton);
+        }
+
+        // If we are modifying
+        else {
+            List<VBox> vBoxes = new ArrayList<>();
+            initialList.forEach(p -> {
+                ComboBox<String> box = new ComboBox<>(FXCollections.observableList(Data.instance.getSetProducts().stream().map(Product::getShortName).toList()));
+                box.setValue(p.getProduct().getShortName());
+                box.setPrefWidth(elementWidth);
+                boxes.add(box);
+
+                TextField field = new TextField(String.valueOf(p.getQuantity()));
+                field.setPrefWidth(elementWidth);
+                fields.add(field);
+
+                vBoxes.add(new VBox(box, field));
+            });
+            hBox.getChildren().addAll(vBoxes);
+
+            // Sets the "add a new product" button
+            addButton = new Button("Ajouter");
+            addButton.setPrefWidth(elementWidth);
+            addButton.setOnAction(event -> addProduct());
+            addButton.setDisable(false);
+            hBox.getChildren().add(addButton);
+        }
     }
 
     private void addProduct() {

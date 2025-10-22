@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <HBox prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <VBox prefHeight="200.0" prefWidth="300.0">
+                    <children>
+                        <Label text="Client">
+                            <VBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </VBox.margin>
+                        </Label>
+                        <ComboBox fx:id="boxClient" prefWidth="150.0">
+                            <VBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </VBox.margin>
+                        </ComboBox>
+                        <Label text="Destination">
+                            <VBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </VBox.margin>
+                        </Label>
+                        <HBox prefHeight="26.0" prefWidth="200.0">
+                            <children>
+                                <ComboBox fx:id="boxCountry" onAction="#countrySelected" prefWidth="150.0">
+                                    <HBox.margin>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                    </HBox.margin>
+                                </ComboBox>
+                                <ComboBox fx:id="boxAccount" onAction="#accountSelected" prefWidth="150.0">
+                                    <HBox.margin>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                    </HBox.margin>
+                                </ComboBox>
+                            </children>
+                            <VBox.margin>
+                                <Insets />
+                            </VBox.margin>
+                        </HBox>
+                        <Label text="Date d'envoi">
+                            <VBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </VBox.margin>
+                        </Label>
+                        <DatePicker fx:id="pickerDateSent">
+                            <VBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </VBox.margin>
+                        </DatePicker>
+                        <Label text="Date de réception">
+                            <VBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </VBox.margin>
+                        </Label>
+                        <DatePicker fx:id="pickerDateReceived">
+                            <VBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </VBox.margin>
+                        </DatePicker>
+                        <Label text="Somme envoyée">
+                            <VBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </VBox.margin>
+                        </Label>
+                        <HBox prefHeight="26.0" prefWidth="200.0">
+                            <children>
+                                <TextField fx:id="fieldAmountSent" />
+                                <ComboBox fx:id="boxCurrencySent" prefWidth="150.0" />
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <Label text="Somme reçue">
+                            <VBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </VBox.margin>
+                        </Label>
+                        <HBox alignment="CENTER_LEFT" prefHeight="26.0" prefWidth="200.0">
+                            <children>
+                                <TextField fx:id="fieldAmountReceived" />
+                                <Label fx:id="labelCurrencyReceived" HBox.hgrow="ALWAYS">
+                                    <HBox.margin>
+                                        <Insets left="5.0" right="5.0" />
+                                    </HBox.margin>
+                                </Label>
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </VBox.margin>
+                        </HBox>
+                    </children>
+                </VBox>
+                <VBox prefHeight="200.0" prefWidth="300.0">
+                    <children>
+                        <Label text="Produits">
+                            <VBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </VBox.margin>
+                        </Label>
+                        <ScrollPane hbarPolicy="ALWAYS" maxHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="200.0" vbarPolicy="NEVER">
+                            <content>
+                                <AnchorPane fx:id="paneProducts" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="70.0" />
+                            </content>
+                        </ScrollPane>
+                        <Label text="Commentaire">
+                            <VBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </VBox.margin>
+                        </Label>
+                        <TextArea fx:id="areaComment" prefHeight="150.0" prefWidth="200.0" promptText="Commentaire">
+                            <VBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </VBox.margin>
+                        </TextArea>
+                        <Label fx:id="labelError" textFill="RED">
+                            <VBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </VBox.margin>
+                        </Label>
+                        <Button mnemonicParsing="false" onAction="#validate" text="Valider">
+                            <VBox.margin>
+                                <Insets left="116.0" right="115.0" top="30.0" />
+                            </VBox.margin>
+                        </Button>
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+    </children>
+</AnchorPane>
