@@ -31,7 +31,7 @@ public class ModifyPaymentController {
     private TextArea areaComment;
 
     @FXML
-    private ComboBox<String> boxAccount; // TODO
+    private ComboBox<String> boxAccount;
 
     @FXML
     private ComboBox<String> boxClient;
@@ -77,7 +77,6 @@ public class ModifyPaymentController {
         boxCurrencySent.setItems(FXCollections.observableList(Data.instance.getSetCurrencies().stream().map(Currency::getName).sorted().toList()));
 
         // Adds the "add products" pane
-        // TODO send it the products from that payment
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("additional_windows/products-adding.fxml"));
             controller = new ProductsAddingController();
