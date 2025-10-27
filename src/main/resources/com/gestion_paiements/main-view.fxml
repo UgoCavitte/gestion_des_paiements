@@ -25,8 +25,8 @@
       </MenuBar>
       <SplitPane dividerPositions="0.5" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="27.0">
          <items>
-            <AnchorPane fx:id="mainTabPane" maxHeight="Infinity" maxWidth="Infinity"/>
-            <AnchorPane fx:id="paneClient" maxHeight="Infinity" maxWidth="Infinity"/>
+            <AnchorPane fx:id="mainTabPane" />
+            <AnchorPane fx:id="paneClient" />
          </items>
       </SplitPane>
    </children>
