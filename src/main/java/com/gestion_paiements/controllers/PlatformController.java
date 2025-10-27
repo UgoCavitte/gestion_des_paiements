@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.time.Instant;
 import java.time.Month;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -53,6 +54,9 @@ public class PlatformController {
     // Used to set the columns
     @FXML
     private void initialize () {
+
+        ZonedDateTime now = Instant.now().atZone(ZoneId.systemDefault());
+
         // On commence par les comboBoxes
         final Set<Integer> availableYears = platform.getTransfers().stream().map(p -> p.getDateReceived().getYear()).collect(Collectors.toSet());
 
@@ -80,6 +84,11 @@ public class PlatformController {
 
             boxYear.setItems(FXCollections.observableList(monthsByYears.keySet().stream().toList()));
         }
+
+        // Select the current year and month
+        boxYear.setValue(now.getYear());
+        boxMonth.setItems(FXCollections.observableList(monthsByYears.get(now.getYear()).stream().toList())); // Otherwise the box is empty
+        boxMonth.setValue(now.getMonth());
 
         // Add the table
         try {
