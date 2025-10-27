@@ -7,8 +7,12 @@ import com.gestion_paiements.types.Destination;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -92,7 +96,23 @@ public class PlatformController {
 
     @FXML
     void addNewTransfer() {
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("additional_windows/add-new-transfer.fxml"));
+            Parent parent = loader.load();
 
+            Stage stage = new Stage();
+            stage.setTitle("Nouveau paiement");
+            stage.initModality(Modality.WINDOW_MODAL);
+
+            Scene scene = new Scene(parent);
+            stage.setScene(scene);
+
+            stage.setResizable(false);
+
+            stage.showAndWait();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
