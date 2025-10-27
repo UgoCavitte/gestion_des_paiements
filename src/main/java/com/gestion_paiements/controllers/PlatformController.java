@@ -3,13 +3,18 @@ package com.gestion_paiements.controllers;
 import com.gestion_paiements.Main;
 import com.gestion_paiements.controllers.accounts_tables.PlatformTableController;
 import com.gestion_paiements.data.RefreshableData;
+import com.gestion_paiements.types.Data;
 import com.gestion_paiements.types.Destination;
+import com.gestion_paiements.types.payments.Payment;
+import com.gestion_paiements.util.Refreshable;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -30,7 +35,7 @@ import java.util.stream.Collectors;
 /// - a button to add an entering transfer ;
 /// - a button to add a transfer to the bank account.
 
-public class PlatformController {
+public class PlatformController implements Refreshable {
 
     @FXML
     private ComboBox<Month> boxMonth;
@@ -41,6 +46,15 @@ public class PlatformController {
     @FXML
     private AnchorPane paneTable;
 
+    @FXML
+    private Label labelAverage;
+
+    @FXML
+    private Label labelCount;
+
+    @FXML
+    private Label labelTotal;
+
     private PlatformTableController controller;
 
     private final HashMap<Integer, Set<Month>> monthsByYears = new HashMap<>();
@@ -50,6 +64,14 @@ public class PlatformController {
     public void setPlatform(Destination platform) {
         this.platform = platform;
     }
+
+    @FXML
+    private Button buttonDelete; // TODO implement these
+
+    @FXML
+    private Button buttonModify;
+
+    private Payment selectedPayment;
 
     // Used to set the columns
     @FXML
@@ -90,9 +112,23 @@ public class PlatformController {
         boxMonth.setItems(FXCollections.observableList(monthsByYears.get(now.getYear()).stream().toList())); // Otherwise the box is empty
         boxMonth.setValue(now.getMonth());
 
+        setLabels();
+
         // Add the table
         try {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("accounts_tables/empty-table.fxml"));
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("accounts_tables/table-platform.fxml"));
+
+            RefreshableData.getToRefresh().remove(controller); // This is to prevent memory overload when user reloads tables too much
+            controller = new PlatformTableController();
+            RefreshableData.getToRefresh().add(controller); // Replacing the removed element instead of duplicating it
+            controller.setDestination(platform);
+            controller.setYear(boxYear.getValue());
+            controller.setMonth(boxMonth.getValue());
+
+            // Selection listener callback
+            controller.setCallBackSelection(this::selectionCallBack);
+            loader.setController(controller);
+
             paneTable.getChildren().clear();
             paneTable.getChildren().add(loader.load());
         }
@@ -129,6 +165,21 @@ public class PlatformController {
 
     }
 
+    void setLabels() {
+        List<Payment> list = Data.instance.getSetPayments().stream()
+                .filter(p -> p.getDestination() == platform)
+                .filter(p -> p.getDateReceived().getYear() == boxYear.getValue() && p.getDateReceived().getMonth() == boxMonth.getValue())
+                .toList();
+
+        int count = list.size();
+        double total = list.stream().map(p -> p.getReceivedAmount().getAmount()).reduce(0.0, Double::sum);
+        double average = total / count;
+
+        labelCount.setText(String.valueOf(count));
+        labelTotal.setText(String.valueOf(total));
+        labelAverage.setText(String.valueOf(average));
+    }
+
     @FXML
     void selectionChanged() {
         boxMonth.setItems(FXCollections.observableList(monthsByYears.get(boxYear.getValue()).stream().toList()));
@@ -154,4 +205,23 @@ public class PlatformController {
         }
     }
 
+    private Void selectionCallBack(Payment p) {
+
+        if (p == null) {
+            buttonDelete.setDisable(true);
+            buttonModify.setDisable(true);
+            return null;
+        }
+
+        buttonModify.setDisable(false);
+        buttonDelete.setDisable(false);
+
+        selectedPayment = p;
+        return null;
+    }
+
+    @Override
+    public void refreshElement() {
+        setLabels();
+    }
 }

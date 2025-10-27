@@ -9,6 +9,7 @@ import com.gestion_paiements.types.Data;
 import com.gestion_paiements.types.Destination;
 import com.gestion_paiements.types.payments.Payment;
 import com.gestion_paiements.types.payments.PaymentFromClient;
+import com.gestion_paiements.util.Refreshable;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -33,7 +34,7 @@ import java.util.stream.Collectors;
 
 // TODO Make the columns customizable in the parameters menu
 
-public class BankAccountController {
+public class BankAccountController implements Refreshable {
 
     @FXML
     private ComboBox<Month> boxMonth;
@@ -254,5 +255,10 @@ public class BankAccountController {
         RefreshableData.refreshTables();
 
         // TODO Write to memory
+    }
+
+    @Override
+    public void refreshElement() {
+        setLabels();
     }
 }

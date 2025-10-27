@@ -18,6 +18,7 @@ import javafx.scene.control.TableView;
 
 import java.time.Month;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /// This table must show this information, that the user can enable or disable through parameters :
@@ -30,6 +31,12 @@ import java.util.stream.Collectors;
 /// - bought products
 
 public class PlatformTableController implements Refreshable {
+
+    Function<Payment, Void> callBackSelection;
+
+    public void setCallBackSelection(Function<Payment, Void> callBackSelection) {
+        this.callBackSelection = callBackSelection;
+    }
 
     private Destination destination;
     private int year;
@@ -83,6 +90,7 @@ public class PlatformTableController implements Refreshable {
 
         setColumns();
         setItems();
+        setListener();
     }
 
     private void setColumns () {
@@ -106,6 +114,10 @@ public class PlatformTableController implements Refreshable {
                 .filter(p -> p.getDateReceived().getYear() == year && p.getDateReceived().getMonth() == month)
                 .collect(Collectors.toSet());
         table.setItems(FXCollections.observableArrayList(payments));
+    }
+
+    private void setListener () {
+        table.getSelectionModel().selectedItemProperty().addListener((obs, oldS, newS) -> callBackSelection.apply(newS));
     }
 
     @Override

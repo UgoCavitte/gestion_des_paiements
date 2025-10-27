@@ -1,6 +1,7 @@
 package com.gestion_paiements.controllers;
 
 import com.gestion_paiements.Main;
+import com.gestion_paiements.data.RefreshableData;
 import com.gestion_paiements.types.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -49,6 +50,7 @@ public class CountryTabController {
                 if (destination.getDestinationType() == DestinationType.bankAccount) {
                     loader = new FXMLLoader(Main.class.getResource( "bank-account-view.fxml"));
                     BankAccountController controller = new BankAccountController();
+                    RefreshableData.getToRefresh().add(controller);
                     controller.setAccount(destination);
                     loader.setController(controller);
                 }
@@ -56,6 +58,7 @@ public class CountryTabController {
                 else {
                     loader = new FXMLLoader(Main.class.getResource( "platform-view.fxml"));
                     PlatformController controller = new PlatformController();
+                    RefreshableData.getToRefresh().add(controller);
                     controller.setPlatform(destination);
                     loader.setController(controller);
                 }
