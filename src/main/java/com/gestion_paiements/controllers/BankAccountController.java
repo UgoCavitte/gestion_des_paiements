@@ -143,7 +143,7 @@ public class BankAccountController {
             Parent parent = loader.load();
 
             Stage stage = new Stage();
-            stage.setTitle("Paramètres");
+            stage.setTitle("Nouveau paiement");
             stage.initModality(Modality.WINDOW_MODAL);
 
             Scene scene = new Scene(parent);
