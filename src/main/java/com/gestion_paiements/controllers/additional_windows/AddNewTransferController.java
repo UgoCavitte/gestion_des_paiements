@@ -21,6 +21,12 @@ import java.util.Objects;
 
 public class AddNewTransferController {
 
+    private Destination destination;
+
+    public void setDestination (Destination destination) {
+        this.destination = destination;
+    }
+
     @FXML
     private TextArea areaComment;
 
@@ -65,6 +71,12 @@ public class AddNewTransferController {
         boxClient.setItems(FXCollections.observableList(Data.instance.getSetClients().stream().map(Client::getName).sorted().toList()));
         boxCountry.setItems(FXCollections.observableList(Data.instance.getMapAccountsCountries().keySet().stream().sorted().toList()));
         boxCurrencySent.setItems(FXCollections.observableList(Data.instance.getSetCurrencies().stream().map(Currency::getName).sorted().toList()));
+
+        // Preselect country and account
+        boxCountry.setValue(destination.getCountry().getName());
+        countrySelected();
+        boxAccount.setValue(destination.getName());
+        accountSelected();
 
         // Adds the "add products" pane
         try {

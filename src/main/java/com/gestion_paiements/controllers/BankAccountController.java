@@ -2,6 +2,7 @@ package com.gestion_paiements.controllers;
 
 import com.gestion_paiements.Main;
 import com.gestion_paiements.controllers.accounts_tables.BankAccountTableController;
+import com.gestion_paiements.controllers.additional_windows.AddNewTransferController;
 import com.gestion_paiements.controllers.additional_windows.ModifyPaymentController;
 import com.gestion_paiements.data.RefreshableData;
 import com.gestion_paiements.types.Client;
@@ -141,6 +142,11 @@ public class BankAccountController implements Refreshable {
     void addNewTransfer() {
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("additional_windows/add-new-transfer.fxml"));
+
+            AddNewTransferController controller = new AddNewTransferController();
+            controller.setDestination(account);
+            loader.setController(controller);
+
             Parent parent = loader.load();
 
             Stage stage = new Stage();

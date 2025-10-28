@@ -2,6 +2,7 @@ package com.gestion_paiements.controllers;
 
 import com.gestion_paiements.Main;
 import com.gestion_paiements.controllers.accounts_tables.PlatformTableController;
+import com.gestion_paiements.controllers.additional_windows.AddNewTransferController;
 import com.gestion_paiements.controllers.additional_windows.ModifyPaymentController;
 import com.gestion_paiements.data.RefreshableData;
 import com.gestion_paiements.types.Client;
@@ -66,10 +67,10 @@ public class PlatformController implements Refreshable {
 
     public void setPlatform(Destination platform) {
         this.platform = platform;
-    } // TODO automate selection
+    }
 
     @FXML
-    private Button buttonDelete; // TODO implement these
+    private Button buttonDelete;
 
     @FXML
     private Button buttonModify;
@@ -146,6 +147,11 @@ public class PlatformController implements Refreshable {
     void addNewTransfer() {
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("additional_windows/add-new-transfer.fxml"));
+
+            AddNewTransferController controller = new AddNewTransferController();
+            controller.setDestination(platform);
+            loader.setController(controller);
+
             Parent parent = loader.load();
 
             Stage stage = new Stage();
