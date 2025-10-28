@@ -2,10 +2,13 @@ package com.gestion_paiements.controllers;
 
 import com.gestion_paiements.Main;
 import com.gestion_paiements.controllers.accounts_tables.PlatformTableController;
+import com.gestion_paiements.controllers.additional_windows.ModifyPaymentController;
 import com.gestion_paiements.data.RefreshableData;
+import com.gestion_paiements.types.Client;
 import com.gestion_paiements.types.Data;
 import com.gestion_paiements.types.Destination;
 import com.gestion_paiements.types.payments.Payment;
+import com.gestion_paiements.types.payments.PaymentFromClient;
 import com.gestion_paiements.util.Refreshable;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -63,7 +66,7 @@ public class PlatformController implements Refreshable {
 
     public void setPlatform(Destination platform) {
         this.platform = platform;
-    }
+    } // TODO automate selection
 
     @FXML
     private Button buttonDelete; // TODO implement these
@@ -218,6 +221,44 @@ public class PlatformController implements Refreshable {
 
         selectedPayment = p;
         return null;
+    }
+
+    @FXML
+    void modify () {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("additional_windows/modify-payment.fxml"));
+
+            ModifyPaymentController controller = new ModifyPaymentController();
+            controller.setSelectedPayment((PaymentFromClient) selectedPayment); // TODO Fix that
+            fxmlLoader.setController(controller);
+
+            Parent parent = fxmlLoader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("Modifier un paiement");
+            stage.initModality(Modality.WINDOW_MODAL);
+
+            Scene scene = new Scene(parent);
+            stage.setScene(scene);
+
+            stage.setResizable(false);
+
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    @FXML
+    void delete () {
+        selectedPayment.getDestination().getTransfers().remove(selectedPayment);
+        ((Client) selectedPayment.getSender()).getPayments().remove(selectedPayment);
+        Data.instance.getSetPayments().remove(selectedPayment);
+
+        RefreshableData.refreshTables();
+
+        // TODO Write to memory
     }
 
     @Override
