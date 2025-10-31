@@ -3,6 +3,7 @@ package com.gestion_paiements.data;
 import com.gestion_paiements.types.*;
 import com.gestion_paiements.types.Currency;
 import com.gestion_paiements.types.payments.PaymentFromClient;
+import com.gestion_paiements.types.payments.StatusPaymentFromClient;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -58,6 +59,7 @@ public abstract class SampleData {
                 new Amount(10, eur),
                 new Amount(9.6, eur),
                 List.of(new PurchasedProduct(2, ind)),
+                StatusPaymentFromClient.NOT_ON_A_PLATFORM,
                 null
                         );
 
@@ -76,6 +78,7 @@ public abstract class SampleData {
                 new Amount(10, eur),
                 new Amount(9.6, eur),
                 List.of(new PurchasedProduct(2, club)),
+                StatusPaymentFromClient.NOT_ON_A_PLATFORM,
                 null
         );
 

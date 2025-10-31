@@ -4,6 +4,7 @@ import com.gestion_paiements.Main;
 import com.gestion_paiements.data.RefreshableData;
 import com.gestion_paiements.types.*;
 import com.gestion_paiements.types.payments.PaymentFromClient;
+import com.gestion_paiements.types.payments.StatusPaymentFromClient;
 import com.gestion_paiements.util.Currencies;
 import com.gestion_paiements.util.Destinations;
 import javafx.collections.FXCollections;
@@ -187,6 +188,9 @@ public class AddNewTransferController {
             }
         }
 
+        // Status
+        StatusPaymentFromClient status = destination.getDestinationType() == DestinationType.platform ? StatusPaymentFromClient.SENT_TO_A_PLATFORM : StatusPaymentFromClient.NOT_ON_A_PLATFORM;
+
         PaymentFromClient payment = new PaymentFromClient(
                 client,
                 destination,
@@ -195,6 +199,7 @@ public class AddNewTransferController {
                 amountSent,
                 amountReceived,
                 list,
+                status,
                 comment
         );
 

@@ -13,6 +13,8 @@ public final class PaymentFromClient extends Payment {
     // Product(s) (what did the client paid for?)
     private List<PurchasedProduct> purchasedProducts;
 
+    private StatusPaymentFromClient status;
+
     //////////////////////////////
     /// CONSTRUCTOR
     //////////////////////////////
@@ -25,6 +27,7 @@ public final class PaymentFromClient extends Payment {
             Amount sentAmount,
             Amount receivedAmount,
             List<PurchasedProduct> purchasedProducts,
+            StatusPaymentFromClient status,
             @Nullable String comment) {
         super.setSender(sender);
         this.purchasedProducts = purchasedProducts;
@@ -34,6 +37,7 @@ public final class PaymentFromClient extends Payment {
         super.setSentAmount(sentAmount);
         super.setReceivedAmount(receivedAmount);
         super.setComment(comment);
+        this.status = status;
 
         super.setId(IDs.getAvailableID(Data.instance.getSetPayments()));
     }
@@ -48,6 +52,14 @@ public final class PaymentFromClient extends Payment {
 
     public void setProducts(List<PurchasedProduct> purchasedProducts) {
         this.purchasedProducts = purchasedProducts;
+    }
+
+    public StatusPaymentFromClient getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusPaymentFromClient status) {
+        this.status = status;
     }
 
     @Override
