@@ -4,6 +4,7 @@ import com.gestion_paiements.Main;
 import com.gestion_paiements.controllers.accounts_tables.PlatformTableController;
 import com.gestion_paiements.controllers.additional_windows.AddNewTransferController;
 import com.gestion_paiements.controllers.additional_windows.ModifyPaymentController;
+import com.gestion_paiements.controllers.additional_windows.PlatformToBankAccountController;
 import com.gestion_paiements.data.RefreshableData;
 import com.gestion_paiements.types.Client;
 import com.gestion_paiements.types.Data;
@@ -169,9 +170,33 @@ public class PlatformController implements Refreshable {
         }
     }
 
+    /// This method opens a window that lets you select a list of payments on this platform and sends the group to the
+    /// bank account
     @FXML
     void transferToBankAccount () {
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("additional_windows/from-platform-to-bank-account.fxml"));
 
+            PlatformToBankAccountController controller = new PlatformToBankAccountController();
+            controller.setPlatform(platform);
+            loader.setController(controller);
+
+            Parent parent = loader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("Nouveau transfert");
+            stage.initModality(Modality.WINDOW_MODAL);
+
+            Scene scene = new Scene(parent);
+            stage.setScene(scene);
+
+            stage.setResizable(false);
+
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     void setLabels() {
