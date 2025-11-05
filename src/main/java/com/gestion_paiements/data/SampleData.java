@@ -65,6 +65,7 @@ public abstract class SampleData {
 
         Data.instance.getSetPayments().add(paymentFromMichel);
         sampleClient.getPayments().add(paymentFromMichel);
+        LCL.getTransfers().add(paymentFromMichel);
 
 
         // Client 2
@@ -84,6 +85,24 @@ public abstract class SampleData {
 
         Data.instance.getSetPayments().add(paymentFromJacques);
         sampleClient2.getPayments().add(paymentFromJacques);
+        LCL.getTransfers().add(paymentFromJacques);
+
+        // Stripe
+        PaymentFromClient toStripe = new PaymentFromClient(
+                sampleClient,
+                Stripe,
+                LocalDate.from(Instant.now().atZone(ZoneId.systemDefault())),
+                LocalDate.from(Instant.now().atZone(ZoneId.systemDefault())),
+                new Amount(10, eur),
+                new Amount(9.6, eur),
+                List.of(new PurchasedProduct(2, club)),
+                StatusPaymentFromClient.SENT_TO_A_PLATFORM,
+                null
+        );
+
+        Data.instance.getSetPayments().add(toStripe);
+        sampleClient.getPayments().add(toStripe);
+        Stripe.getTransfers().add(toStripe);
 
 
 
