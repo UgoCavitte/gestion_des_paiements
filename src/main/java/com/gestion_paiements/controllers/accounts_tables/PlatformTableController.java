@@ -108,6 +108,7 @@ public class PlatformTableController implements Refreshable {
 
     private void setItems () {
         table.getItems().clear();
+        // TODO correct this
         Set<Payment> payments = Data.instance
                 .getSetPayments()
                 .stream().filter(p -> p.getDestination() == destination)
