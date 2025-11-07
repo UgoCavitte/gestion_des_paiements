@@ -31,6 +31,7 @@ public final class PaymentFromPlatform extends Payment {
     }
 
     public PaymentFromPlatform (
+            HashSet<PaymentFromClient> payments,
             Destination sender,
             Destination destination,
             LocalDate dateSent,
@@ -38,6 +39,7 @@ public final class PaymentFromPlatform extends Payment {
             Amount commission,
             @Nullable String comment
     ) {
+        this.sentPayments = payments;
         super.setSender(sender);
         super.setDestination(destination);
         super.setDateSent(dateSent);
