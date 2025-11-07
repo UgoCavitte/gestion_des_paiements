@@ -2,8 +2,12 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -25,6 +29,90 @@
                   <VBox fx:id="vboxPayments" minHeight="300.0" minWidth="600.0" />
                </content>
             </ScrollPane>
+            <Label text="Compte concerné :">
+               <VBox.margin>
+                  <Insets left="36.0" top="5.0" />
+               </VBox.margin>
+            </Label>
+            <ComboBox fx:id="boxBankAccount" prefWidth="150.0">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="36.0" top="5.0" />
+               </VBox.margin>
+            </ComboBox>
+            <HBox alignment="CENTER">
+               <children>
+                  <VBox>
+                     <children>
+                        <Label text="Date d'envoi :">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <DatePicker fx:id="dateSent" onAction="#dateSentSelected">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </DatePicker>
+                     </children>
+                     <HBox.margin>
+                        <Insets left="36.0" right="80.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox>
+                     <children>
+                        <Label text="Date de réception :">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <DatePicker fx:id="dateReceived" />
+                     </children>
+                     <HBox.margin>
+                        <Insets left="36.0" right="80.0" />
+                     </HBox.margin>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" top="5.0" />
+               </VBox.margin>
+            </HBox>
+            <Label text="Commission :">
+               <VBox.margin>
+                  <Insets left="36.0" top="10.0" />
+               </VBox.margin>
+            </Label>
+            <HBox alignment="CENTER_LEFT">
+               <VBox.margin>
+                  <Insets left="36.0" />
+               </VBox.margin>
+               <children>
+                  <TextField fx:id="fieldCommission">
+                     <HBox.margin>
+                        <Insets bottom="5.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Label fx:id="labelCurrency">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <Label text="Commentaire :">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="36.0" top="10.0" />
+               </VBox.margin>
+            </Label>
+            <TextArea fx:id="areaComment" prefHeight="200.0" prefWidth="200.0" wrapText="true">
+               <VBox.margin>
+                  <Insets left="36.0" right="36.0" />
+               </VBox.margin>
+            </TextArea>
+            <Label fx:id="labelError" textFill="RED" wrapText="true">
+               <VBox.margin>
+                  <Insets left="36.0" right="36.0" top="5.0" />
+               </VBox.margin>
+            </Label>
             <HBox alignment="CENTER">
                <children>
                   <Button fx:id="buttonValidate" alignment="CENTER" mnemonicParsing="false" onAction="#validate" text="Valider" textAlignment="CENTER">
@@ -33,6 +121,9 @@
                      </HBox.margin>
                   </Button>
                </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" top="5.0" />
+               </VBox.margin>
             </HBox>
          </children>
       </VBox>

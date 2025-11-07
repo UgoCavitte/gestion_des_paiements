@@ -12,6 +12,10 @@ public class SelectablePaymentLineController {
     @FXML
     private CheckBox checkBox;
 
+    public boolean isSelected () {
+        return checkBox.isSelected();
+    }
+
     @FXML
     private Label labelAmountSent;
 
@@ -28,6 +32,10 @@ public class SelectablePaymentLineController {
 
     public void setPayment(PaymentFromClient payment) {
         this.payment = payment;
+    }
+
+    public PaymentFromClient getPayment() {
+        return payment;
     }
 
     @FXML
