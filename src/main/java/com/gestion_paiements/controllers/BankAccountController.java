@@ -5,7 +5,6 @@ import com.gestion_paiements.controllers.accounts_tables.BankAccountTableControl
 import com.gestion_paiements.controllers.additional_windows.AddNewTransferController;
 import com.gestion_paiements.controllers.additional_windows.ModifyPaymentController;
 import com.gestion_paiements.data.RefreshableData;
-import com.gestion_paiements.types.Client;
 import com.gestion_paiements.types.Data;
 import com.gestion_paiements.types.Destination;
 import com.gestion_paiements.types.payments.Payment;
