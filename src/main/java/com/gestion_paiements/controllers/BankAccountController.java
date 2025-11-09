@@ -10,6 +10,8 @@ import com.gestion_paiements.types.Data;
 import com.gestion_paiements.types.Destination;
 import com.gestion_paiements.types.payments.Payment;
 import com.gestion_paiements.types.payments.PaymentFromClient;
+import com.gestion_paiements.types.payments.PaymentFromPlatform;
+import com.gestion_paiements.types.payments.StatusPaymentFromClient;
 import com.gestion_paiements.util.Refreshable;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -32,8 +34,6 @@ import java.util.stream.Collectors;
 /// - a menu to show the month to show
 /// - a table with entering transfers for each month with all the information about these transfers (maybe make this customizable so the user does not have to see what he does not want to see)
 /// - a button to add an entering transfer.
-
-// TODO Make the columns customizable in the parameters menu
 
 public class BankAccountController implements Refreshable {
 
@@ -225,6 +225,8 @@ public class BankAccountController implements Refreshable {
     @FXML
     void modify () {
 
+        // TODO Check payment type
+
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("additional_windows/modify-payment.fxml"));
 
@@ -251,12 +253,31 @@ public class BankAccountController implements Refreshable {
 
     }
 
+    // Works differently whether the payment was sent by a client or from a platform
     @FXML
     void delete () {
-        // TODO Check the payment type
-        selectedPayment.getDestination().getTransfers().remove(selectedPayment);
-        ((Client) selectedPayment.getSender()).getPayments().remove(selectedPayment);
-        Data.instance.getSetPayments().remove(selectedPayment);
+
+        // Sent by a client -> simple removal
+        if (selectedPayment.getClass() == PaymentFromClient.class) {
+            PaymentFromClient toRemove = (PaymentFromClient) selectedPayment;
+            toRemove.getDestination().getTransfers().remove(toRemove);
+            toRemove.getSender().getPayments().remove(toRemove);
+            Data.instance.getSetPayments().remove(toRemove);
+        }
+
+        // Sent by a platform
+        else {
+            PaymentFromPlatform toRemove = (PaymentFromPlatform) selectedPayment;
+
+            // Start by marking all the sent payments in the group as kept on the platform
+            toRemove.getSentPayments().forEach(p -> p.setStatus(StatusPaymentFromClient.SENT_TO_A_PLATFORM));
+
+            // Then remove from the bank account
+            toRemove.getDestination().getTransfers().remove(toRemove);
+
+            // And from the overall set
+            Data.instance.getSetPayments().remove(toRemove);
+        }
 
         RefreshableData.refreshTables();
 
