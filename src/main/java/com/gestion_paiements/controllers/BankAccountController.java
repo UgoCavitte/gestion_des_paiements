@@ -4,6 +4,7 @@ import com.gestion_paiements.Main;
 import com.gestion_paiements.controllers.accounts_tables.BankAccountTableController;
 import com.gestion_paiements.controllers.additional_windows.AddNewTransferController;
 import com.gestion_paiements.controllers.additional_windows.ModifyPaymentController;
+import com.gestion_paiements.controllers.additional_windows.ModifyPaymentFromPlatformController;
 import com.gestion_paiements.data.RefreshableData;
 import com.gestion_paiements.types.Data;
 import com.gestion_paiements.types.Destination;
@@ -229,7 +230,7 @@ public class BankAccountController implements Refreshable {
                 FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("additional_windows/modify-payment.fxml"));
 
                 ModifyPaymentController controller = new ModifyPaymentController();
-                controller.setSelectedPayment((PaymentFromClient) selectedPayment); // TODO Fix that
+                controller.setSelectedPayment((PaymentFromClient) selectedPayment);
                 fxmlLoader.setController(controller);
 
                 Parent parent = fxmlLoader.load();
@@ -252,9 +253,11 @@ public class BankAccountController implements Refreshable {
 
         else {
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader();
+                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("additional_windows/modify-payment-from-platform.fxml"));
 
-                // TODO Make the resource
+                ModifyPaymentFromPlatformController controller = new ModifyPaymentFromPlatformController();
+                controller.setPayment((PaymentFromPlatform) selectedPayment);
+                fxmlLoader.setController(controller);
 
                 Parent parent = fxmlLoader.load();
 
