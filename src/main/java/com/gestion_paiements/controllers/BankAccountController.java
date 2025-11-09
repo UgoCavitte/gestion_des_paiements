@@ -225,31 +225,57 @@ public class BankAccountController implements Refreshable {
     @FXML
     void modify () {
 
-        // TODO Check payment type
+        if (selectedPayment.getClass() == PaymentFromClient.class) {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("additional_windows/modify-payment.fxml"));
 
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("additional_windows/modify-payment.fxml"));
+                ModifyPaymentController controller = new ModifyPaymentController();
+                controller.setSelectedPayment((PaymentFromClient) selectedPayment); // TODO Fix that
+                fxmlLoader.setController(controller);
 
-            ModifyPaymentController controller = new ModifyPaymentController();
-            controller.setSelectedPayment((PaymentFromClient) selectedPayment); // TODO Fix that
-            fxmlLoader.setController(controller);
+                Parent parent = fxmlLoader.load();
 
-            Parent parent = fxmlLoader.load();
+                Stage stage = new Stage();
+                stage.setTitle("Modifier un paiement");
+                stage.initModality(Modality.WINDOW_MODAL);
 
-            Stage stage = new Stage();
-            stage.setTitle("Modifier un paiement");
-            stage.initModality(Modality.WINDOW_MODAL);
+                Scene scene = new Scene(parent);
+                stage.setScene(scene);
 
-            Scene scene = new Scene(parent);
-            stage.setScene(scene);
+                stage.setResizable(false);
 
-            stage.setResizable(false);
+                stage.showAndWait();
 
-            stage.showAndWait();
-
-        } catch (IOException e) {
-            throw new RuntimeException();
+            } catch (IOException e) {
+                throw new RuntimeException();
+            }
         }
+
+        else {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+
+                // TODO Make the resource
+
+                Parent parent = fxmlLoader.load();
+
+                Stage stage = new Stage();
+                stage.setTitle("Modifier un paiement");
+                stage.initModality(Modality.WINDOW_MODAL);
+
+                Scene scene = new Scene(parent);
+                stage.setScene(scene);
+
+                stage.setResizable(false);
+
+                stage.showAndWait();
+
+            } catch (IOException e) {
+                throw new RuntimeException();
+            }
+        }
+
+
 
     }
 
