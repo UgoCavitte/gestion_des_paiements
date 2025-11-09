@@ -17,6 +17,9 @@ public class ColumnsToShowController {
     private CheckBox BAComment;
 
     @FXML
+    private CheckBox BACommission;
+
+    @FXML
     private CheckBox BADateReceived;
 
     @FXML
@@ -60,11 +63,13 @@ public class ColumnsToShowController {
 
     @FXML CheckBox PSentToBank;
 
-    private void initialize() {
+    @FXML
+    private void initialize () {
 
         BAAmountReceived.setSelected(Preferences.ColumnsToShow.BAAmountReceived);
         BAAmountSent.setSelected(Preferences.ColumnsToShow.BAAmountSent);
         BAComment.setSelected(Preferences.ColumnsToShow.BAComment);
+        BACommission.setSelected(Preferences.ColumnsToShow.BACommission);
         BADateReceived.setSelected(Preferences.ColumnsToShow.BADateReceived);
         BADateSent.setSelected(Preferences.ColumnsToShow.BADateSent);
         BAId.setSelected(Preferences.ColumnsToShow.BAId);
@@ -80,6 +85,7 @@ public class ColumnsToShowController {
         PIDEnvoiCompte.setSelected(Preferences.ColumnsToShow.PSentToBankID);
         PProducts.setSelected(Preferences.ColumnsToShow.PProducts);
         PSender.setSelected(Preferences.ColumnsToShow.PSender);
+        PSentToBank.setSelected(Preferences.ColumnsToShow.PSentToBank);
 
     }
 
@@ -98,6 +104,12 @@ public class ColumnsToShowController {
     @FXML
     void BAComment () {
         Preferences.ColumnsToShow.BAComment = BAComment.isSelected();
+        RefreshableData.refreshTables();
+    }
+
+    @FXML
+    void BACommission () {
+        Preferences.ColumnsToShow.BACommission = BACommission.isSelected();
         RefreshableData.refreshTables();
     }
 

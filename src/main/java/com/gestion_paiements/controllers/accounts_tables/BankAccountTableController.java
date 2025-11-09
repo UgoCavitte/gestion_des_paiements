@@ -5,6 +5,7 @@ import com.gestion_paiements.types.Data;
 import com.gestion_paiements.types.Destination;
 import com.gestion_paiements.types.payments.Payment;
 import com.gestion_paiements.types.payments.PaymentFromClient;
+import com.gestion_paiements.types.payments.PaymentFromPlatform;
 import com.gestion_paiements.util.Currencies;
 import com.gestion_paiements.util.Dates;
 import com.gestion_paiements.util.PurchasedProducts;
@@ -64,6 +65,7 @@ public class BankAccountTableController implements Refreshable {
     private final TableColumn<Payment, String> columnAmountReceived = new TableColumn<>("Somme reçue");
     private final TableColumn<Payment, String> columnSender = new TableColumn<>("Envoyeur");
     private final TableColumn<Payment, String> columnBought = new TableColumn<>("Produits");
+    private final TableColumn<Payment, String> columnCommission = new TableColumn<>("Commission");
     private final TableColumn<Payment, String> columnComment = new TableColumn<>("Commentaire");
 
     @FXML
@@ -83,6 +85,7 @@ public class BankAccountTableController implements Refreshable {
                 return new SimpleStringProperty("");
             }
         });
+        columnCommission.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getClass() == PaymentFromPlatform.class ? Currencies.fromAmountToString(((PaymentFromPlatform) cellData.getValue()).getCommission()) : ""));
         columnComment.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getComment()));
 
         setColumns();
@@ -100,6 +103,7 @@ public class BankAccountTableController implements Refreshable {
         if (Preferences.ColumnsToShow.BAAmountSent) table.getColumns().add(columnAmountSent);
         if (Preferences.ColumnsToShow.BAAmountReceived) table.getColumns().add(columnAmountReceived);
         if (Preferences.ColumnsToShow.BAProducts) table.getColumns().add(columnBought);
+        if (Preferences.ColumnsToShow.BACommission) table.getColumns().add(columnCommission);
         if (Preferences.ColumnsToShow.BAComment) table.getColumns().add(columnComment);
     }
 

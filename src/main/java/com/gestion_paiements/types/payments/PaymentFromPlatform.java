@@ -24,7 +24,7 @@ public final class PaymentFromPlatform extends Payment {
 
     public Amount getCommission() {
         return commission;
-    }
+    } // TODO Add this column
 
     public void setCommission(Amount commission) {
         this.commission = commission;
