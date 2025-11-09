@@ -14,6 +14,7 @@ public abstract class Preferences {
         public static boolean BAComment = true;
 
         // Platform
+        public static boolean PSentToBank = true;
         public static boolean PId = true;
         public static boolean PDateSent = true;
         public static boolean PDateReceived = true;
@@ -22,7 +23,7 @@ public abstract class Preferences {
         public static boolean PSender = true;
         public static boolean PProducts = true;
         public static boolean PComment = true;
-        public static boolean PSentToBank = true;
+        public static boolean PSentToBankID = true;
     }
 
 }

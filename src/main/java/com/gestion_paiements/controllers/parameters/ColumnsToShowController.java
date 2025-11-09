@@ -58,6 +58,8 @@ public class ColumnsToShowController {
     @FXML
     private CheckBox PSender;
 
+    @FXML CheckBox PSentToBank;
+
     private void initialize() {
 
         BAAmountReceived.setSelected(Preferences.ColumnsToShow.BAAmountReceived);
@@ -75,7 +77,7 @@ public class ColumnsToShowController {
         PDateReceived.setSelected(Preferences.ColumnsToShow.PDateReceived);
         PDateSent.setSelected(Preferences.ColumnsToShow.PDateSent);
         PId.setSelected(Preferences.ColumnsToShow.PId);
-        PIDEnvoiCompte.setSelected(Preferences.ColumnsToShow.PSentToBank);
+        PIDEnvoiCompte.setSelected(Preferences.ColumnsToShow.PSentToBankID);
         PProducts.setSelected(Preferences.ColumnsToShow.PProducts);
         PSender.setSelected(Preferences.ColumnsToShow.PSender);
 
@@ -179,7 +181,13 @@ public class ColumnsToShowController {
 
     @FXML
     void PIDEnvoiCompte() {
-        Preferences.ColumnsToShow.PSentToBank = PIDEnvoiCompte.isSelected();
+        Preferences.ColumnsToShow.PSentToBankID = PIDEnvoiCompte.isSelected();
+        RefreshableData.refreshTables();
+    }
+
+    @FXML
+    void PSentToBank() {
+        Preferences.ColumnsToShow.PSentToBank = PSentToBank.isSelected();
         RefreshableData.refreshTables();
     }
 

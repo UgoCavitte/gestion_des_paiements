@@ -3,8 +3,8 @@ package com.gestion_paiements.controllers.accounts_tables;
 import com.gestion_paiements.data.Preferences;
 import com.gestion_paiements.types.Data;
 import com.gestion_paiements.types.Destination;
-import com.gestion_paiements.types.payments.Payment;
 import com.gestion_paiements.types.payments.PaymentFromClient;
+import com.gestion_paiements.types.payments.StatusPaymentFromClient;
 import com.gestion_paiements.util.Currencies;
 import com.gestion_paiements.util.Dates;
 import com.gestion_paiements.util.PurchasedProducts;
@@ -22,6 +22,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /// This table must show this information, that the user can enable or disable through parameters :
+/// - payment sent to bank or not
 /// - id
 /// - date sent
 /// - date received
@@ -32,9 +33,9 @@ import java.util.stream.Collectors;
 
 public class PlatformTableController implements Refreshable {
 
-    Function<Payment, Void> callBackSelection;
+    Function<PaymentFromClient, Void> callBackSelection;
 
-    public void setCallBackSelection(Function<Payment, Void> callBackSelection) {
+    public void setCallBackSelection(Function<PaymentFromClient, Void> callBackSelection) {
         this.callBackSelection = callBackSelection;
     }
 
@@ -55,22 +56,24 @@ public class PlatformTableController implements Refreshable {
     }
 
     @FXML
-    private TableView<Payment> table;
+    private TableView<PaymentFromClient> table;
 
     // Columns
-    private final TableColumn<Payment, Integer> columnID = new TableColumn<>("ID");
-    private final TableColumn<Payment, String> columnDateSent = new TableColumn<>("Date d'envoi");
-    private final TableColumn<Payment, String> columnDateReceived = new TableColumn<>("Date de réception");
-    private final TableColumn<Payment, String> columnAmountSent = new TableColumn<>("Somme envoyée");
-    private final TableColumn<Payment, String> columnAmountReceived = new TableColumn<>("Somme reçue");
-    private final TableColumn<Payment, String> columnSender = new TableColumn<>("Envoyeur");
-    private final TableColumn<Payment, String> columnBought = new TableColumn<>("Produits");
-    private final TableColumn<Payment, String> columnComment = new TableColumn<>("Commentaire");
-    private final TableColumn<Payment, String> columnSentToBankID = new TableColumn<>("ID d'envoi sur le compte");
+    private final TableColumn<PaymentFromClient, String> columnSentToBank = new TableColumn<>("Envoyé ?");
+    private final TableColumn<PaymentFromClient, Integer> columnID = new TableColumn<>("ID");
+    private final TableColumn<PaymentFromClient, String> columnDateSent = new TableColumn<>("Date d'envoi");
+    private final TableColumn<PaymentFromClient, String> columnDateReceived = new TableColumn<>("Date de réception");
+    private final TableColumn<PaymentFromClient, String> columnAmountSent = new TableColumn<>("Somme envoyée");
+    private final TableColumn<PaymentFromClient, String> columnAmountReceived = new TableColumn<>("Somme reçue");
+    private final TableColumn<PaymentFromClient, String> columnSender = new TableColumn<>("Envoyeur");
+    private final TableColumn<PaymentFromClient, String> columnBought = new TableColumn<>("Produits");
+    private final TableColumn<PaymentFromClient, String> columnComment = new TableColumn<>("Commentaire");
+    private final TableColumn<PaymentFromClient, String> columnSentToBankID = new TableColumn<>("ID d'envoi sur le compte");
 
     @FXML
     private void initialize() {
 
+        columnSentToBank.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStatus() == StatusPaymentFromClient.SENT_TO_THE_BANK ? "V" : ""));
         columnID.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId()).asObject());
         columnDateSent.setCellValueFactory(cellData -> new SimpleStringProperty(Dates.fromDateToString(cellData.getValue().getDateSent())));
         columnDateReceived.setCellValueFactory(cellData -> new SimpleStringProperty(Dates.fromDateToString(cellData.getValue().getDateReceived())));
@@ -95,6 +98,7 @@ public class PlatformTableController implements Refreshable {
 
     private void setColumns () {
         table.getColumns().clear();
+        if (Preferences.ColumnsToShow.PSentToBank) table.getColumns().add(columnSentToBank);
         if (Preferences.ColumnsToShow.PId) table.getColumns().add(columnID);
         if (Preferences.ColumnsToShow.PSender) table.getColumns().add(columnSender);
         if (Preferences.ColumnsToShow.PDateSent) table.getColumns().add(columnDateSent);
@@ -103,16 +107,17 @@ public class PlatformTableController implements Refreshable {
         if (Preferences.ColumnsToShow.PAmountReceived) table.getColumns().add(columnAmountReceived);
         if (Preferences.ColumnsToShow.PProducts) table.getColumns().add(columnBought);
         if (Preferences.ColumnsToShow.PComment) table.getColumns().add(columnComment);
-        if (Preferences.ColumnsToShow.PSentToBank) table.getColumns().add(columnSentToBankID);
+        if (Preferences.ColumnsToShow.PSentToBankID) table.getColumns().add(columnSentToBankID);
     }
 
     private void setItems () {
         table.getItems().clear();
         // TODO correct this
-        Set<Payment> payments = Data.instance
+        Set<PaymentFromClient> payments = Data.instance
                 .getSetPayments()
                 .stream().filter(p -> p.getDestination() == destination)
                 .filter(p -> p.getDateReceived().getYear() == year && p.getDateReceived().getMonth() == month)
+                .map(p -> (PaymentFromClient) p)
                 .collect(Collectors.toSet());
         table.setItems(FXCollections.observableArrayList(payments));
     }
