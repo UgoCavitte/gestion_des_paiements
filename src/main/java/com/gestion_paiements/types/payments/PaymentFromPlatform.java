@@ -24,7 +24,7 @@ public final class PaymentFromPlatform extends Payment {
 
     public Amount getCommission() {
         return commission;
-    } // TODO Add this column
+    }
 
     public void setCommission(Amount commission) {
         this.commission = commission;
@@ -52,7 +52,7 @@ public final class PaymentFromPlatform extends Payment {
 
     // Minus commission
     @Override
-    public Amount getReceivedAmount () {
+    public @NotNull Amount getReceivedAmount () {
         return new Amount(
                 this.getSentAmount().getAmount() - commission.getAmount(),
                 super.getDestination().getCurrency()
@@ -61,7 +61,7 @@ public final class PaymentFromPlatform extends Payment {
 
     // Gross amount
     @Override
-    public Amount getSentAmount () {
+    public @NotNull Amount getSentAmount () {
         double total = sentPayments.stream()
                             .mapToDouble(a -> a.getReceivedAmount().getAmount())
                             .sum();
