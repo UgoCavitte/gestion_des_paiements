@@ -112,10 +112,8 @@ public class PlatformTableController implements Refreshable {
 
     private void setItems () {
         table.getItems().clear();
-        // TODO correct this
-        Set<PaymentFromClient> payments = Data.instance
-                .getSetPayments()
-                .stream().filter(p -> p.getDestination() == destination)
+        Set<PaymentFromClient> payments = destination
+                .getTransfers().stream()
                 .filter(p -> p.getDateReceived().getYear() == year && p.getDateReceived().getMonth() == month)
                 .map(p -> (PaymentFromClient) p)
                 .collect(Collectors.toSet());
