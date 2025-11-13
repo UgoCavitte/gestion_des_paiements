@@ -76,7 +76,7 @@ public class PlatformController implements Refreshable {
     @FXML
     private Button buttonModify;
 
-    private Payment selectedPayment;
+    private PaymentFromClient selectedPayment;
 
     // Used to set the columns
     @FXML
@@ -239,7 +239,7 @@ public class PlatformController implements Refreshable {
         }
     }
 
-    private Void selectionCallBack(Payment p) {
+    private Void selectionCallBack(PaymentFromClient p) {
 
         if (p == null) {
             buttonDelete.setDisable(true);
@@ -260,7 +260,7 @@ public class PlatformController implements Refreshable {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("additional_windows/modify-payment.fxml"));
 
             ModifyPaymentController controller = new ModifyPaymentController();
-            controller.setSelectedPayment((PaymentFromClient) selectedPayment); // TODO Fix that
+            controller.setSelectedPayment(selectedPayment);
             fxmlLoader.setController(controller);
 
             Parent parent = fxmlLoader.load();
