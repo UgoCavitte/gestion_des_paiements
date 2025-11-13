@@ -109,12 +109,9 @@ public class BankAccountTableController implements Refreshable {
 
     private void setItems() {
         table.getItems().clear();
-        // TODO correct this
-        Set<Payment> payments = Data.instance
-                .getSetPayments()
-                .stream().filter(p -> p.getDestination() == destination)
-                .filter(p -> p.getDateReceived().getYear() == year && p.getDateReceived().getMonth() == month)
-                .collect(Collectors.toSet());
+        Set<Payment> payments = destination.getTransfers().stream()
+                                            .filter(p -> p.getDateReceived().getYear() == year && p.getDateReceived().getMonth() == month)
+                                            .collect(Collectors.toSet());
         table.setItems(FXCollections.observableArrayList(payments));
     }
 
