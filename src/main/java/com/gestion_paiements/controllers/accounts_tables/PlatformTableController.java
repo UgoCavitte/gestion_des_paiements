@@ -4,6 +4,7 @@ import com.gestion_paiements.data.Preferences;
 import com.gestion_paiements.types.Data;
 import com.gestion_paiements.types.Destination;
 import com.gestion_paiements.types.payments.PaymentFromClient;
+import com.gestion_paiements.types.payments.PaymentFromPlatform;
 import com.gestion_paiements.types.payments.StatusPaymentFromClient;
 import com.gestion_paiements.util.Currencies;
 import com.gestion_paiements.util.Dates;
@@ -20,6 +21,7 @@ import java.time.Month;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /// This table must show this information, that the user can enable or disable through parameters :
 /// - payment sent to bank or not
@@ -89,7 +91,18 @@ public class PlatformTableController implements Refreshable {
             }
         });
         columnComment.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getComment()));
-        columnSentToBankID.setCellValueFactory(cellData -> new SimpleStringProperty("Pas implémenté")); // TODO Implement this
+        columnSentToBankID.setCellValueFactory(cellData -> {
+            Set<PaymentFromPlatform> payments = Data.instance.getSetPayments().stream().filter(p -> p.getClass() == PaymentFromPlatform.class).map(p -> (PaymentFromPlatform) p).collect(Collectors.toSet());
+
+            for (PaymentFromPlatform p : payments) {
+                if (p.getSentPayments().contains(cellData.getValue())) {
+                    return new SimpleStringProperty(String.valueOf(p.getId()));
+                }
+            }
+
+            return new SimpleStringProperty("Error");
+
+        });
 
         setColumns();
         setItems();
