@@ -1,8 +1,9 @@
 package com.gestion_paiements.controllers.accounts_tables;
 
 import com.gestion_paiements.data.Preferences;
-import com.gestion_paiements.types.Data;
 import com.gestion_paiements.types.Destination;
+import com.gestion_paiements.types.Product;
+import com.gestion_paiements.types.PurchasedProduct;
 import com.gestion_paiements.types.payments.Payment;
 import com.gestion_paiements.types.payments.PaymentFromClient;
 import com.gestion_paiements.types.payments.PaymentFromPlatform;
@@ -17,7 +18,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 import java.time.Month;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -81,8 +82,21 @@ public class BankAccountTableController implements Refreshable {
             if (cellData.getValue() instanceof PaymentFromClient pfc) {
                 return new SimpleStringProperty(PurchasedProducts.fromListToString(pfc.getProducts()));
             }
+            // if received from a platform, we display a list of all the purchased products
             else {
-                return new SimpleStringProperty("");
+                Map<Product, Integer> map = ((PaymentFromPlatform) cellData.getValue()).getSentPayments().stream()
+                        .flatMap(payment -> payment.getProducts().stream())
+                        .collect(Collectors.toMap(
+                                PurchasedProduct::getProduct,
+                                PurchasedProduct::getQuantity,
+                                Integer::sum
+                        ));
+
+                return new SimpleStringProperty(
+                        PurchasedProducts.fromListToString(
+                                map.entrySet().stream()
+                                        .map((entry) -> new PurchasedProduct(entry.getValue(), entry.getKey()))
+                                        .toList()));
             }
         });
         columnCommission.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getClass() == PaymentFromPlatform.class ? Currencies.fromAmountToString(((PaymentFromPlatform) cellData.getValue()).getCommission()) : ""));
