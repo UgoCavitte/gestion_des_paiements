@@ -100,4 +100,13 @@ public abstract class Memory {
         //
     }
 
+    ////////////////////////////////////////////////////
+    /// BINDER
+    ////////////////////////////////////////////////////
+
+    /// Binds data together to let the program find links faster
+    public static void bindData () {
+        //
+    }
+
 }
