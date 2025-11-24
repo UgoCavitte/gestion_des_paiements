@@ -102,7 +102,11 @@ public class MainController {
         Memory.generalSave();
 
         System.out.println("Reading started");
-        Memory.readProducts();
+        Memory.generalRead();
+
+        // Test use
+        Data.instance.getSetProducts().forEach(p -> System.out.println(p.getShortName()));
+        Data.instance.getMapClientsCountries().values().forEach(c -> System.out.println(c.getName()));
 
     }
 }
