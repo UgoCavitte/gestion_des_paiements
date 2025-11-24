@@ -7,9 +7,8 @@ import com.gestion_paiements.types.payments.Payment;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.*;
 import java.util.Currency;
-import java.util.HashMap;
-import java.util.HashSet;
 
 /// This class is used to save data into JSON files
 /// You can either save everything, which is not optimal for resources and will create lag when the save will become big
@@ -117,13 +116,30 @@ public abstract class Memory {
 
     /// Saves [Country]
     public static void writeCountries () {
-        //
+        File file = new File("countries.json");
+
+        try {
+            mapper.writeValue(file, Data.instance.getMapClientsCountries().values());
+        } catch (IOException e) {
+            System.out.println("Error during serialization: " + e.getMessage());
+        }
     }
 
     /// Reads [Country] and returns a [HashMap]
-    public static HashMap<String, Country> readCountries () {
-        //
-        return null;
+    public static void readCountries () {
+        File file = new File("countries.json");
+
+        try {
+            List<Country> loaded = mapper.readValue(file, new TypeReference<ArrayList<Country>>() {});
+            List<String> labels = loaded.stream().map(Country::getName).toList();
+            HashMap<String, Country> map = new HashMap<>();
+            for (int i = 0; i < loaded.size(); i++) {
+                map.put(labels.get(i), loaded.get(i));
+            }
+            Data.instance.setMapClientsCountries(map);
+        } catch (IOException e) {
+            System.out.println("Error during deserialization: " + e.getMessage());
+        }
     }
 
     /// Saves [Currency]
@@ -150,9 +166,17 @@ public abstract class Memory {
     /// GENERAL SAVING
     ////////////////////////////////////////////////////
 
+    /// Writes all the data for this Instance into files
     public static void generalSave () {
         writeProducts();
+        writeCountries();
         System.out.println("Written !");
+    }
+
+    /// Reads all saved data and sets the Instance
+    public static void generalRead () {
+        readProducts();
+        readCountries();
     }
 
 }
