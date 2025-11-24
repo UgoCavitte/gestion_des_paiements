@@ -1,8 +1,12 @@
 package com.gestion_paiements.data;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gestion_paiements.types.*;
 import com.gestion_paiements.types.payments.Payment;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Currency;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -12,6 +16,8 @@ import java.util.HashSet;
 /// enough, either save some data separately
 
 public abstract class Memory {
+
+    static ObjectMapper mapper = new ObjectMapper();
 
     ////////////////////////////////////////////////////
     /// COMPLEX SAVINGS
@@ -42,32 +48,60 @@ public abstract class Memory {
         Data.instance.getMapAccountsCountries().values().forEach(Memory::writeClientsForSpecificCountry);
     }
 
+    /// Saves a specific [Destination]
+    public static void writeSpecificDestination (Destination destination) {
+        //
+    }
+
+    /// Saves all [Destination]
+    public static void writeEveryDestinations () {
+        //
+    }
+
     ////////////////////////////////////////////////////
     /// COMPLEX READINGS
     ////////////////////////////////////////////////////
 
     /// Reads [Client] and returns a [HashSet]
+    /// Clients are saved in individual files
     public static HashSet<Client> readClients () {
         //
+        return null;
     }
 
     /// Reads [Payment] and returns a [HashSet]
     public static HashSet<Payment> readPayments () {
         //
+        return null;
     }
 
     ////////////////////////////////////////////////////
     /// NON-COMPLEX SAVINGS AND READINGS
+    /// ALL THE FOLLOWING DATA IS SAVED IN ONE FILE
+    /// FOR EACH TYPE
     ////////////////////////////////////////////////////
 
     /// Saves [Product]
     public static void writeProducts () {
-        //
+        File file = new File("products.json");
+
+        try {
+            mapper.writeValue(file, Data.instance.getSetProducts());
+        } catch (IOException e) {
+            System.out.println("Error during serialization: " + e.getMessage());
+        }
+
     }
 
-    /// Reads [Product] and returns a [HashSet]
-    public static HashSet<Product> readProducts() {
-        //
+    /// Reads [Product] and sets the Instance [HashSet]
+    public static void readProducts() {
+        File file = new File("products.json");
+
+        try {
+            Data.instance.setSetProducts(mapper.readValue(file, new TypeReference<HashSet<Product>>() {}));
+        } catch (IOException e) {
+            System.out.println("Error during deserialization: " + e.getMessage());
+        }
     }
 
     /// Saves [WorkingCountry]
@@ -78,6 +112,7 @@ public abstract class Memory {
     /// Reads [WorkingCountry] and returns a [HashMap]
     public static HashMap<String, WorkingCountry> readWorkingCountries () {
         //
+        return null;
     }
 
     /// Saves [Country]
@@ -88,6 +123,7 @@ public abstract class Memory {
     /// Reads [Country] and returns a [HashMap]
     public static HashMap<String, Country> readCountries () {
         //
+        return null;
     }
 
     /// Saves [Currency]
@@ -98,6 +134,7 @@ public abstract class Memory {
     /// Reads [Currency] and returns a [HashMap]
     public static HashSet<Currency> readCurrencies () {
         //
+        return null;
     }
 
     ////////////////////////////////////////////////////
@@ -107,6 +144,15 @@ public abstract class Memory {
     /// Binds data together to let the program find links faster
     public static void bindData () {
         //
+    }
+
+    ////////////////////////////////////////////////////
+    /// GENERAL SAVING
+    ////////////////////////////////////////////////////
+
+    public static void generalSave () {
+        writeProducts();
+        System.out.println("Written !");
     }
 
 }

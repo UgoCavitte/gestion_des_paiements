@@ -4,6 +4,7 @@ module com.gestion_paiements {
     requires org.jetbrains.annotations;
     requires javafx.base;
     requires javafx.graphics;
+    requires com.fasterxml.jackson.databind;
 
     exports com.gestion_paiements;
     exports com.gestion_paiements.data;
