@@ -46,6 +46,9 @@ public abstract class SampleData {
         Country FranceClient = new Country("France");
         Country RussieClient = new Country("Russie");
         Country UkraineClient = new Country("Ukraine");
+        Data.instance.getMapClientsCountries().put("France", FranceClient);
+        Data.instance.getMapClientsCountries().put("Russie", RussieClient);
+        Data.instance.getMapClientsCountries().put("Ukraine", UkraineClient);
 
 
         // Client 1
