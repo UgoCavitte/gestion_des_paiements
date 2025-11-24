@@ -12,6 +12,11 @@ public class Country implements WithID, Comparable<Country> {
 
     private String name;
 
+    // Needed for deserialization
+    public Country () {
+
+    }
+
     public Country (String name) {
         this.id = IDs.getAvailableID(new HashSet<>(Data.instance.getMapClientsCountries().values()));
         this.name = name;
