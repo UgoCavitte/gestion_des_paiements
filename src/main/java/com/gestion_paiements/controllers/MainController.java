@@ -1,7 +1,10 @@
 package com.gestion_paiements.controllers;
 
 import com.gestion_paiements.Main;
+import com.gestion_paiements.data.Memory;
 import com.gestion_paiements.data.RefreshableData;
+import com.gestion_paiements.types.Data;
+import com.gestion_paiements.types.Product;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -91,5 +94,15 @@ public class MainController {
     @FXML
     private void fermerFenetre() {
         // TODO
+    }
+
+    @FXML
+    private void generalSave () {
+        System.out.println("Saving started");
+        Memory.generalSave();
+
+        System.out.println("Reading started");
+        Memory.readProducts();
+
     }
 }

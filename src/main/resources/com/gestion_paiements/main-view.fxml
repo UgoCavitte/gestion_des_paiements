@@ -12,6 +12,7 @@
         <menus>
             <Menu mnemonicParsing="false" text="Données">
               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#generalSave" text="Tout sauvegarder" />
                   <MenuItem mnemonicParsing="false" onAction="#fermerFenetre" text="Fermer la fenêtre" />
                 <MenuItem mnemonicParsing="false" onAction="#rechargerDonnees" text="Recharger les données" />
               </items>
