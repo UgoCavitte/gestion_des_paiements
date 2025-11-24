@@ -16,6 +16,11 @@ public final class Product implements Comparable<Product>, WithID {
     /// CONSTRUCTOR
     //////////////////////////////
 
+    // Needed for deserialization
+    public Product () {
+
+    }
+
     public Product(String shortName, String description) {
         this.id = IDs.getAvailableID(Data.instance.getSetProducts());
         this.shortName = shortName;
