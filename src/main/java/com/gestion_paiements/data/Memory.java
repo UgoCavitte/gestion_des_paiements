@@ -2,6 +2,8 @@ package com.gestion_paiements.data;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gestion_paiements.saving_formats.ToBindClient;
+import com.gestion_paiements.saving_formats.ToBindPayments;
 import com.gestion_paiements.saving_formats.ToBindWorkingCountry;
 import com.gestion_paiements.types.*;
 import com.gestion_paiements.types.Currency;
@@ -9,6 +11,9 @@ import com.gestion_paiements.types.payments.Payment;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -55,24 +60,28 @@ public abstract class Memory {
         // TODO
     }
 
-    /// Takes no parameter, save every [Payment] for every country
-    public static void writePaymentsForEveryCountry () {
-        Data.instance.getMapAccountsCountries().values().forEach(Memory::writePayments);
+    /// Saves or resaves all data for [Client] elements in separate files in a separate directory
+    public static void writeClients () {
+        Path clientDirPath = Paths.get("data", "clients");
+
+        try {
+            Files.createDirectories(clientDirPath);
+
+            for (Client client : Data.instance.getSetClients()) {
+                ToBindClient toSave = new ToBindClient(client);
+                String fileName = "client_" + client.getId() + ".json";
+                File file = clientDirPath.resolve(fileName).toFile();
+                mapper.writeValue(file, toSave);
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error while serializing Clients elements: " + e.getMessage());
+        }
     }
 
-    /// Saves or resaves all data for a specific [Client]
-    public static void writeClient (Client client) {
-        // TODO
-    }
-
-    /// Saves all [Client] for a specific country
-    public static void writeClientsForSpecificCountry (WorkingCountry country) {
-        // TODO
-    }
-
-    /// Saves all [Client] for all countries
-    public static void writeClientsForEveryCountry () {
-        Data.instance.getMapAccountsCountries().values().forEach(Memory::writeClientsForSpecificCountry);
+    // TODO
+    public static void writeSpecificClient (Client client) {
+        //
     }
 
     /// Saves a specific [Destination]
@@ -89,9 +98,9 @@ public abstract class Memory {
     /// COMPLEX READINGS
     ////////////////////////////////////////////////////
 
-    /// Reads [Client] and returns a [HashSet]
+    /// Reads [Client] and sets instance [HashSet]
     /// Clients are saved in individual files
-    public static HashSet<Client> readClients () {
+    public static void readClients () {
         // TODO
         return null;
     }
@@ -234,6 +243,7 @@ public abstract class Memory {
         writeCountries();
         writeCurrencies();
         writeWorkingCountries();
+        writeClients();
         System.out.println("Written !");
     }
 
