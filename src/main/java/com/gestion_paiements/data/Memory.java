@@ -2,6 +2,7 @@ package com.gestion_paiements.data;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gestion_paiements.saving_formats.ToBindWorkingCountry;
 import com.gestion_paiements.types.*;
 import com.gestion_paiements.types.Currency;
 import com.gestion_paiements.types.payments.Payment;
@@ -9,6 +10,7 @@ import com.gestion_paiements.types.payments.Payment;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /// This class is used to save data into JSON files
 /// You can either save everything, which is not optimal for resources and will create lag when the save will become big
@@ -18,13 +20,15 @@ public abstract class Memory {
 
     static ObjectMapper mapper = new ObjectMapper();
 
+    static Set<ToBindWorkingCountry> unboundWorkingCountries = new HashSet<>();
+
     ////////////////////////////////////////////////////
     /// COMPLEX SAVINGS
     ////////////////////////////////////////////////////
 
     /// Saves or resaves all [Payment] for a specific [WorkingCountry]
     public static void writePayments (WorkingCountry country) {
-        //
+        // TODO
     }
 
     /// Takes no parameter, save every [Payment] for every country
@@ -34,12 +38,12 @@ public abstract class Memory {
 
     /// Saves or resaves all data for a specific [Client]
     public static void writeClient (Client client) {
-        //
+        // TODO
     }
 
     /// Saves all [Client] for a specific country
     public static void writeClientsForSpecificCountry (WorkingCountry country) {
-        //
+        // TODO
     }
 
     /// Saves all [Client] for all countries
@@ -49,12 +53,12 @@ public abstract class Memory {
 
     /// Saves a specific [Destination]
     public static void writeSpecificDestination (Destination destination) {
-        //
+        // TODO
     }
 
     /// Saves all [Destination]
     public static void writeEveryDestinations () {
-        //
+        // TODO
     }
 
     ////////////////////////////////////////////////////
@@ -64,13 +68,13 @@ public abstract class Memory {
     /// Reads [Client] and returns a [HashSet]
     /// Clients are saved in individual files
     public static HashSet<Client> readClients () {
-        //
+        // TODO
         return null;
     }
 
     /// Reads [Payment] and returns a [HashSet]
     public static HashSet<Payment> readPayments () {
-        //
+        // TODO
         return null;
     }
 
@@ -82,16 +86,31 @@ public abstract class Memory {
 
     /// Saves [WorkingCountry]
     public static void writeWorkingCountries () {
-        //
+        Set<ToBindWorkingCountry> toSave = Data.instance.getMapAccountsCountries()
+                                                        .values().stream()
+                                                        .map(ToBindWorkingCountry::new)
+                                                        .collect(Collectors.toSet());
+
+        File file = new File("working_countries.json");
+
+        try {
+            mapper.writeValue(file, toSave);
+        } catch (IOException e) {
+            System.out.println("Error during serialization: " + e.getMessage());
+        }
+
     }
 
-    /// Reads [WorkingCountry] and returns a [HashMap]
-    public static HashMap<String, WorkingCountry> readWorkingCountries () {
-        //
-        return null;
+    /// Reads [WorkingCountry] and sets the Memory set of [ToBindWorkingCountry]
+    public static void readWorkingCountries () {
+        File file = new File("working_countries.json");
+
+        try {
+            unboundWorkingCountries = mapper.readValue(file, new TypeReference<Set<ToBindWorkingCountry>>() {});
+        } catch (IOException e) {
+            System.out.println("Error during serialization: " + e.getMessage());
+        }
     }
-
-
 
     ////////////////////////////////////////////////////
     /// SIMPLE SAVINGS AND READINGS (ALL DATA WRITTEN)
