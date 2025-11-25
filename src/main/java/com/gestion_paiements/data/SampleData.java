@@ -33,6 +33,8 @@ public abstract class SampleData {
         Destination Stripe = new Destination(DestinationType.platform, France, eur, "Stripe");
         France.getAccountsAndPlatforms().put(LCL.getName(), LCL);
         France.getAccountsAndPlatforms().put(Stripe.getName(), Stripe);
+        Data.instance.getSetDestinations().add(LCL);
+        Data.instance.getSetDestinations().add(Stripe);
 
 
         // Products
