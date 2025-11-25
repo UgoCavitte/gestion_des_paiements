@@ -1,6 +1,8 @@
 package com.gestion_paiements.data;
 
+import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gestion_paiements.saving_formats.ToBindClient;
 import com.gestion_paiements.saving_formats.ToBindPayments;
@@ -16,6 +18,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /// This class is used to save data into JSON files
 /// You can either save everything, which is not optimal for resources and will create lag when the save will become big
@@ -26,6 +29,7 @@ public abstract class Memory {
     static ObjectMapper mapper = new ObjectMapper();
 
     static Set<ToBindWorkingCountry> unboundWorkingCountries = new HashSet<>();
+    static Set<ToBindClient> unboundClients = new HashSet<>();
 
     ////////////////////////////////////////////////////
     /// MAPS
@@ -99,10 +103,31 @@ public abstract class Memory {
     ////////////////////////////////////////////////////
 
     /// Reads [Client] and sets instance [HashSet]
-    /// Clients are saved in individual files
     public static void readClients () {
-        // TODO
-        return null;
+        Path clientDirPath = Paths.get("data", "client");
+
+        if (!Files.exists(clientDirPath)) {
+            System.out.println("Client data directory not found: " + clientDirPath);
+            return;
+        }
+
+        try (Stream<Path> pathStream = Files.list(clientDirPath)) {
+
+            unboundClients = pathStream
+                    .filter(path -> !Files.isDirectory(path) && path.toString().endsWith(".json"))
+                    .map(path -> {
+                        try {
+                            return mapper.readValue(path.toFile(), ToBindClient.class);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    })
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toSet());
+
+        } catch (IOException e) {
+            System.out.println("Error while deserializing Clients elements: " + e.getMessage());
+        }
     }
 
     /// Reads [Payment] and returns a [HashSet]
