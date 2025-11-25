@@ -5,10 +5,14 @@ package com.gestion_paiements.types;
  */
 
 import com.gestion_paiements.types.payments.Payment;
+import com.gestion_paiements.util.IDs;
+import com.gestion_paiements.util.WithID;
 
 import java.util.HashSet;
 
-public final class Destination extends Sender {
+public final class Destination extends Sender implements WithID {
+
+    private int ID;
 
     private DestinationType destinationType;
 
@@ -27,6 +31,7 @@ public final class Destination extends Sender {
         this.country = country;
         this.currency = currency;
         super.setName(name);
+        this.ID = IDs.getAvailableID(Data.instance.getSetDestinations());
     }
 
     //////////////////////////////
@@ -63,5 +68,15 @@ public final class Destination extends Sender {
 
     public void setCountry(WorkingCountry country) {
         this.country = country;
+    }
+
+    @Override
+    public int getId() {
+        return this.ID;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.ID = id;
     }
 }
