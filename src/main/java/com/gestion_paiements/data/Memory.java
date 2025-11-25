@@ -209,6 +209,7 @@ public abstract class Memory {
         writeProducts();
         writeCountries();
         writeCurrencies();
+        writeWorkingCountries();
         System.out.println("Written !");
     }
 
@@ -217,6 +218,8 @@ public abstract class Memory {
         readProducts();
         readCountries();
         readCurrencies();
+        readWorkingCountries();
+        System.out.println("Read!");
     }
 
 }
