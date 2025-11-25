@@ -3,8 +3,8 @@ package com.gestion_paiements.saving_formats;
 import com.gestion_paiements.types.Client;
 import com.gestion_paiements.types.payments.Payment;
 
-import java.util.Set;
-import java.util.stream.Collectors;
+/// Unbound class for [Client]
+/// Only [Payment] elements are not saved, because they will be bound to clients from saved payments
 
 public final class ToBindClient {
 
@@ -12,12 +12,9 @@ public final class ToBindClient {
 
     private int country;
 
-    private Set<Integer> payments;
-
     private String comment;
 
     // Default constructor
-
     public ToBindClient() {
     }
 
@@ -25,7 +22,6 @@ public final class ToBindClient {
     public ToBindClient (Client client) {
         this.id = client.getId();
         this.country = client.getCountry().getId();
-        this.payments = client.getPayments().stream().map(Payment::getId).collect(Collectors.toSet());
         this.comment = client.getComment();
     }
 
@@ -43,14 +39,6 @@ public final class ToBindClient {
 
     public void setCountry(int country) {
         this.country = country;
-    }
-
-    public Set<Integer> getPayments() {
-        return payments;
-    }
-
-    public void setPayments(Set<Integer> payments) {
-        this.payments = payments;
     }
 
     public String getComment() {
