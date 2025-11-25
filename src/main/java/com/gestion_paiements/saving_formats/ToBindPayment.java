@@ -5,7 +5,7 @@ import com.gestion_paiements.types.payments.Payment;
 
 /// Unbound class for [Payment] elements
 
-public class ToBindPayments {
+public class ToBindPayment {
 
     private int id;
 
@@ -30,11 +30,11 @@ public class ToBindPayments {
     private String comment;
 
     // For deserialization
-    public ToBindPayments() {
+    public ToBindPayment() {
     }
 
     // For me
-    public ToBindPayments (Payment payment) {
+    public ToBindPayment(Payment payment) {
         this.id = payment.getId();
         this.dateSent = payment.getDateSent().toString();
         this.dateReceived = payment.getDateReceived().toString();
