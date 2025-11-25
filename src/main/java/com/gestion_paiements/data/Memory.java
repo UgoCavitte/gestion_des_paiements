@@ -1,12 +1,9 @@
 package com.gestion_paiements.data;
 
-import com.fasterxml.jackson.core.exc.StreamReadException;
-import com.fasterxml.jackson.core.exc.StreamWriteException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gestion_paiements.saving_formats.ToBindClient;
-import com.gestion_paiements.saving_formats.ToBindPayments;
+import com.gestion_paiements.saving_formats.ToBindPayment;
 import com.gestion_paiements.saving_formats.ToBindWorkingCountry;
 import com.gestion_paiements.types.*;
 import com.gestion_paiements.types.Currency;
@@ -60,9 +57,23 @@ public abstract class Memory {
     /// COMPLEX SAVINGS
     ////////////////////////////////////////////////////
 
-    /// Saves or resaves all [Payment] for a specific [WorkingCountry]
-    public static void writePayments (WorkingCountry country) {
-        // TODO
+    /// Saves or resaves all [Payment]
+    // TODO Redo the saving process not to conflict with the files quantity limit (is it really needed?)
+    public static void writePayments () {
+        Path paymentsDirPath = Paths.get("data", "payments");
+
+        try {
+            Files.createDirectories(paymentsDirPath);
+
+            for (Payment payment : Data.instance.getSetPayments()) {
+                ToBindPayment toSave = new ToBindPayment(payment);
+                String fileName = "payment_" + payment.getId() + ".json";
+                File file = paymentsDirPath.resolve(fileName).toFile();
+                mapper.writeValue(file, toSave);
+            }
+        } catch (IOException e) {
+            System.out.println("Error while serializing payments: " + e.getMessage());
+        }
     }
 
     /// Saves or resaves all data for [Client] elements in separate files in a separate directory
@@ -111,7 +122,7 @@ public abstract class Memory {
     /// COMPLEX READINGS
     ////////////////////////////////////////////////////
 
-    /// Reads [Client] and sets instance [HashSet]
+    /// Reads all [Client]
     public static void readClients () {
         Path clientDirPath = Paths.get("data", "client");
 
