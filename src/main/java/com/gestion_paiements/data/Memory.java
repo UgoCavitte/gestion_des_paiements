@@ -1,6 +1,7 @@
 package com.gestion_paiements.data;
 
 import com.fasterxml.jackson.core.exc.StreamReadException;
+import com.fasterxml.jackson.core.exc.StreamWriteException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -83,9 +84,17 @@ public abstract class Memory {
         }
     }
 
-    // TODO
+    /// Writes a specific [Client]
     public static void writeSpecificClient (Client client) {
-        //
+        Path clientDirPath = Paths.get("data", "clients");
+
+        try {
+            Files.createDirectories(clientDirPath);
+            File file = clientDirPath.resolve("client_" + client.getId() + ".json").toFile();
+            mapper.writeValue(file, new ToBindClient(client));
+        } catch (IOException e) {
+            System.out.println("Error while serializing Client" + client.getId() + ": " + e.getMessage());
+        }
     }
 
     /// Saves a specific [Destination]
