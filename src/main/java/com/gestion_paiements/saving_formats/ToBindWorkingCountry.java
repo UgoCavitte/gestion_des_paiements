@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 /// This class is used to save and read Data in memory
 /// This convert it to a WorkingCountry, a binding with accounts is necessary
 
-public class ToBindWorkingCountry {
+public final class ToBindWorkingCountry {
 
     private Set<Integer> destinations;
 
