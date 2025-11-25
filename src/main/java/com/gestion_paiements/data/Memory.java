@@ -96,7 +96,7 @@ public abstract class Memory {
         try {
             mapper.writeValue(file, toSave);
         } catch (IOException e) {
-            System.out.println("Error during serialization: " + e.getMessage());
+            System.out.println("Error while serializing WorkingCountry elements: " + e.getMessage());
         }
 
     }
@@ -108,7 +108,7 @@ public abstract class Memory {
         try {
             unboundWorkingCountries = mapper.readValue(file, new TypeReference<Set<ToBindWorkingCountry>>() {});
         } catch (IOException e) {
-            System.out.println("Error during serialization: " + e.getMessage());
+            System.out.println("Error while deserializing WorkingCountry elements: " + e.getMessage());
         }
     }
 
@@ -125,7 +125,7 @@ public abstract class Memory {
         try {
             mapper.writeValue(file, Data.instance.getSetProducts());
         } catch (IOException e) {
-            System.out.println("Error during serialization: " + e.getMessage());
+            System.out.println("Error while serializing Product elements: " + e.getMessage());
         }
 
     }
@@ -137,7 +137,7 @@ public abstract class Memory {
         try {
             Data.instance.setSetProducts(mapper.readValue(file, new TypeReference<HashSet<Product>>() {}));
         } catch (IOException e) {
-            System.out.println("Error during deserialization: " + e.getMessage());
+            System.out.println("Error while deserializing Product elements: " + e.getMessage());
         }
     }
 
@@ -148,7 +148,7 @@ public abstract class Memory {
         try {
             mapper.writeValue(file, Data.instance.getMapClientsCountries().values());
         } catch (IOException e) {
-            System.out.println("Error during serialization: " + e.getMessage());
+            System.out.println("Error while serializing Country elements: " + e.getMessage());
         }
     }
 
@@ -165,7 +165,7 @@ public abstract class Memory {
             }
             Data.instance.setMapClientsCountries(map);
         } catch (IOException e) {
-            System.out.println("Error during deserialization: " + e.getMessage());
+            System.out.println("Error while deserializing Country elements: " + e.getMessage());
         }
     }
 
@@ -176,7 +176,7 @@ public abstract class Memory {
         try {
             mapper.writeValue(file, Data.instance.getSetCurrencies());
         } catch (IOException e) {
-            System.out.println("Error during serialization: " + e.getMessage());
+            System.out.println("Error while serializing Currency elements: " + e.getMessage());
         }
     }
 
@@ -187,7 +187,7 @@ public abstract class Memory {
         try {
             Data.instance.setSetCurrencies(mapper.readValue(file, new TypeReference<HashSet<Currency>>() {}));
         } catch (IOException e) {
-            System.out.println("Error during deserialization: " + e.getMessage());
+            System.out.println("Error while deserializing Currency elements: " + e.getMessage());
         }
     }
 
