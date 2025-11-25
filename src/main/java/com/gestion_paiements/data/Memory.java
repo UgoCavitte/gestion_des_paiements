@@ -75,7 +75,26 @@ public abstract class Memory {
     }
 
     ////////////////////////////////////////////////////
-    /// NON-COMPLEX SAVINGS AND READINGS
+    /// QUITE COMPLEX SAVINGS AND READINGS
+    /// ALL THE FOLLOWING DATA IS SAVED IN ONE FILE
+    /// FOR EACH TYPE
+    ////////////////////////////////////////////////////
+
+    /// Saves [WorkingCountry]
+    public static void writeWorkingCountries () {
+        //
+    }
+
+    /// Reads [WorkingCountry] and returns a [HashMap]
+    public static HashMap<String, WorkingCountry> readWorkingCountries () {
+        //
+        return null;
+    }
+
+
+
+    ////////////////////////////////////////////////////
+    /// SIMPLE SAVINGS AND READINGS (ALL DATA WRITTEN)
     /// ALL THE FOLLOWING DATA IS SAVED IN ONE FILE
     /// FOR EACH TYPE
     ////////////////////////////////////////////////////
@@ -101,17 +120,6 @@ public abstract class Memory {
         } catch (IOException e) {
             System.out.println("Error during deserialization: " + e.getMessage());
         }
-    }
-
-    /// Saves [WorkingCountry]
-    public static void writeWorkingCountries () {
-        //
-    }
-
-    /// Reads [WorkingCountry] and returns a [HashMap]
-    public static HashMap<String, WorkingCountry> readWorkingCountries () {
-        //
-        return null;
     }
 
     /// Saves [Country]
