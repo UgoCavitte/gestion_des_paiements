@@ -21,9 +21,14 @@ public abstract class Memory {
     static ObjectMapper mapper = new ObjectMapper();
 
     // MAPS
-    public static Map<Integer, DestinationType> mapDestinationType = Map.of(
+    public static Map<Integer, DestinationType> mapFromIntegerToDestinationType = Map.of(
             0, DestinationType.bankAccount,
             1, DestinationType.platform
+    );
+
+    public static Map<DestinationType, Integer> mapFromDestinationTypeToInteger = Map.of(
+            DestinationType.bankAccount, 0,
+            DestinationType.platform, 1
     );
 
     static Set<ToBindWorkingCountry> unboundWorkingCountries = new HashSet<>();
