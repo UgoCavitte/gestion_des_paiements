@@ -21,7 +21,7 @@ public abstract class Memory {
     static ObjectMapper mapper = new ObjectMapper();
 
     // MAPS
-    public Map<Integer, DestinationType> mapDestinationType = Map.of(
+    public static Map<Integer, DestinationType> mapDestinationType = Map.of(
             0, DestinationType.bankAccount,
             1, DestinationType.platform
     );
