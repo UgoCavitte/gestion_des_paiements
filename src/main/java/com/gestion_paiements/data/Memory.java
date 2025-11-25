@@ -20,7 +20,12 @@ public abstract class Memory {
 
     static ObjectMapper mapper = new ObjectMapper();
 
-    // MAPS
+    static Set<ToBindWorkingCountry> unboundWorkingCountries = new HashSet<>();
+
+    ////////////////////////////////////////////////////
+    /// MAPS
+    ////////////////////////////////////////////////////
+
     public static Map<Integer, DestinationType> mapFromIntegerToDestinationType = Map.of(
             0, DestinationType.bankAccount,
             1, DestinationType.platform
@@ -31,7 +36,15 @@ public abstract class Memory {
             DestinationType.platform, 1
     );
 
-    static Set<ToBindWorkingCountry> unboundWorkingCountries = new HashSet<>();
+    public static Map<Integer, Class<?>> mapFromIntegerToSenderType = Map.of(
+            0, Client.class,
+            1, Destination.class
+    );
+
+    public static Map<Class<?>, Integer> mapFromSenderTypeToInteger = Map.of(
+            Client.class, 0,
+            Destination.class, 1
+    );
 
     ////////////////////////////////////////////////////
     /// COMPLEX SAVINGS
