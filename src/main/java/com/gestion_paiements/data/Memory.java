@@ -185,9 +185,9 @@ public abstract class Memory {
                                                         .map(ToBindWorkingCountry::new)
                                                         .collect(Collectors.toSet());
 
-        File file = new File(workingCountriesFileName);
-
         try {
+            Files.createDirectories(dataPath);
+            File file = dataPath.resolve(workingCountriesFileName).toFile();
             mapper.writeValue(file, toSave);
         } catch (IOException e) {
             System.out.println("Error while serializing WorkingCountry elements: " + e.getMessage());
@@ -197,9 +197,14 @@ public abstract class Memory {
 
     /// Reads [WorkingCountry] and sets the Memory set of [ToBindWorkingCountry]
     public static void readWorkingCountries () {
-        File file = new File(workingCountriesFileName);
+
+        if (!Files.exists(dataPath)) {
+            System.out.println("Data directory not found: " + dataPath);
+            return;
+        }
 
         try {
+            File file = dataPath.resolve(workingCountriesFileName).toFile();
             unboundWorkingCountries = mapper.readValue(file, new TypeReference<Set<ToBindWorkingCountry>>() {});
         } catch (IOException e) {
             System.out.println("Error while deserializing WorkingCountry elements: " + e.getMessage());
@@ -214,9 +219,10 @@ public abstract class Memory {
 
     /// Saves [Product]
     public static void writeProducts () {
-        File file = new File(productsFileName);
 
         try {
+            Files.createDirectories(dataPath);
+            File file = dataPath.resolve(productsFileName).toFile();
             mapper.writeValue(file, Data.instance.getSetProducts());
         } catch (IOException e) {
             System.out.println("Error while serializing Product elements: " + e.getMessage());
@@ -226,9 +232,14 @@ public abstract class Memory {
 
     /// Reads [Product] and sets the Instance [HashSet]
     public static void readProducts() {
-        File file = new File(productsFileName);
+
+        if (!Files.exists(dataPath)) {
+            System.out.println("Data directory not found: " + dataPath);
+            return;
+        }
 
         try {
+            File file = dataPath.resolve(productsFileName).toFile();
             Data.instance.setSetProducts(mapper.readValue(file, new TypeReference<HashSet<Product>>() {}));
         } catch (IOException e) {
             System.out.println("Error while deserializing Product elements: " + e.getMessage());
@@ -237,9 +248,10 @@ public abstract class Memory {
 
     /// Saves [Country]
     public static void writeCountries () {
-        File file = new File(countriesFileName);
 
         try {
+            Files.createDirectories(dataPath);
+            File file = dataPath.resolve(countriesFileName).toFile();
             mapper.writeValue(file, Data.instance.getMapClientsCountries().values());
         } catch (IOException e) {
             System.out.println("Error while serializing Country elements: " + e.getMessage());
@@ -248,9 +260,15 @@ public abstract class Memory {
 
     /// Reads [Country] and returns a [HashMap]
     public static void readCountries () {
-        File file = new File(countriesFileName);
+
+        if (!Files.exists(dataPath)) {
+            System.out.println("Data directory not found: " + dataPath);
+            return;
+        }
 
         try {
+            File file = dataPath.resolve(countriesFileName).toFile();
+
             List<Country> loaded = mapper.readValue(file, new TypeReference<ArrayList<Country>>() {});
             List<String> labels = loaded.stream().map(Country::getName).toList();
             HashMap<String, Country> map = new HashMap<>();
@@ -265,9 +283,10 @@ public abstract class Memory {
 
     /// Saves [Currency]
     public static void writeCurrencies () {
-        File file = new File(currenciesFileName);
 
         try {
+            Files.createDirectories(dataPath);
+            File file = dataPath.resolve(currenciesFileName).toFile();
             mapper.writeValue(file, Data.instance.getSetCurrencies());
         } catch (IOException e) {
             System.out.println("Error while serializing Currency elements: " + e.getMessage());
@@ -276,9 +295,14 @@ public abstract class Memory {
 
     /// Reads [Currency] and sets the Instance [HashMap]
     public static void readCurrencies () {
-        File file = new File(currenciesFileName);
+
+        if (!Files.exists(dataPath)) {
+            System.out.println("Data directory not found: " + dataPath);
+            return;
+        }
 
         try {
+            File file = dataPath.resolve(currenciesFileName).toFile();
             Data.instance.setSetCurrencies(mapper.readValue(file, new TypeReference<HashSet<Currency>>() {}));
         } catch (IOException e) {
             System.out.println("Error while deserializing Currency elements: " + e.getMessage());
