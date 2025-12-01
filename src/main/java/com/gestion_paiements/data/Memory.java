@@ -29,6 +29,9 @@ public abstract class Memory {
     static Set<ToBindWorkingCountry> unboundWorkingCountries = new HashSet<>();
     static Set<ToBindClient> unboundClients = new HashSet<>();
 
+    static Path clientsDirPath = Paths.get("data", "clients");
+    static Path paymentsDirPath = Paths.get("data", "payments");
+
     ////////////////////////////////////////////////////
     /// MAPS
     ////////////////////////////////////////////////////
@@ -60,7 +63,6 @@ public abstract class Memory {
     /// Saves or resaves all [Payment]
     // TODO Redo the saving process not to conflict with the files quantity limit (is it really needed?)
     public static void writePayments () {
-        Path paymentsDirPath = Paths.get("data", "payments");
 
         try {
             Files.createDirectories(paymentsDirPath);
@@ -78,15 +80,14 @@ public abstract class Memory {
 
     /// Saves or resaves all data for [Client] elements in separate files in a separate directory
     public static void writeClients () {
-        Path clientDirPath = Paths.get("data", "clients");
 
         try {
-            Files.createDirectories(clientDirPath);
+            Files.createDirectories(clientsDirPath);
 
             for (Client client : Data.instance.getSetClients()) {
                 ToBindClient toSave = new ToBindClient(client);
                 String fileName = "client_" + client.getId() + ".json";
-                File file = clientDirPath.resolve(fileName).toFile();
+                File file = clientsDirPath.resolve(fileName).toFile();
                 mapper.writeValue(file, toSave);
             }
 
@@ -97,11 +98,10 @@ public abstract class Memory {
 
     /// Writes a specific [Client]
     public static void writeSpecificClient (Client client) {
-        Path clientDirPath = Paths.get("data", "clients");
 
         try {
-            Files.createDirectories(clientDirPath);
-            File file = clientDirPath.resolve("client_" + client.getId() + ".json").toFile();
+            Files.createDirectories(clientsDirPath);
+            File file = clientsDirPath.resolve("client_" + client.getId() + ".json").toFile();
             mapper.writeValue(file, new ToBindClient(client));
         } catch (IOException e) {
             System.out.println("Error while serializing Client" + client.getId() + ": " + e.getMessage());
@@ -124,14 +124,13 @@ public abstract class Memory {
 
     /// Reads all [Client]
     public static void readClients () {
-        Path clientDirPath = Paths.get("data", "client");
 
-        if (!Files.exists(clientDirPath)) {
-            System.out.println("Client data directory not found: " + clientDirPath);
+        if (!Files.exists(clientsDirPath)) {
+            System.out.println("Client data directory not found: " + clientsDirPath);
             return;
         }
 
-        try (Stream<Path> pathStream = Files.list(clientDirPath)) {
+        try (Stream<Path> pathStream = Files.list(clientsDirPath)) {
 
             unboundClients = pathStream
                     .filter(path -> !Files.isDirectory(path) && path.toString().endsWith(".json"))
