@@ -78,6 +78,16 @@ public abstract class Memory {
         }
     }
 
+    public static void writeSpecificPayment (Payment payment) {
+        try {
+            Files.createDirectories(paymentsDirPath);
+            File file = paymentsDirPath.resolve("payment_" + payment.getId() + ".json").toFile();
+            mapper.writeValue(file, new ToBindPayment(payment));
+        } catch (IOException e) {
+            System.out.println("Error while serializing payment " + payment.getId() + " from " + payment.getSender().getName() + ": " + e.getMessage());
+        }
+    }
+
     /// Saves or resaves all data for [Client] elements in separate files in a separate directory
     public static void writeClients () {
 
