@@ -14,6 +14,10 @@ public final class Currency implements WithID {
         this.name = name;
     }
 
+    public Currency () {
+
+    }
+
     //////////////////////////////
     /// GETTERS AND SETTERS
     //////////////////////////////
