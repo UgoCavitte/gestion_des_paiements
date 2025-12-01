@@ -28,6 +28,7 @@ public abstract class Memory {
 
     static Set<ToBindWorkingCountry> unboundWorkingCountries = new HashSet<>();
     static Set<ToBindClient> unboundClients = new HashSet<>();
+    static Set<ToBindPayment> unboundPayments = new HashSet<>();
 
     static Path clientsDirPath = Paths.get("data", "clients");
     static Path paymentsDirPath = Paths.get("data", "payments");
@@ -162,14 +163,35 @@ public abstract class Memory {
                     .collect(Collectors.toSet());
 
         } catch (IOException e) {
-            System.out.println("Error while deserializing Clients elements: " + e.getMessage());
+            System.out.println("Error while deserializing Client elements: " + e.getMessage());
         }
     }
 
     /// Reads [Payment] and returns a [HashSet]
-    public static HashSet<Payment> readPayments () {
-        // TODO
-        return null;
+    public static void readPayments () {
+
+        if (!Files.exists(paymentsDirPath)) {
+            System.out.println("Payments data directory not found: " + paymentsDirPath);
+            return;
+        }
+
+        try (Stream<Path> pathStream = Files.list(paymentsDirPath)) {
+
+            unboundPayments = pathStream
+                    .filter(path -> !Files.isDirectory(path) && path.toString().endsWith(".json"))
+                    .map(path -> {
+                        try {
+                            return mapper.readValue(path.toFile(), ToBindPayment.class);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    })
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toSet());
+
+        } catch (IOException e) {
+            System.out.println("Error while deserializing Payment elements: " + e.getMessage());
+        }
     }
 
     ////////////////////////////////////////////////////
@@ -329,6 +351,7 @@ public abstract class Memory {
         writeCurrencies();
         writeWorkingCountries();
         writeClients();
+        writePayments();
         System.out.println("Written !");
     }
 
@@ -338,6 +361,7 @@ public abstract class Memory {
         readCountries();
         readCurrencies();
         readWorkingCountries();
+        readPayments();
         System.out.println("Read!");
     }
 
