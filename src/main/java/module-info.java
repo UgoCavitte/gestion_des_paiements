@@ -17,6 +17,8 @@ module com.gestion_paiements {
     exports com.gestion_paiements.controllers.warnings;
     exports com.gestion_paiements.controllers.elements;
 
+    exports com.gestion_paiements.saving_formats to com.fasterxml.jackson.databind;
+
     opens com.gestion_paiements to javafx.graphics, javafx.fxml;
     opens com.gestion_paiements.controllers to javafx.fxml;
     opens com.gestion_paiements.controllers.accounts_tables to javafx.fxml;
