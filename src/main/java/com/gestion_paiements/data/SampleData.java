@@ -16,8 +16,8 @@ public abstract class SampleData {
 
         // Currencies
         Currency eur = new Currency("EUR");
-        Currency rub = new Currency("RUB");
         Data.instance.getSetCurrencies().add(eur);
+        Currency rub = new Currency("RUB");
         Data.instance.getSetCurrencies().add(rub);
 
 
@@ -30,26 +30,26 @@ public abstract class SampleData {
 
         // Accounts countries
         Destination LCL = new Destination(DestinationType.bankAccount, France, eur, "LCL");
-        Destination Stripe = new Destination(DestinationType.platform, France, eur, "Stripe");
         France.getAccountsAndPlatforms().put(LCL.getName(), LCL);
-        France.getAccountsAndPlatforms().put(Stripe.getName(), Stripe);
         Data.instance.getSetDestinations().add(LCL);
+        Destination Stripe = new Destination(DestinationType.platform, France, eur, "Stripe");
+        France.getAccountsAndPlatforms().put(Stripe.getName(), Stripe);
         Data.instance.getSetDestinations().add(Stripe);
 
 
         // Products
         Product ind = new Product("ind", "Cours individuel");
-        Product club = new Product("club", "Séance au club de discussion");
         Data.instance.getSetProducts().add(ind);
+        Product club = new Product("club", "Séance au club de discussion");
         Data.instance.getSetProducts().add(club);
 
 
         // Client countries
         Country FranceClient = new Country("France");
-        Country RussieClient = new Country("Russie");
-        Country UkraineClient = new Country("Ukraine");
         Data.instance.getMapClientsCountries().put("France", FranceClient);
+        Country RussieClient = new Country("Russie");
         Data.instance.getMapClientsCountries().put("Russie", RussieClient);
+        Country UkraineClient = new Country("Ukraine");
         Data.instance.getMapClientsCountries().put("Ukraine", UkraineClient);
 
 
