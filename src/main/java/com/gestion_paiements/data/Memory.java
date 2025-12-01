@@ -167,7 +167,7 @@ public abstract class Memory {
         }
     }
 
-    /// Reads [Payment] and returns a [HashSet]
+    /// Reads [Payment] elements and set this class HashSet of [ToBindPayment]
     public static void readPayments () {
 
         if (!Files.exists(paymentsDirPath)) {
