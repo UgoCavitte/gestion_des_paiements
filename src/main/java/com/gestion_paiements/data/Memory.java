@@ -31,6 +31,13 @@ public abstract class Memory {
 
     static Path clientsDirPath = Paths.get("data", "clients");
     static Path paymentsDirPath = Paths.get("data", "payments");
+    static Path dataPath = Paths.get("data");
+
+    static String currenciesFileName = "currencies.json";
+    static String destinationsFileName = "destinations.json";
+    static String workingCountriesFileName = "working_countries.json";
+    static String productsFileName = "products.json";
+    static String countriesFileName = "countries.json";
 
     ////////////////////////////////////////////////////
     /// MAPS
@@ -178,7 +185,7 @@ public abstract class Memory {
                                                         .map(ToBindWorkingCountry::new)
                                                         .collect(Collectors.toSet());
 
-        File file = new File("working_countries.json");
+        File file = new File(workingCountriesFileName);
 
         try {
             mapper.writeValue(file, toSave);
@@ -190,7 +197,7 @@ public abstract class Memory {
 
     /// Reads [WorkingCountry] and sets the Memory set of [ToBindWorkingCountry]
     public static void readWorkingCountries () {
-        File file = new File("working_countries.json");
+        File file = new File(workingCountriesFileName);
 
         try {
             unboundWorkingCountries = mapper.readValue(file, new TypeReference<Set<ToBindWorkingCountry>>() {});
@@ -207,7 +214,7 @@ public abstract class Memory {
 
     /// Saves [Product]
     public static void writeProducts () {
-        File file = new File("products.json");
+        File file = new File(productsFileName);
 
         try {
             mapper.writeValue(file, Data.instance.getSetProducts());
@@ -219,7 +226,7 @@ public abstract class Memory {
 
     /// Reads [Product] and sets the Instance [HashSet]
     public static void readProducts() {
-        File file = new File("products.json");
+        File file = new File(productsFileName);
 
         try {
             Data.instance.setSetProducts(mapper.readValue(file, new TypeReference<HashSet<Product>>() {}));
@@ -230,7 +237,7 @@ public abstract class Memory {
 
     /// Saves [Country]
     public static void writeCountries () {
-        File file = new File("countries.json");
+        File file = new File(countriesFileName);
 
         try {
             mapper.writeValue(file, Data.instance.getMapClientsCountries().values());
@@ -241,7 +248,7 @@ public abstract class Memory {
 
     /// Reads [Country] and returns a [HashMap]
     public static void readCountries () {
-        File file = new File("countries.json");
+        File file = new File(countriesFileName);
 
         try {
             List<Country> loaded = mapper.readValue(file, new TypeReference<ArrayList<Country>>() {});
@@ -258,7 +265,7 @@ public abstract class Memory {
 
     /// Saves [Currency]
     public static void writeCurrencies () {
-        File file = new File("currencies.json");
+        File file = new File(currenciesFileName);
 
         try {
             mapper.writeValue(file, Data.instance.getSetCurrencies());
@@ -269,7 +276,7 @@ public abstract class Memory {
 
     /// Reads [Currency] and sets the Instance [HashMap]
     public static void readCurrencies () {
-        File file = new File("currencies.json");
+        File file = new File(currenciesFileName);
 
         try {
             Data.instance.setSetCurrencies(mapper.readValue(file, new TypeReference<HashSet<Currency>>() {}));
