@@ -4,6 +4,7 @@ package com.gestion_paiements.types;
  * Can be a platform or a bank account
  */
 
+import com.gestion_paiements.saving_formats.ToBindDestination;
 import com.gestion_paiements.types.payments.Payment;
 import com.gestion_paiements.util.IDs;
 import com.gestion_paiements.util.WithID;
@@ -32,6 +33,10 @@ public final class Destination extends Sender implements WithID {
         this.currency = currency;
         super.setName(name);
         this.ID = IDs.getAvailableID(Data.instance.getSetDestinations());
+    }
+
+    public Destination (ToBindDestination toBind) {
+        this.ID = toBind.getId();
     }
 
     //////////////////////////////
