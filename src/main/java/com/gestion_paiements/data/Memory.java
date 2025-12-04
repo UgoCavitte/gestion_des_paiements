@@ -127,17 +127,6 @@ public abstract class Memory {
         }
     }
 
-    /// Saves all [Destination] in one file
-    public static void writeDestinations () {
-        try {
-            Files.createDirectories(dataPath);
-            File file = dataPath.resolve(destinationsFileName).toFile();
-            mapper.writeValue(file, Data.instance.getSetDestinations().stream().map(ToBindDestination::new));
-        } catch (IOException e) {
-            System.out.println("Error while serializing Destination elements: " + e.getMessage());
-        }
-    }
-
     ////////////////////////////////////////////////////
     /// COMPLEX READINGS
     ////////////////////////////////////////////////////
@@ -330,6 +319,17 @@ public abstract class Memory {
             Data.instance.setSetCurrencies(mapper.readValue(file, new TypeReference<HashSet<Currency>>() {}));
         } catch (IOException e) {
             System.out.println("Error while deserializing Currency elements: " + e.getMessage());
+        }
+    }
+
+    /// Saves all [Destination] in one file
+    public static void writeDestinations () {
+        try {
+            Files.createDirectories(dataPath);
+            File file = dataPath.resolve(destinationsFileName).toFile();
+            mapper.writeValue(file, Data.instance.getSetDestinations().stream().map(ToBindDestination::new));
+        } catch (IOException e) {
+            System.out.println("Error while serializing Destination elements: " + e.getMessage());
         }
     }
 
