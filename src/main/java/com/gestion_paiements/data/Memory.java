@@ -3,6 +3,7 @@ package com.gestion_paiements.data;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gestion_paiements.saving_formats.ToBindClient;
+import com.gestion_paiements.saving_formats.ToBindDestination;
 import com.gestion_paiements.saving_formats.ToBindPayment;
 import com.gestion_paiements.saving_formats.ToBindWorkingCountry;
 import com.gestion_paiements.types.*;
@@ -126,14 +127,15 @@ public abstract class Memory {
         }
     }
 
-    /// Saves a specific [Destination]
-    public static void writeSpecificDestination (Destination destination) {
-        // TODO
-    }
-
-    /// Saves all [Destination]
-    public static void writeEveryDestinations () {
-        // TODO
+    /// Saves all [Destination] in one file
+    public static void writeDestinations () {
+        try {
+            Files.createDirectories(dataPath);
+            File file = dataPath.resolve(destinationsFileName).toFile();
+            mapper.writeValue(file, Data.instance.getSetDestinations().stream().map(ToBindDestination::new));
+        } catch (IOException e) {
+            System.out.println("Error while serializing Destination elements: " + e.getMessage());
+        }
     }
 
     ////////////////////////////////////////////////////
