@@ -21,11 +21,9 @@ public final class WorkingCountry {
         accountsAndPlatforms.forEach(a -> this.accountsAndPlatforms.put(a.getName(), a));
     }
 
-    /*
     public WorkingCountry (ToBindWorkingCountry toBind) {
         this.setName(toBind.getName());
-        this.setId(toBind.get);
-    }*/
+    }
 
     public String getName() {
         return name;
