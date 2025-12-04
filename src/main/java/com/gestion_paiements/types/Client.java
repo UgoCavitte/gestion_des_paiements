@@ -1,5 +1,6 @@
 package com.gestion_paiements.types;
 
+import com.gestion_paiements.saving_formats.ToBindClient;
 import com.gestion_paiements.types.payments.PaymentFromClient;
 import com.gestion_paiements.util.IDs;
 import com.gestion_paiements.util.WithID;
@@ -36,6 +37,11 @@ public final class Client extends Sender implements WithID {
         super.setName(name);
         this.country = country;
         this.comment = comment;
+    }
+
+    public Client (ToBindClient toBind) {
+        this.ID = toBind.getId();
+        this.comment = toBind.getComment();
     }
 
     //////////////////////////////
