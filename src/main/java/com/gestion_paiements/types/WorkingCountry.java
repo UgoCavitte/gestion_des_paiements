@@ -1,21 +1,38 @@
 package com.gestion_paiements.types;
 
+import com.gestion_paiements.saving_formats.ToBindWorkingCountry;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Set;
 
-public final class WorkingCountry extends Country {
+public final class WorkingCountry {
+
+    String name;
 
     HashMap<String, Destination> accountsAndPlatforms = new HashMap<>();
 
     public WorkingCountry (String name) {
-        super (name);
+        this.name = name;
     }
 
     public WorkingCountry (String name, @NotNull Set<Destination> accountsAndPlatforms) {
-        super (name);
+        this.name = name;
         accountsAndPlatforms.forEach(a -> this.accountsAndPlatforms.put(a.getName(), a));
+    }
+
+    /*
+    public WorkingCountry (ToBindWorkingCountry toBind) {
+        this.setName(toBind.getName());
+        this.setId(toBind.get);
+    }*/
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public HashMap<String, Destination> getAccountsAndPlatforms() {
