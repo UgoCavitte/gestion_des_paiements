@@ -30,6 +30,7 @@ public abstract class Memory {
     static Set<ToBindWorkingCountry> unboundWorkingCountries = new HashSet<>();
     static Set<ToBindClient> unboundClients = new HashSet<>();
     static Set<ToBindPayment> unboundPayments = new HashSet<>();
+    static Set<ToBindDestination> unboundDestinations = new HashSet<>();
 
     static Path clientsDirPath = Paths.get("data", "clients");
     static Path paymentsDirPath = Paths.get("data", "payments");
@@ -333,6 +334,22 @@ public abstract class Memory {
         }
     }
 
+    /// Reads all [Destination] elements from one file
+    public static void readDestinations () {
+
+        if (!Files.exists(dataPath)) {
+            System.out.println("Data directory not found: " + dataPath);
+            return;
+        }
+
+        try {
+            File file = dataPath.resolve(destinationsFileName).toFile();
+            unboundDestinations = mapper.readValue(file, new TypeReference<Set<ToBindDestination>>() {});
+        } catch (IOException e) {
+            System.out.println("Error while deserializing Currency elements: " + e.getMessage());
+        }
+    }
+
     ////////////////////////////////////////////////////
     /// BINDER
     ////////////////////////////////////////////////////
@@ -354,6 +371,7 @@ public abstract class Memory {
         writeWorkingCountries();
         writeClients();
         writePayments();
+        writeDestinations();
         System.out.println("Written !");
     }
 
@@ -364,6 +382,7 @@ public abstract class Memory {
         readCurrencies();
         readWorkingCountries();
         readPayments();
+        readDestinations();
         System.out.println("Read!");
     }
 
