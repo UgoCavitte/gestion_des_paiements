@@ -346,7 +346,7 @@ public abstract class Memory {
             File file = dataPath.resolve(destinationsFileName).toFile();
             unboundDestinations = mapper.readValue(file, new TypeReference<Set<ToBindDestination>>() {});
         } catch (IOException e) {
-            System.out.println("Error while deserializing Currency elements: " + e.getMessage());
+            System.out.println("Error while deserializing Destination elements: " + e.getMessage());
         }
     }
 
