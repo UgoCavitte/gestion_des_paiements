@@ -1,12 +1,18 @@
 package com.gestion_paiements.types;
 
 import com.gestion_paiements.saving_formats.ToBindWorkingCountry;
+import com.gestion_paiements.util.IDs;
+import com.gestion_paiements.util.WithID;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-public final class WorkingCountry {
+public final class WorkingCountry implements WithID {
+
+    int id;
 
     String name;
 
@@ -14,11 +20,13 @@ public final class WorkingCountry {
 
     public WorkingCountry (String name) {
         this.name = name;
+        this.id = IDs.getAvailableID(new HashSet<>(Data.instance.getMapAccountsCountries().values()));
     }
 
     public WorkingCountry (String name, @NotNull Set<Destination> accountsAndPlatforms) {
         this.name = name;
         accountsAndPlatforms.forEach(a -> this.accountsAndPlatforms.put(a.getName(), a));
+        this.id = IDs.getAvailableID(new HashSet<>(Data.instance.getMapAccountsCountries().values()));
     }
 
     public WorkingCountry (ToBindWorkingCountry toBind) {
@@ -39,5 +47,15 @@ public final class WorkingCountry {
 
     public void setAccountsAndPlatforms(HashMap<String, Destination> accountsAndPlatforms) {
         this.accountsAndPlatforms = accountsAndPlatforms;
+    }
+
+    @Override
+    public int getId() {
+        return this.id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
     }
 }
