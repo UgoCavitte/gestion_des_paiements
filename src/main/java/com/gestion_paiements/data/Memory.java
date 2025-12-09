@@ -27,10 +27,10 @@ public abstract class Memory {
 
     static ObjectMapper mapper = new ObjectMapper();
 
-    static Set<ToBindWorkingCountry> unboundWorkingCountries = new HashSet<>();
-    static Set<ToBindClient> unboundClients = new HashSet<>();
-    static Set<ToBindPayment> unboundPayments = new HashSet<>();
-    static Set<ToBindDestination> unboundDestinations = new HashSet<>();
+    static List<ToBindWorkingCountry> unboundWorkingCountries = new ArrayList<>();
+    static List<ToBindClient> unboundClients = new ArrayList<>();
+    static List<ToBindPayment> unboundPayments = new ArrayList<>();
+    static List<ToBindDestination> unboundDestinations = new ArrayList<>();
 
     static Path clientsDirPath = Paths.get("data", "clients");
     static Path paymentsDirPath = Paths.get("data", "payments");
@@ -152,7 +152,7 @@ public abstract class Memory {
                         }
                     })
                     .filter(Objects::nonNull)
-                    .collect(Collectors.toSet());
+                    .toList();
 
         } catch (IOException e) {
             System.out.println("Error while deserializing Client elements: " + e.getMessage());
@@ -179,7 +179,7 @@ public abstract class Memory {
                         }
                     })
                     .filter(Objects::nonNull)
-                    .collect(Collectors.toSet());
+                    .toList();
 
         } catch (IOException e) {
             System.out.println("Error while deserializing Payment elements: " + e.getMessage());
@@ -219,7 +219,7 @@ public abstract class Memory {
 
         try {
             File file = dataPath.resolve(workingCountriesFileName).toFile();
-            unboundWorkingCountries = mapper.readValue(file, new TypeReference<Set<ToBindWorkingCountry>>() {});
+            unboundWorkingCountries = mapper.readValue(file, new TypeReference<List<ToBindWorkingCountry>>() {});
         } catch (IOException e) {
             System.out.println("Error while deserializing WorkingCountry elements: " + e.getMessage());
         }
@@ -344,7 +344,7 @@ public abstract class Memory {
 
         try {
             File file = dataPath.resolve(destinationsFileName).toFile();
-            unboundDestinations = mapper.readValue(file, new TypeReference<Set<ToBindDestination>>() {});
+            unboundDestinations = mapper.readValue(file, new TypeReference<List<ToBindDestination>>() {});
         } catch (IOException e) {
             System.out.println("Error while deserializing Destination elements: " + e.getMessage());
         }
@@ -355,8 +355,101 @@ public abstract class Memory {
     ////////////////////////////////////////////////////
 
     /// Binds data together to let the program find links faster
+    /// We need to keep everything in order to synchronize already bound and unbound data from elements
     public static void bindData () {
-        //
+
+        // We start by making the not unbound elements
+        List<WorkingCountry> workingCountries = unboundWorkingCountries.stream().map(WorkingCountry::new).toList();
+        List<Destination> destinations = unboundDestinations.stream().map(Destination::new).toList();
+        List<Client> clients = unboundClients.stream().map(Client::new).toList();
+
+        // -------------------------
+        // EASY BINDING: currency, country, destinationType
+        // -------------------------
+
+        // Client elements only need their country to be bound
+        for (int i = 0 ; i < clients.size() ; i++) {
+            int finalI = i;
+            clients.get(i)
+                    .setCountry(Data.instance.getMapClientsCountries()
+                                            .values().stream()
+                                            .filter(t -> t.getId() == unboundClients.get(finalI).getCountry())
+                                            .findFirst().orElse(null));
+            if (clients.get(i).getCountry() == null) {
+                throw new RuntimeException("Country not found with the given ID while binding Client elements.");
+            }
+        }
+
+        // WorkingCountry elements only need their destination to be bound
+        for (int i = 0; i < workingCountries.size(); i++) {
+            int finalI = i;
+
+            Set<Destination> destinationsForThisCountry = destinations.stream()
+                                                            .filter(d -> unboundWorkingCountries.get(finalI).getDestinations().contains(d.getId()))
+                                                            .collect(Collectors.toSet());
+
+            workingCountries.get(i)
+                    .setAccountsAndPlatforms(
+                            destinationsForThisCountry.stream()
+                            .collect(Collectors.toMap(Destination::getName, e -> e, (u, v) -> u, HashMap::new)));
+        }
+
+
+        // Destination elements need their currency, type and working country
+        for (int i = 0; i < destinations.size(); i++) {
+            int finalI = i;
+
+            Destination currentDestination = destinations.get(i);
+
+            // CURRENCY
+            currentDestination.setCurrency(
+                    Data.instance.getSetCurrencies().stream()
+                            .filter(c -> c.getId() == unboundDestinations.get(finalI).getCurrency())
+                            .findFirst().orElse(null)
+            );
+
+            if (destinations.get(i).getCurrency() == null) {
+                throw new RuntimeException("Currency not found with the given ID while binding Destination elements.");
+            }
+
+            // TYPE
+            currentDestination.setDestinationType(
+                    mapFromIntegerToDestinationType.get(unboundDestinations.get(finalI).getType())
+            );
+
+            if (destinations.get(i).getDestinationType() == null) {
+                throw new RuntimeException("DestinationType not found with the given ID while binding Destination elements.");
+            }
+
+            // WORKING COUNTRY
+            currentDestination.setCountry(
+                    Data.instance.getMapAccountsCountries()
+                            .values().stream()
+                            .filter(c -> c.getId() == unboundDestinations.get(finalI).getWorkingCountry())
+                            .findFirst().orElse(null)
+            );
+
+            if (destinations.get(i).getCountry() == null) {
+                throw new RuntimeException("WorkingCountry not found with the given ID while binding Destination elements.");
+            }
+
+        }
+
+
+        // -------------------------
+        // HARD BINDING: payments
+        // -------------------------
+
+
+        // Payment elements need their sender
+        // We start by sorting [Payment] elements by type
+       // List<Payment> payments = unboundPayments.stream().map(Payment::new).toList();
+
+        // WorkingCountry elements need their platforms
+
+        // Destination elements need their WorkingCountry, currency and transfers
+
+        // Client elements need their payments and country
     }
 
     ////////////////////////////////////////////////////
