@@ -1,5 +1,6 @@
 package com.gestion_paiements.types.payments;
 
+import com.gestion_paiements.saving_formats.ToBindPayment;
 import com.gestion_paiements.types.*;
 import com.gestion_paiements.util.IDs;
 import org.jetbrains.annotations.NotNull;
@@ -48,6 +49,11 @@ public final class PaymentFromPlatform extends Payment {
         super.setComment(comment);
 
         super.setId(IDs.getAvailableID(Data.instance.getSetPayments()));
+    }
+
+    // For binding
+    public PaymentFromPlatform (ToBindPayment toBind) {
+        super(toBind);
     }
 
     // Minus commission

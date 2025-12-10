@@ -1,5 +1,6 @@
 package com.gestion_paiements.types.payments;
 
+import com.gestion_paiements.saving_formats.ToBindPayment;
 import com.gestion_paiements.types.*;
 import com.gestion_paiements.util.IDs;
 import org.jetbrains.annotations.NotNull;
@@ -29,6 +30,7 @@ public final class PaymentFromClient extends Payment {
             List<PurchasedProduct> purchasedProducts,
             StatusPaymentFromClient status,
             @Nullable String comment) {
+        super();
         super.setSender(sender);
         this.purchasedProducts = purchasedProducts;
         super.setDestination(destination);
@@ -40,6 +42,11 @@ public final class PaymentFromClient extends Payment {
         this.status = status;
 
         super.setId(IDs.getAvailableID(Data.instance.getSetPayments()));
+    }
+
+    // For binding
+    public PaymentFromClient (ToBindPayment toBind) {
+        super(toBind);
     }
 
     //////////////////////////////

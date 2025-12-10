@@ -9,12 +9,15 @@ import com.gestion_paiements.saving_formats.ToBindWorkingCountry;
 import com.gestion_paiements.types.*;
 import com.gestion_paiements.types.Currency;
 import com.gestion_paiements.types.payments.Payment;
+import com.gestion_paiements.types.payments.PaymentFromClient;
+import com.gestion_paiements.types.payments.PaymentFromPlatform;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -328,7 +331,7 @@ public abstract class Memory {
         try {
             Files.createDirectories(dataPath);
             File file = dataPath.resolve(destinationsFileName).toFile();
-            mapper.writeValue(file, Data.instance.getSetDestinations().stream().map(ToBindDestination::new));
+            mapper.writeValue(file, Data.instance.getSetDestinations().stream().map(ToBindDestination::new).collect(Collectors.toSet()));
         } catch (IOException e) {
             System.out.println("Error while serializing Destination elements: " + e.getMessage());
         }
@@ -435,21 +438,161 @@ public abstract class Memory {
 
         }
 
+        Data.instance.setSetClients(new HashSet<>(clients));
+        Data.instance.setMapAccountsCountries(workingCountries.stream()
+                .collect(Collectors.toMap(
+                        WorkingCountry::getName,
+                        e -> e,
+                        (u, v) -> u,
+                        HashMap::new
+                ))
+        );
+        Data.instance.setSetDestinations(new HashSet<>(destinations));
+
 
         // -------------------------
         // HARD BINDING: payments
         // -------------------------
 
+        // We start by separating types of Payment elements
+        List<ToBindPayment> unboundPaymentsFromClients = unboundPayments.stream()
+                .filter(p -> mapFromIntegerToSenderType.get(p.getSenderType()) == Client.class)
+                .toList();
+        List<PaymentFromClient> paymentsFromClients = unboundPaymentsFromClients.stream()
+                .map(PaymentFromClient::new)
+                .toList();
 
-        // Payment elements need their sender
-        // We start by sorting [Payment] elements by type
-       // List<Payment> payments = unboundPayments.stream().map(Payment::new).toList();
+        List<ToBindPayment> unboundPaymentsFromPlatforms = unboundPayments.stream()
+                .filter(p -> mapFromIntegerToSenderType.get(p.getSenderType()) == Destination.class)
+                .toList();
+        List<PaymentFromPlatform> paymentsFromPlatforms = unboundPaymentsFromPlatforms.stream()
+                .map(PaymentFromPlatform::new)
+                .toList();
+
+        // PaymentFromClient elements binding
+        // Need to bind: dateSent, dateReceived, amountSent, amountReceived, destination, sender + purchasedProducts, status
+        for (int i = 0; i < paymentsFromClients.size(); i++) {
+            PaymentFromClient currentPayment = paymentsFromClients.get(i);
+            ToBindPayment currentToBind = unboundPaymentsFromClients.get(i);
+
+            // Dates
+            currentPayment.setDateSent(LocalDate.parse(currentToBind.getDateSent()));
+            currentPayment.setDateReceived(LocalDate.parse(currentToBind.getDateReceived()));
+
+            // Amounts
+            currentPayment.setSentAmount(
+                    new Amount(
+                            currentToBind.getAmountSent(),
+                            Data.instance.getSetCurrencies().stream().filter(p -> p.getId() == currentToBind.getCurrencySent()).findFirst().orElse(null)
+                    )
+            );
+
+            if (currentPayment.getSentAmount().getCurrency() == null) {
+                throw new RuntimeException("Currency not found with the given ID while binding PaymentFromClient elements.");
+            }
+
+            currentPayment.setReceivedAmount(
+                    new Amount(
+                            currentToBind.getAmountReceived(),
+                            Data.instance.getSetCurrencies().stream().filter(p -> p.getId() == currentToBind.getCurrencyReceived()).findFirst().orElse(null)
+                    )
+            );
+
+            if (currentPayment.getSentAmount().getCurrency() == null) {
+                throw new RuntimeException("Currency not found with the given ID while binding PaymentFromClient elements.");
+            }
+
+            // Destination
+            currentPayment.setDestination(
+                    Data.instance.getSetDestinations().stream()
+                            .filter(p -> p.getId() == currentToBind.getDestination())
+                            .findFirst().orElse(null)
+            );
+
+            if (currentPayment.getDestination() == null) {
+                throw new RuntimeException("Destination not found with the given ID while binding PaymentFromClient elements.");
+            }
+
+            // Sender
+            currentPayment.setSender(
+                    Data.instance.getSetClients().stream()
+                            .filter(p -> p.getId() == currentToBind.getSenderID())
+                            .findFirst().orElse(null)
+            );
+
+            if (currentPayment.getSender() == null) {
+                throw new RuntimeException("Sender (Client) not found with the given ID while binding PaymentFromClient elements.");
+            }
+
+            // TODO
+
+        }
+
+        // PaymentFromPlatform elements binding
+        // Need to bind: dateSent, dateReceived, amountSent, amountReceived, destination, sender + sentPayments, commission
+        for (int i = 0; i < paymentsFromPlatforms.size(); i++) {
+            PaymentFromPlatform currentPayment = paymentsFromPlatforms.get(i);
+            ToBindPayment currentToBind = unboundPaymentsFromPlatforms.get(i);
+
+            // Dates
+            currentPayment.setDateSent(LocalDate.parse(currentToBind.getDateSent()));
+            currentPayment.setDateReceived(LocalDate.parse(currentToBind.getDateReceived()));
+
+            // Amounts
+            currentPayment.setSentAmount(
+                    new Amount(
+                            currentToBind.getAmountSent(),
+                            Data.instance.getSetCurrencies().stream().filter(p -> p.getId() == currentToBind.getCurrencySent()).findFirst().orElse(null)
+                    )
+            );
+
+            if (currentPayment.getSentAmount().getCurrency() == null) {
+                throw new RuntimeException("Currency not found with the given ID while binding PaymentFromPlatform elements.");
+            }
+
+            currentPayment.setReceivedAmount(
+                    new Amount(
+                            currentToBind.getAmountReceived(),
+                            Data.instance.getSetCurrencies().stream().filter(p -> p.getId() == currentToBind.getCurrencyReceived()).findFirst().orElse(null)
+                    )
+            );
+
+            if (currentPayment.getSentAmount().getCurrency() == null) {
+                throw new RuntimeException("Currency not found with the given ID while binding PaymentFromPlatform elements.");
+            }
+
+            // Destination
+            currentPayment.setDestination(
+                    Data.instance.getSetDestinations().stream()
+                            .filter(p -> p.getId() == currentToBind.getDestination())
+                            .findFirst().orElse(null)
+            );
+
+            if (currentPayment.getDestination() == null) {
+                throw new RuntimeException("Destination not found with the given ID while binding PaymentFromPlatform elements.");
+            }
+
+            // Sender
+            currentPayment.setSender(
+                    Data.instance.getSetDestinations().stream()
+                            .filter(p -> p.getId() == currentToBind.getSenderID())
+                            .findFirst().orElse(null)
+            );
+
+            if (currentPayment.getSender() == null) {
+                throw new RuntimeException("Sender (Platform) not found with the given ID while binding PaymentFromPlatform elements.");
+            }
+
+            // TODO
+        }
+
 
         // WorkingCountry elements need their platforms
 
         // Destination elements need their WorkingCountry, currency and transfers
 
         // Client elements need their payments and country
+
     }
 
     ////////////////////////////////////////////////////
@@ -474,8 +617,10 @@ public abstract class Memory {
         readCountries();
         readCurrencies();
         readWorkingCountries();
+        readClients();
         readPayments();
         readDestinations();
+        bindData();
         System.out.println("Read!");
     }
 

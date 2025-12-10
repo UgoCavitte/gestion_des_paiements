@@ -1,5 +1,6 @@
 package com.gestion_paiements.types.payments;
 
+import com.gestion_paiements.saving_formats.ToBindPayment;
 import com.gestion_paiements.types.Amount;
 import com.gestion_paiements.types.Destination;
 import com.gestion_paiements.types.Sender;
@@ -32,6 +33,16 @@ public abstract class Payment implements Comparable<Payment>, WithID {
 
     // Any other information if needed
     private @Nullable String comment;
+
+    // For binding
+    public Payment(ToBindPayment toBind) {
+        this.id = toBind.getId();
+        this.comment = toBind.getComment();
+    }
+
+    public Payment() {
+
+    }
 
     //////////////////////////////
     /// GETTERS AND SETTERS
