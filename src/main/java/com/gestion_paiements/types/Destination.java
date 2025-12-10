@@ -39,6 +39,10 @@ public final class Destination extends Sender implements WithID {
         this.ID = toBind.getId();
     }
 
+    public Destination () {
+
+    }
+
     //////////////////////////////
     /// GETTERS AND SETTERS
     //////////////////////////////
