@@ -2,6 +2,11 @@ package com.gestion_paiements.saving_formats;
 
 import com.gestion_paiements.data.Memory;
 import com.gestion_paiements.types.payments.Payment;
+import com.gestion_paiements.types.payments.PaymentFromClient;
+import com.gestion_paiements.types.payments.PaymentFromPlatform;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /// Unbound class for [Payment] elements
 
@@ -29,6 +34,18 @@ public class ToBindPayment {
 
     private String comment;
 
+    // More complex parameters for PaymentFromPlatform
+    private double commissionAmount;
+
+    private int commissionCurrency;
+
+    private Set<Integer> sentPayments;
+
+    // More complex parameters for PaymentFromClient
+    private Set<Integer> purchasedProducts;
+
+    private int statusPaymentFromClient;
+
     // For deserialization
     public ToBindPayment() {
     }
@@ -46,6 +63,21 @@ public class ToBindPayment {
         this.senderType = Memory.mapFromSenderTypeToInteger.get(payment.getSender().getClass());
         this.senderID = payment.getSender().getId();
         this.comment = payment.getComment();
+
+        if (payment instanceof PaymentFromPlatform) {
+            this.commissionAmount = ((PaymentFromPlatform) payment).getCommission().getAmount();
+            this.commissionCurrency = ((PaymentFromPlatform) payment).getCommission().getCurrency().getId();
+            this.sentPayments = ((PaymentFromPlatform) payment).getSentPayments().stream().map(Payment::getId).collect(Collectors.toSet());
+        }
+
+        else if (payment instanceof PaymentFromClient) {
+            //
+        }
+
+        else {
+            throw new RuntimeException("Non-supported subtype of Payment");
+        }
+
     }
 
     public int getId() {
@@ -134,5 +166,45 @@ public class ToBindPayment {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public double getCommissionAmount() {
+        return commissionAmount;
+    }
+
+    public void setCommissionAmount(double commissionAmount) {
+        this.commissionAmount = commissionAmount;
+    }
+
+    public int getCommissionCurrency() {
+        return commissionCurrency;
+    }
+
+    public void setCommissionCurrency(int commissionCurrency) {
+        this.commissionCurrency = commissionCurrency;
+    }
+
+    public Set<Integer> getSentPayments() {
+        return sentPayments;
+    }
+
+    public void setSentPayments(Set<Integer> sentPayments) {
+        this.sentPayments = sentPayments;
+    }
+
+    public Set<Integer> getPurchasedProducts() {
+        return purchasedProducts;
+    }
+
+    public void setPurchasedProducts(Set<Integer> purchasedProducts) {
+        this.purchasedProducts = purchasedProducts;
+    }
+
+    public int getStatusPaymentFromClient() {
+        return statusPaymentFromClient;
+    }
+
+    public void setStatusPaymentFromClient(int statusPaymentFromClient) {
+        this.statusPaymentFromClient = statusPaymentFromClient;
     }
 }
