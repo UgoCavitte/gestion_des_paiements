@@ -10,7 +10,7 @@ public final class PurchasedProduct {
     /// CONSTRUCTOR
     //////////////////////////////
 
-    public PurchasedProduct(int quantity, Product product) {
+    public PurchasedProduct(double quantity, Product product) {
         this.quantity = quantity;
         this.product = product;
     }
