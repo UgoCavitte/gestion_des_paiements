@@ -23,6 +23,8 @@ public final class Destination extends Sender implements WithID {
 
     private HashSet<Payment> transfers = new HashSet<>();
 
+    private String name;
+
     //////////////////////////////
     /// CONSTRUCTOR
     //////////////////////////////
@@ -31,7 +33,7 @@ public final class Destination extends Sender implements WithID {
         this.destinationType = destinationType;
         this.country = country;
         this.currency = currency;
-        super.setName(name);
+        this.name = name;
         this.ID = IDs.getAvailableID(Data.instance.getSetDestinations());
     }
 
@@ -87,5 +89,15 @@ public final class Destination extends Sender implements WithID {
     @Override
     public void setId(int id) {
         this.ID = id;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
     }
 }

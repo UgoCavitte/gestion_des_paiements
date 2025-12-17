@@ -6,13 +6,11 @@ import com.gestion_paiements.util.WithID;
 
 public abstract class Sender implements WithID {
 
-    private String name;
-
     public String getName() {
-        return name;
+        return "Name not set";
     }
 
     public void setName(String name) {
-        this.name = name;
+
     }
 }
