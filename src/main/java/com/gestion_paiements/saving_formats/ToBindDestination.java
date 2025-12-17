@@ -7,6 +7,8 @@ import com.gestion_paiements.types.Destination;
 
 public final class ToBindDestination {
 
+    private String name;
+
     private int id;
 
     private int type;
@@ -22,10 +24,19 @@ public final class ToBindDestination {
 
     // Constructor for me
     public ToBindDestination (Destination destination) {
+        this.name = destination.getName();
         this.id = destination.getId();
         this.type = Memory.mapFromDestinationTypeToInteger.get(destination.getDestinationType());
         this.workingCountry = destination.getCountry().getId();
         this.currency = destination.getCurrency().getId();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getId() {

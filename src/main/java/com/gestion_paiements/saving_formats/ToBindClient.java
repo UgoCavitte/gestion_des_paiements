@@ -8,6 +8,8 @@ import com.gestion_paiements.types.payments.Payment;
 
 public final class ToBindClient {
 
+    private String name;
+
     private int id;
 
     private int country;
@@ -20,9 +22,18 @@ public final class ToBindClient {
 
     // Constructor for me
     public ToBindClient (Client client) {
+        this.name = client.getName();
         this.id = client.getId();
         this.country = client.getCountry().getId();
         this.comment = client.getComment();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getId() {
