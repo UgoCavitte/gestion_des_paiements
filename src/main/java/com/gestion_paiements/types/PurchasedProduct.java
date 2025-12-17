@@ -2,7 +2,7 @@ package com.gestion_paiements.types;
 
 public final class PurchasedProduct {
 
-    private int quantity;
+    private double quantity;
 
     private Product product;
 
@@ -19,11 +19,11 @@ public final class PurchasedProduct {
     /// GETTERS AND SETTERS
     //////////////////////////////
 
-    public int getQuantity() {
+    public double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(double quantity) {
         this.quantity = quantity;
     }
 
