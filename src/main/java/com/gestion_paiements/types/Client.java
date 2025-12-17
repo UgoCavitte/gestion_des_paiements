@@ -25,8 +25,6 @@ public final class Client extends Sender implements WithID {
     // This must be set separately when the app is being opened
     private HashSet<PaymentFromClient> payments = new HashSet<>();
 
-    private String name;
-
     // Any other information about the client
     private @Nullable String comment;
 
@@ -36,7 +34,7 @@ public final class Client extends Sender implements WithID {
 
     public Client(String name, Country country, @Nullable String comment) {
         this.ID = IDs.getAvailableID(Data.instance.getSetClients());
-        this.name = name;
+        super.setName(name);
         this.country = country;
         this.comment = comment;
     }
@@ -44,6 +42,7 @@ public final class Client extends Sender implements WithID {
     public Client (ToBindClient toBind) {
         this.ID = toBind.getId();
         this.comment = toBind.getComment();
+        this.setName(toBind.getName());
     }
 
     //////////////////////////////
@@ -82,15 +81,5 @@ public final class Client extends Sender implements WithID {
     @Override
     public void setId(int id) {
         this.ID = id;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public void setName(String name) {
-        this.name = name;
     }
 }
