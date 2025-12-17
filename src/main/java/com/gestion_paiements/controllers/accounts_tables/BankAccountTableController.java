@@ -84,12 +84,12 @@ public class BankAccountTableController implements Refreshable {
             }
             // if received from a platform, we display a list of all the purchased products
             else {
-                Map<Product, Integer> map = ((PaymentFromPlatform) cellData.getValue()).getSentPayments().stream()
+                Map<Product, Double> map = ((PaymentFromPlatform) cellData.getValue()).getSentPayments().stream()
                         .flatMap(payment -> payment.getProducts().stream())
                         .collect(Collectors.toMap(
                                 PurchasedProduct::getProduct,
                                 PurchasedProduct::getQuantity,
-                                Integer::sum
+                                Double::sum
                         ));
 
                 return new SimpleStringProperty(
