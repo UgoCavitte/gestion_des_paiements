@@ -1,10 +1,12 @@
 package com.gestion_paiements.saving_formats;
 
 import com.gestion_paiements.data.Memory;
+import com.gestion_paiements.types.PurchasedProduct;
 import com.gestion_paiements.types.payments.Payment;
 import com.gestion_paiements.types.payments.PaymentFromClient;
 import com.gestion_paiements.types.payments.PaymentFromPlatform;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -42,7 +44,9 @@ public class ToBindPayment {
     private Set<Integer> sentPayments;
 
     // More complex parameters for PaymentFromClient
-    private Set<Integer> purchasedProducts;
+    private List<Integer> purchasedProducts;
+
+    private List<Double> purchasedProductsQuantity;
 
     private int statusPaymentFromClient;
 
@@ -64,14 +68,16 @@ public class ToBindPayment {
         this.senderID = payment.getSender().getId();
         this.comment = payment.getComment();
 
-        if (payment instanceof PaymentFromPlatform) {
-            this.commissionAmount = ((PaymentFromPlatform) payment).getCommission().getAmount();
-            this.commissionCurrency = ((PaymentFromPlatform) payment).getCommission().getCurrency().getId();
-            this.sentPayments = ((PaymentFromPlatform) payment).getSentPayments().stream().map(Payment::getId).collect(Collectors.toSet());
+        if (payment instanceof PaymentFromPlatform paymentFromPlatform) {
+            this.commissionAmount = paymentFromPlatform.getCommission().getAmount();
+            this.commissionCurrency = paymentFromPlatform.getCommission().getCurrency().getId();
+            this.sentPayments = paymentFromPlatform.getSentPayments().stream().map(Payment::getId).collect(Collectors.toSet());
         }
 
-        else if (payment instanceof PaymentFromClient) {
-            //
+        else if (payment instanceof PaymentFromClient paymentFromClient) {
+            this.purchasedProducts = paymentFromClient.getProducts().stream().map(p -> p.getProduct().getId()).toList();
+            this.purchasedProductsQuantity = paymentFromClient.getProducts().stream().map(PurchasedProduct::getQuantity).toList();
+            this.statusPaymentFromClient = Memory.mapFromStatusPaymentToInteger.get(paymentFromClient.getStatus());
         }
 
         else {
@@ -192,12 +198,20 @@ public class ToBindPayment {
         this.sentPayments = sentPayments;
     }
 
-    public Set<Integer> getPurchasedProducts() {
+    public List<Integer> getPurchasedProducts() {
         return purchasedProducts;
     }
 
-    public void setPurchasedProducts(Set<Integer> purchasedProducts) {
+    public void setPurchasedProducts(List<Integer> purchasedProducts) {
         this.purchasedProducts = purchasedProducts;
+    }
+
+    public List<Double> getPurchasedProductsQuantity() {
+        return purchasedProductsQuantity;
+    }
+
+    public void setPurchasedProductsQuantity(List<Double> purchasedProductsQuantity) {
+        this.purchasedProductsQuantity = purchasedProductsQuantity;
     }
 
     public int getStatusPaymentFromClient() {
