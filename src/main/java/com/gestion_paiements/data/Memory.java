@@ -11,6 +11,7 @@ import com.gestion_paiements.types.Currency;
 import com.gestion_paiements.types.payments.Payment;
 import com.gestion_paiements.types.payments.PaymentFromClient;
 import com.gestion_paiements.types.payments.PaymentFromPlatform;
+import com.gestion_paiements.types.payments.StatusPaymentFromClient;
 
 import java.io.File;
 import java.io.IOException;
@@ -67,6 +68,18 @@ public abstract class Memory {
     public static Map<Class<?>, Integer> mapFromSenderTypeToInteger = Map.of(
             Client.class, 0,
             Destination.class, 1
+    );
+
+    public static Map<StatusPaymentFromClient, Integer> mapFromStatusPaymentToInteger = Map.of(
+            StatusPaymentFromClient.SENT_TO_THE_BANK, 0,
+            StatusPaymentFromClient.SENT_TO_A_PLATFORM, 1,
+            StatusPaymentFromClient.NOT_ON_A_PLATFORM, 2
+    );
+
+    public static Map<Integer, StatusPaymentFromClient> mapFromIntegerToStatusPayment = Map.of(
+            0, StatusPaymentFromClient.SENT_TO_THE_BANK,
+            1, StatusPaymentFromClient.SENT_TO_A_PLATFORM,
+            2, StatusPaymentFromClient.NOT_ON_A_PLATFORM
     );
 
     ////////////////////////////////////////////////////
@@ -449,6 +462,10 @@ public abstract class Memory {
         );
         Data.instance.setSetDestinations(new HashSet<>(destinations));
 
+        System.out.println("We set everything");
+        Set<String> toPrint = destinations.stream().map(Destination::getName).collect(Collectors.toSet());
+        System.out.println(toPrint);
+
 
         // -------------------------
         // HARD BINDING: payments
@@ -488,7 +505,7 @@ public abstract class Memory {
             );
 
             if (currentPayment.getSentAmount().getCurrency() == null) {
-                throw new RuntimeException("Currency not found with the given ID while binding PaymentFromClient elements.");
+                throw new RuntimeException("Currency not found with the given ID (" + currentToBind.getCurrencySent() + ") while binding PaymentFromClient element with the ID " + currentToBind.getId());
             }
 
             currentPayment.setReceivedAmount(
@@ -499,7 +516,7 @@ public abstract class Memory {
             );
 
             if (currentPayment.getSentAmount().getCurrency() == null) {
-                throw new RuntimeException("Currency not found with the given ID while binding PaymentFromClient elements.");
+                throw new RuntimeException("Currency not found with the given ID while binding PaymentFromClient element with the ID " + currentToBind.getId());
             }
 
             // Destination
@@ -510,7 +527,7 @@ public abstract class Memory {
             );
 
             if (currentPayment.getDestination() == null) {
-                throw new RuntimeException("Destination not found with the given ID while binding PaymentFromClient elements.");
+                throw new RuntimeException("Destination not found with the given ID while binding PaymentFromClient element with the ID " + currentToBind.getId());
             }
 
             // Sender
@@ -521,7 +538,7 @@ public abstract class Memory {
             );
 
             if (currentPayment.getSender() == null) {
-                throw new RuntimeException("Sender (Client) not found with the given ID while binding PaymentFromClient elements.");
+                throw new RuntimeException("Sender (Client) not found with the given ID while binding PaymentFromClient element with the ID " + currentToBind.getId());
             }
 
             // TODO
@@ -538,29 +555,6 @@ public abstract class Memory {
             currentPayment.setDateSent(LocalDate.parse(currentToBind.getDateSent()));
             currentPayment.setDateReceived(LocalDate.parse(currentToBind.getDateReceived()));
 
-            // Amounts
-            currentPayment.setSentAmount(
-                    new Amount(
-                            currentToBind.getAmountSent(),
-                            Data.instance.getSetCurrencies().stream().filter(p -> p.getId() == currentToBind.getCurrencySent()).findFirst().orElse(null)
-                    )
-            );
-
-            if (currentPayment.getSentAmount().getCurrency() == null) {
-                throw new RuntimeException("Currency not found with the given ID while binding PaymentFromPlatform elements.");
-            }
-
-            currentPayment.setReceivedAmount(
-                    new Amount(
-                            currentToBind.getAmountReceived(),
-                            Data.instance.getSetCurrencies().stream().filter(p -> p.getId() == currentToBind.getCurrencyReceived()).findFirst().orElse(null)
-                    )
-            );
-
-            if (currentPayment.getSentAmount().getCurrency() == null) {
-                throw new RuntimeException("Currency not found with the given ID while binding PaymentFromPlatform elements.");
-            }
-
             // Destination
             currentPayment.setDestination(
                     Data.instance.getSetDestinations().stream()
@@ -569,7 +563,7 @@ public abstract class Memory {
             );
 
             if (currentPayment.getDestination() == null) {
-                throw new RuntimeException("Destination not found with the given ID while binding PaymentFromPlatform elements.");
+                throw new RuntimeException("Destination not found with the given ID while binding PaymentFromPlatform element with the ID " + currentToBind.getId());
             }
 
             // Sender
@@ -580,10 +574,29 @@ public abstract class Memory {
             );
 
             if (currentPayment.getSender() == null) {
-                throw new RuntimeException("Sender (Platform) not found with the given ID while binding PaymentFromPlatform elements.");
+                throw new RuntimeException("Sender (Platform) not found with the given ID while binding PaymentFromPlatform element with the ID " + currentToBind.getId());
             }
 
-            // TODO
+            // Commission
+            currentPayment.setCommission(
+                    new Amount(
+                            currentToBind.getCommissionAmount(),
+                            Data.instance.getSetCurrencies().stream().filter(c -> c.getId() == currentToBind.getCommissionCurrency()).findFirst().orElse(null)
+                    )
+            );
+
+            if (currentPayment.getCommission().getCurrency() == null) {
+                throw new RuntimeException("Currency not found with the given ID while binding Commission parameter for a PaymentFromPlatform element with the ID " + currentToBind.getId());
+            }
+
+            // Sent payments
+            HashSet<PaymentFromClient> sentPaymentsBound = new HashSet<>();
+            for (int j : currentToBind.getSentPayments()) {
+                Payment found = Data.instance.getSetPayments().stream().filter(p -> p.getId() == j).findFirst().orElse(null);
+                if (found == null) throw new RuntimeException("Payment not found with the given ID while binding sent PaymentFromClient elements for a PaymentFromPlatform element with the ID " + currentToBind.getId());
+                sentPaymentsBound.add((PaymentFromClient) found);
+            }
+            currentPayment.setSentPayments(sentPaymentsBound);
         }
 
 
@@ -622,6 +635,8 @@ public abstract class Memory {
         readDestinations();
         bindData();
         System.out.println("Read!");
+
+        RefreshableData.refreshTables();
     }
 
 }
