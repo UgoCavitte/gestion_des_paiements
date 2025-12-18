@@ -557,11 +557,16 @@ public abstract class Memory {
                 }
                 if (currentPayment.getProducts().get(j).getQuantity() == 0) {
                     throw new RuntimeException("Quantity could not be set for the given value (" + currentToBind.getPurchasedProductsQuantity().get(j) + ") while serializing PurchasedProduct element with the ID " + currentPayment.getId());
-                }
+                } // TODO Add this exception in the payment creation form
 
             }
 
             // Status
+            currentPayment.setStatus(mapFromIntegerToStatusPayment.get(currentToBind.getStatusPaymentFromClient()));
+
+            if (currentPayment.getStatus() == null) {
+                throw new RuntimeException("Status could not be set for the given ID (" + currentToBind.getStatusPaymentFromClient() + ") while binding PaymentFromClient element with the ID " + currentPayment.getId());
+            }
 
         }
 
