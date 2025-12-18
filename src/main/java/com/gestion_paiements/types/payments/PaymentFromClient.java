@@ -28,7 +28,6 @@ public final class PaymentFromClient extends Payment {
             Amount sentAmount,
             Amount receivedAmount,
             List<PurchasedProduct> purchasedProducts,
-            StatusPaymentFromClient status,
             @Nullable String comment) {
         super();
         super.setSender(sender);
@@ -39,9 +38,12 @@ public final class PaymentFromClient extends Payment {
         super.setSentAmount(sentAmount);
         super.setReceivedAmount(receivedAmount);
         super.setComment(comment);
-        this.status = status;
 
         super.setId(IDs.getAvailableID(Data.instance.getSetPayments()));
+
+        // Bank account or Platform?
+        if (destination.getDestinationType() == DestinationType.bankAccount) this.status = StatusPaymentFromClient.NOT_ON_A_PLATFORM;
+        else this.status = StatusPaymentFromClient.SENT_TO_A_PLATFORM;
     }
 
     // For binding
