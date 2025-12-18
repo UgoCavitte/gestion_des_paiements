@@ -15,6 +15,11 @@ public final class PurchasedProduct {
         this.product = product;
     }
 
+    public PurchasedProduct(Product product, double quantity) {
+        this.quantity = quantity;
+        this.product = product;
+    }
+
     //////////////////////////////
     /// GETTERS AND SETTERS
     //////////////////////////////
