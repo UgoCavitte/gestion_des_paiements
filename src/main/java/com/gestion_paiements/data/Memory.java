@@ -100,7 +100,7 @@ public abstract class Memory {
                 mapper.writeValue(file, toSave);
             }
         } catch (IOException e) {
-            System.out.println("Error while serializing payments: " + e.getMessage());
+            throw new RuntimeException("Error while serializing payments: " + e.getMessage());
         }
     }
 
@@ -110,7 +110,7 @@ public abstract class Memory {
             File file = paymentsDirPath.resolve("payment_" + payment.getId() + ".json").toFile();
             mapper.writeValue(file, new ToBindPayment(payment));
         } catch (IOException e) {
-            System.out.println("Error while serializing payment " + payment.getId() + " from " + payment.getSender().getName() + ": " + e.getMessage());
+            throw new RuntimeException("Error while serializing payment " + payment.getId() + " from " + payment.getSender().getName() + ": " + e.getMessage());
         }
     }
 
@@ -128,7 +128,7 @@ public abstract class Memory {
             }
 
         } catch (IOException e) {
-            System.out.println("Error while serializing Clients elements: " + e.getMessage());
+            throw new RuntimeException("Error while serializing Clients elements: " + e.getMessage());
         }
     }
 
@@ -140,7 +140,7 @@ public abstract class Memory {
             File file = clientsDirPath.resolve("client_" + client.getId() + ".json").toFile();
             mapper.writeValue(file, new ToBindClient(client));
         } catch (IOException e) {
-            System.out.println("Error while serializing Client" + client.getId() + ": " + e.getMessage());
+            throw new RuntimeException("Error while serializing Client" + client.getId() + ": " + e.getMessage());
         }
     }
 
@@ -171,7 +171,7 @@ public abstract class Memory {
                     .toList();
 
         } catch (IOException e) {
-            System.out.println("Error while deserializing Client elements: " + e.getMessage());
+            throw new RuntimeException("Error while deserializing Client elements: " + e.getMessage());
         }
     }
 
@@ -198,7 +198,7 @@ public abstract class Memory {
                     .toList();
 
         } catch (IOException e) {
-            System.out.println("Error while deserializing Payment elements: " + e.getMessage());
+            throw new RuntimeException("Error while deserializing Payment elements: " + e.getMessage());
         }
     }
 
@@ -220,7 +220,7 @@ public abstract class Memory {
             File file = dataPath.resolve(workingCountriesFileName).toFile();
             mapper.writeValue(file, toSave);
         } catch (IOException e) {
-            System.out.println("Error while serializing WorkingCountry elements: " + e.getMessage());
+            throw new RuntimeException("Error while serializing WorkingCountry elements: " + e.getMessage());
         }
 
     }
@@ -237,7 +237,7 @@ public abstract class Memory {
             File file = dataPath.resolve(workingCountriesFileName).toFile();
             unboundWorkingCountries = mapper.readValue(file, new TypeReference<List<ToBindWorkingCountry>>() {});
         } catch (IOException e) {
-            System.out.println("Error while deserializing WorkingCountry elements: " + e.getMessage());
+            throw new RuntimeException("Error while deserializing WorkingCountry elements: " + e.getMessage());
         }
     }
 
@@ -255,7 +255,7 @@ public abstract class Memory {
             File file = dataPath.resolve(productsFileName).toFile();
             mapper.writeValue(file, Data.instance.getSetProducts());
         } catch (IOException e) {
-            System.out.println("Error while serializing Product elements: " + e.getMessage());
+            throw new RuntimeException("Error while serializing Product elements: " + e.getMessage());
         }
 
     }
@@ -272,7 +272,7 @@ public abstract class Memory {
             File file = dataPath.resolve(productsFileName).toFile();
             Data.instance.setSetProducts(mapper.readValue(file, new TypeReference<HashSet<Product>>() {}));
         } catch (IOException e) {
-            System.out.println("Error while deserializing Product elements: " + e.getMessage());
+            throw new RuntimeException("Error while deserializing Product elements: " + e.getMessage());
         }
     }
 
@@ -284,7 +284,7 @@ public abstract class Memory {
             File file = dataPath.resolve(countriesFileName).toFile();
             mapper.writeValue(file, Data.instance.getMapClientsCountries().values());
         } catch (IOException e) {
-            System.out.println("Error while serializing Country elements: " + e.getMessage());
+            throw new RuntimeException("Error while serializing Country elements: " + e.getMessage());
         }
     }
 
@@ -307,7 +307,7 @@ public abstract class Memory {
             }
             Data.instance.setMapClientsCountries(map);
         } catch (IOException e) {
-            System.out.println("Error while deserializing Country elements: " + e.getMessage());
+            throw new RuntimeException("Error while deserializing Country elements: " + e.getMessage());
         }
     }
 
@@ -319,7 +319,7 @@ public abstract class Memory {
             File file = dataPath.resolve(currenciesFileName).toFile();
             mapper.writeValue(file, Data.instance.getSetCurrencies());
         } catch (IOException e) {
-            System.out.println("Error while serializing Currency elements: " + e.getMessage());
+            throw new RuntimeException("Error while serializing Currency elements: " + e.getMessage());
         }
     }
 
@@ -335,7 +335,7 @@ public abstract class Memory {
             File file = dataPath.resolve(currenciesFileName).toFile();
             Data.instance.setSetCurrencies(mapper.readValue(file, new TypeReference<HashSet<Currency>>() {}));
         } catch (IOException e) {
-            System.out.println("Error while deserializing Currency elements: " + e.getMessage());
+            throw new RuntimeException("Error while deserializing Currency elements: " + e.getMessage());
         }
     }
 
@@ -346,7 +346,7 @@ public abstract class Memory {
             File file = dataPath.resolve(destinationsFileName).toFile();
             mapper.writeValue(file, Data.instance.getSetDestinations().stream().map(ToBindDestination::new).collect(Collectors.toSet()));
         } catch (IOException e) {
-            System.out.println("Error while serializing Destination elements: " + e.getMessage());
+            throw new RuntimeException("Error while serializing Destination elements: " + e.getMessage());
         }
     }
 
@@ -362,7 +362,7 @@ public abstract class Memory {
             File file = dataPath.resolve(destinationsFileName).toFile();
             unboundDestinations = mapper.readValue(file, new TypeReference<List<ToBindDestination>>() {});
         } catch (IOException e) {
-            System.out.println("Error while deserializing Destination elements: " + e.getMessage());
+            throw new RuntimeException("Error while deserializing Destination elements: " + e.getMessage());
         }
     }
 
