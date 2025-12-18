@@ -541,7 +541,27 @@ public abstract class Memory {
                 throw new RuntimeException("Sender (Client) not found with the given ID while binding PaymentFromClient element with the ID " + currentToBind.getId());
             }
 
-            // TODO
+            // Purchased products
+            currentPayment.setProducts(new ArrayList<>());
+            for (int j = 0; j < currentToBind.getPurchasedProducts().size(); j++) {
+                int finalJ = j;
+                currentPayment.getProducts().add(
+                        new PurchasedProduct(
+                                Data.instance.getSetProducts().stream().filter(p -> p.getId() == currentToBind.getPurchasedProducts().get(finalJ)).findFirst().orElse(null),
+                                currentToBind.getPurchasedProductsQuantity().get(finalJ)
+                        )
+                );
+
+                if (currentPayment.getProducts().get(j).getProduct() == null) {
+                    throw new RuntimeException("Product not found with the given ID (" + currentToBind.getPurchasedProducts().get(j) + ") while serializing PurchasedProduct element with the ID " + currentPayment.getId());
+                }
+                if (currentPayment.getProducts().get(j).getQuantity() == 0) {
+                    throw new RuntimeException("Quantity could not be set for the given value (" + currentToBind.getPurchasedProductsQuantity().get(j) + ") while serializing PurchasedProduct element with the ID " + currentPayment.getId());
+                }
+
+            }
+
+            // Status
 
         }
 
