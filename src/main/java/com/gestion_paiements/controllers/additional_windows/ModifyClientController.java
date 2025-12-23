@@ -76,8 +76,6 @@ public class ModifyClientController {
         selectedClient.setCountry(country);
         selectedClient.setComment(comment);
 
-        Data.instance.getSetClients().forEach(c -> System.out.println(c.getName()));
-
         RefreshableData.refreshTables();
 
         // TODO Write in memory
