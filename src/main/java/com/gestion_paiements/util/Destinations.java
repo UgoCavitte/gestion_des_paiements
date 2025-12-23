@@ -4,8 +4,6 @@ import com.gestion_paiements.types.Data;
 import com.gestion_paiements.types.Destination;
 
 import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class Destinations {
 
