@@ -104,6 +104,9 @@ public class MainController {
         System.out.println("Reading started");
         Memory.generalRead();
 
+        System.out.println("Resaving to check data");
+        Memory.generalSave();
+
         // Test use
         Data.instance.getSetProducts().forEach(p -> System.out.println(p.getShortName()));
         Data.instance.getMapClientsCountries().values().forEach(c -> System.out.println(c.getName()));

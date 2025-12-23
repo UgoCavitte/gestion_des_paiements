@@ -451,6 +451,7 @@ public abstract class Memory {
 
         }
 
+        // Saves in the instance
         Data.instance.setSetClients(new HashSet<>(clients));
         Data.instance.setMapAccountsCountries(workingCountries.stream()
                 .collect(Collectors.toMap(
@@ -461,10 +462,6 @@ public abstract class Memory {
                 ))
         );
         Data.instance.setSetDestinations(new HashSet<>(destinations));
-
-        System.out.println("We set everything");
-        Set<String> toPrint = destinations.stream().map(Destination::getName).collect(Collectors.toSet());
-        System.out.println(toPrint);
 
 
         // -------------------------
@@ -557,7 +554,7 @@ public abstract class Memory {
                 }
                 if (currentPayment.getProducts().get(j).getQuantity() == 0) {
                     throw new RuntimeException("Quantity could not be set for the given value (" + currentToBind.getPurchasedProductsQuantity().get(j) + ") while serializing PurchasedProduct element with the ID " + currentPayment.getId());
-                } // TODO Add this exception in the payment creation form
+                }
 
             }
 
@@ -624,8 +621,18 @@ public abstract class Memory {
             currentPayment.setSentPayments(sentPaymentsBound);
         }
 
+        // Saves Payment elements in the instance
+        Data.instance.setSetPayments(new HashSet<>(Stream.concat(paymentsFromClients.stream(), paymentsFromPlatforms.stream()).collect(Collectors.toSet())));
 
-        // WorkingCountry elements need their platforms
+        // -------------------------
+        // LATER BINDING: payments for Destination and Client elements (Sender elements)
+        // -------------------------
+
+        // Bind Payment elements for Destination elements
+
+
+
+
 
         // Destination elements need their WorkingCountry, currency and transfers
 
