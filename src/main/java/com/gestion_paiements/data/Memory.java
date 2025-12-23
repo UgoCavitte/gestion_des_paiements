@@ -628,15 +628,20 @@ public abstract class Memory {
         // LATER BINDING: payments for Destination and Client elements (Sender elements)
         // -------------------------
 
-        // Bind Payment elements for Destination elements
+        // Bind Payment elements for Destination elements and Client elements
+        Data.instance.getSetDestinations().forEach(d -> d.getTransfers().clear());
+        Data.instance.getSetClients().forEach(c -> c.getPayments().clear());
+        for (Payment payment : Data.instance.getSetPayments()) {
+            Destination destination = Data.instance.getSetDestinations().stream().filter(d -> d.getId() == payment.getDestination().getId()).findFirst().orElse(null);
+            if (destination == null) throw new RuntimeException("Destination not found for the given ID while binding Payment elements in Destination elements. Payment ID: " + payment.getId() + ". Destination ID: " + payment.getDestination().getId());
+            destination.getTransfers().add(payment);
+            if (payment instanceof PaymentFromClient paymentFromClient) {
+                Client client = Data.instance.getSetClients().stream().filter(c -> c.getId() == paymentFromClient.getSender().getId()).findFirst().orElse(null);
+                if (client == null) throw new RuntimeException("Client not found for the given ID while binding Payment elements in Client elements. Payment ID: " + payment.getId() + ". Client ID: " + payment.getSender().getId());
+                client.getPayments().add(paymentFromClient);
+            }
+        }
 
-
-
-
-
-        // Destination elements need their WorkingCountry, currency and transfers
-
-        // Client elements need their payments and country
 
     }
 
