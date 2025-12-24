@@ -3,6 +3,7 @@ package com.gestion_paiements.controllers;
 import com.gestion_paiements.Main;
 import com.gestion_paiements.types.Data;
 import com.gestion_paiements.types.WorkingCountry;
+import com.gestion_paiements.util.Refreshable;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,7 +16,7 @@ import java.util.Comparator;
 
 ///  This tab contains the different countries
 
-public class MainTabPaneController {
+public class MainTabPaneController implements Refreshable {
 
     // Uses an array list to get them sorted more easily
     final ArrayList<Tab> tabsCountries = new ArrayList<>();
@@ -52,4 +53,9 @@ public class MainTabPaneController {
         tabPaneCountries.getTabs().addAll(tabsCountries);
     }
 
+    @Override
+    public void refreshElement() {
+        System.out.println("Refreshing main tab");
+        this.initialize();
+    }
 }

@@ -39,6 +39,11 @@ public class MainController {
         // PANE WITH COUNTRIES
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main-tab-view.fxml"));
+
+            MainTabPaneController controller = new MainTabPaneController();
+            RefreshableData.getToRefresh().add(controller);
+            fxmlLoader.setController(controller);
+
             Parent parent = fxmlLoader.load();
             mainTabPane.getChildren().clear();
             mainTabPane.getChildren().add(parent);
