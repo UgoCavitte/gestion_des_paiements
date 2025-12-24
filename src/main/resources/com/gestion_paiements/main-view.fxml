@@ -25,9 +25,9 @@
           </Menu>
         </menus>
       </MenuBar>
-      <SplitPane dividerPositions="0.5" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="27.0">
+      <SplitPane dividerPositions="0.60" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="27.0">
          <items>
-            <StackPane fx:id="mainTabPane" />
+            <StackPane  fx:id="mainTabPane" />
             <StackPane fx:id="paneClient" />
          </items>
       </SplitPane>
