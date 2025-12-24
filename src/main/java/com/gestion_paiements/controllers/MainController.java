@@ -92,7 +92,7 @@ public class MainController {
     @FXML
     private void rechargerDonnees() {
         // TODO
-        Memory.generalRead();
+        // Memory.generalRead();
     }
 
     @FXML
@@ -106,7 +106,7 @@ public class MainController {
         Memory.generalSave();
 
         System.out.println("Reading started");
-        Memory.generalRead();
+        // Memory.generalRead();
 
         System.out.println("Resaving to check data");
         Memory.generalSave();

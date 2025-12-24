@@ -20,6 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -664,15 +665,33 @@ public abstract class Memory {
     }
 
     /// Reads all saved data and sets the Instance
-    public static void generalRead () {
+    public static void generalRead (Consumer<Double> progressCallback) {
+        double totalSteps = 8.0;
+
         readProducts();
+        progressCallback.accept(1.0 / totalSteps);
+
         readCountries();
+        progressCallback.accept(2.0 / totalSteps);
+
         readCurrencies();
+        progressCallback.accept(3.0 / totalSteps);
+
         readWorkingCountries();
+        progressCallback.accept(4.0 / totalSteps);
+
         readClients();
+        progressCallback.accept(5.0 / totalSteps);
+
         readPayments();
+        progressCallback.accept(6.0 / totalSteps);
+
         readDestinations();
+        progressCallback.accept(7.0 / totalSteps);
+
         bindData();
+        progressCallback.accept(8.0 / totalSteps);
+
         System.out.println("Read!");
 
         RefreshableData.refreshTables();

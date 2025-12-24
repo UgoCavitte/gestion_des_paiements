@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -22,10 +23,12 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         // Splash
         Stage loadingStage = new Stage();
-        loadingStage.initStyle(StageStyle.UNDECORATED); // Optional: removes borders/buttons
+        loadingStage.initStyle(StageStyle.UNDECORATED);
+        ProgressBar progressBar = new ProgressBar(0);
+        Label statusLabel = new Label("Initialisation...");
 
         Label loadingLabel = new Label("Chargement des données...");
-        VBox loadingLayout = new VBox(loadingLabel);
+        VBox loadingLayout = new VBox(loadingLabel, statusLabel, progressBar);
         loadingLayout.setAlignment(Pos.CENTER);
         loadingLayout.setPrefSize(300, 200);
 
@@ -33,21 +36,25 @@ public class Main extends Application {
         loadingStage.show();
 
         // Loader
-        Task<Void> loadTask = getVoidTask(stage, loadingStage);
+        Task<Void> loadTask = getVoidTask(stage, loadingStage, progressBar, statusLabel);
 
         new Thread(loadTask).start();
     }
 
-    private @NotNull Task<Void> getVoidTask(Stage stage, Stage loadingStage) {
+    private @NotNull Task<Void> getVoidTask(Stage stage, Stage loadingStage, ProgressBar progressBar, Label statusLabel) {
         Task<Void> loadTask = new Task<>() {
             @Override
             protected Void call() throws Exception {
-                // YOUR DATA LOADING LOGIC HERE
-                Memory.generalRead();
-                // Thread.sleep(2000); // Simulated delay
+                updateMessage("Chargement de la configuration...");
+                Memory.generalRead(progress -> {
+                    updateProgress(progress, 1.0);
+                });
                 return null;
             }
         };
+
+        progressBar.progressProperty().bind(loadTask.progressProperty());
+        statusLabel.textProperty().bind(loadTask.messageProperty());
 
         loadTask.setOnSucceeded(e -> {
             loadingStage.close();
