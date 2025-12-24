@@ -4,6 +4,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane minHeight="734.0" minWidth="966.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gestion_paiements.controllers.MainController">
@@ -26,8 +27,8 @@
       </MenuBar>
       <SplitPane dividerPositions="0.5" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="27.0">
          <items>
-            <AnchorPane fx:id="mainTabPane" />
-            <AnchorPane fx:id="paneClient" />
+            <StackPane fx:id="mainTabPane" />
+            <StackPane fx:id="paneClient" />
          </items>
       </SplitPane>
    </children>

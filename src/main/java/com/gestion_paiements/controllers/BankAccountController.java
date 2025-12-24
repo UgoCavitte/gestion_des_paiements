@@ -21,7 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -44,7 +44,7 @@ public class BankAccountController implements Refreshable {
     private ComboBox<Integer> boxYear;
 
     @FXML
-    private AnchorPane paneTable;
+    private StackPane paneTable;
 
     @FXML
     private Label labelAverage;

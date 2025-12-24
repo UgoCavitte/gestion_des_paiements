@@ -3,13 +3,11 @@ package com.gestion_paiements.controllers;
 import com.gestion_paiements.Main;
 import com.gestion_paiements.data.Memory;
 import com.gestion_paiements.data.RefreshableData;
-import com.gestion_paiements.types.Data;
-import com.gestion_paiements.types.Product;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -25,10 +23,10 @@ import java.io.IOException;
 public class MainController {
 
     @FXML
-    private AnchorPane mainTabPane;
+    private StackPane mainTabPane;
 
     @FXML
-    private AnchorPane paneClient;
+    private StackPane paneClient;
 
     // This method must :
     // - set TabPanes inside the pane ;
