@@ -89,6 +89,7 @@ public class MainController {
     @FXML
     private void rechargerDonnees() {
         // TODO
+        Memory.generalRead();
     }
 
     @FXML

@@ -379,6 +379,19 @@ public abstract class Memory {
         List<Destination> destinations = unboundDestinations.stream().map(Destination::new).toList();
         List<Client> clients = unboundClients.stream().map(Client::new).toList();
 
+        // Saves in the instance
+        // This must be done now to let code use Data.instance
+        Data.instance.setSetClients(new HashSet<>(clients));
+        Data.instance.setMapAccountsCountries(workingCountries.stream()
+                .collect(Collectors.toMap(
+                        WorkingCountry::getName,
+                        e -> e,
+                        (u, v) -> u,
+                        HashMap::new
+                ))
+        );
+        Data.instance.setSetDestinations(new HashSet<>(destinations));
+
         // -------------------------
         // EASY BINDING: currency, country, destinationType
         // -------------------------
@@ -439,29 +452,17 @@ public abstract class Memory {
 
             // WORKING COUNTRY
             currentDestination.setCountry(
-                    Data.instance.getMapAccountsCountries()
+                    Data.instance.getMapAccountsCountries() // TODO This is not set at this moment
                             .values().stream()
                             .filter(c -> c.getId() == unboundDestinations.get(finalI).getWorkingCountry())
                             .findFirst().orElse(null)
             );
 
             if (destinations.get(i).getCountry() == null) {
-                throw new RuntimeException("WorkingCountry not found with the given ID while binding Destination elements.");
+                throw new RuntimeException("WorkingCountry not found with the given ID " + unboundDestinations.get(i).getWorkingCountry() + " while binding Destination elements.");
             }
 
         }
-
-        // Saves in the instance
-        Data.instance.setSetClients(new HashSet<>(clients));
-        Data.instance.setMapAccountsCountries(workingCountries.stream()
-                .collect(Collectors.toMap(
-                        WorkingCountry::getName,
-                        e -> e,
-                        (u, v) -> u,
-                        HashMap::new
-                ))
-        );
-        Data.instance.setSetDestinations(new HashSet<>(destinations));
 
 
         // -------------------------
@@ -482,6 +483,9 @@ public abstract class Memory {
         List<PaymentFromPlatform> paymentsFromPlatforms = unboundPaymentsFromPlatforms.stream()
                 .map(PaymentFromPlatform::new)
                 .toList();
+
+        // Saves payments directly to Data.instance to let the code use it
+        Data.instance.setSetPayments(new HashSet<>(Stream.concat(paymentsFromClients.stream(), paymentsFromPlatforms.stream()).collect(Collectors.toSet())));
 
         // PaymentFromClient elements binding
         // Need to bind: dateSent, dateReceived, amountSent, amountReceived, destination, sender + purchasedProducts, status
@@ -621,8 +625,6 @@ public abstract class Memory {
             currentPayment.setSentPayments(sentPaymentsBound);
         }
 
-        // Saves Payment elements in the instance
-        Data.instance.setSetPayments(new HashSet<>(Stream.concat(paymentsFromClients.stream(), paymentsFromPlatforms.stream()).collect(Collectors.toSet())));
 
         // -------------------------
         // LATER BINDING: payments for Destination and Client elements (Sender elements)
