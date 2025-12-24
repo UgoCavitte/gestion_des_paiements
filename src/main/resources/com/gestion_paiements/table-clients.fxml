@@ -19,12 +19,16 @@
                     </padding>
                 </Label>
                 <TableView fx:id="tableClients" minHeight="-Infinity" minWidth="-Infinity" prefHeight="608.0" prefWidth="460.0" VBox.vgrow="ALWAYS">
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                    </columnResizePolicy>
+
                     <columns>
-                        <TableColumn fx:id="tableClientsColumnID" prefWidth="75.0" text="ID" />
-                        <TableColumn fx:id="tableClientsColumnName" prefWidth="75.0" text="Nom" />
-                        <TableColumn fx:id="tableClientsColumnCountry" prefWidth="75.0" text="Pays" />
-                        <TableColumn fx:id="tableClientColumnLastPaymentDate" prefWidth="135.0" text="Dernier paiement" />
-                        <TableColumn fx:id="tableClientColumnComment" prefWidth="100.0" text="Commentaire" />
+                        <TableColumn fx:id="tableClientsColumnID" minWidth="75.0" text="ID" />
+                        <TableColumn fx:id="tableClientsColumnName" minWidth="75.0" text="Nom" />
+                        <TableColumn fx:id="tableClientsColumnCountry" minWidth="75.0" text="Pays" />
+                        <TableColumn fx:id="tableClientColumnLastPaymentDate" minWidth="135.0" text="Dernier paiement" />
+                        <TableColumn fx:id="tableClientColumnComment" minWidth="100.0" text="Commentaire" />
                     </columns>
                 </TableView>
                 <HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="460.0" VBox.vgrow="ALWAYS">

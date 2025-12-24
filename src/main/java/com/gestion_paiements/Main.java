@@ -1,6 +1,7 @@
 package com.gestion_paiements;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -15,5 +16,9 @@ public class Main extends Application {
         stage.setTitle("Gestion des paiements");
         stage.setScene(scene);
         stage.show();
+
+        Platform.runLater(() -> {
+            stage.setMaximized(true);
+        });
     }
 }
