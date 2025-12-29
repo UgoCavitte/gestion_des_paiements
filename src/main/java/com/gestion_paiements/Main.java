@@ -3,7 +3,6 @@ package com.gestion_paiements;
 import com.gestion_paiements.data.Memory;
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
