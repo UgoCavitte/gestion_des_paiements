@@ -105,14 +105,7 @@ public abstract class SampleData {
         jacques.getPayments().add(toStripe);
         Stripe.getTransfers().add(toStripe);
 
-
-        /*
-        // Payments
-        for (PaymentFromClient p : michel.getPayments()) {
-            Data.instance.getMapAccountsCountries().get("France").getAccountsAndPlatforms().get("LCL").getTransfers().add(p);
-        }*/
-
-
+        RefreshableData.refreshTables();
 
     }
 

@@ -3,6 +3,7 @@ package com.gestion_paiements.controllers;
 import com.gestion_paiements.Main;
 import com.gestion_paiements.data.Memory;
 import com.gestion_paiements.data.RefreshableData;
+import com.gestion_paiements.data.SampleData;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -93,6 +94,11 @@ public class MainController {
     private void rechargerDonnees() {
         // TODO
         // Memory.generalRead();
+    }
+
+    @FXML
+    private void loadSampleData() {
+        SampleData.init();
     }
 
     @FXML

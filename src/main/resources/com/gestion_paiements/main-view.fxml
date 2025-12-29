@@ -15,7 +15,8 @@
               <items>
                   <MenuItem mnemonicParsing="false" onAction="#generalSave" text="Tout sauvegarder" />
                   <MenuItem mnemonicParsing="false" onAction="#fermerFenetre" text="Fermer la fenêtre" />
-                <MenuItem mnemonicParsing="false" onAction="#rechargerDonnees" text="Charger les données sans sauvegarder" />
+                  <MenuItem mnemonicParsing="false" onAction="#rechargerDonnees" text="Charger les données sans sauvegarder" />
+                  <MenuItem mnemonicParsing="false" onAction="#loadSampleData" text="Charger une sauvegarde de test"/>
               </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Paramètres">
