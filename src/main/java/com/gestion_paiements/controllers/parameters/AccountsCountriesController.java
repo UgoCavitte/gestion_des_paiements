@@ -1,5 +1,6 @@
 package com.gestion_paiements.controllers.parameters;
 
+import com.gestion_paiements.data.RefreshableData;
 import com.gestion_paiements.types.Data;
 import com.gestion_paiements.types.WorkingCountry;
 import javafx.collections.FXCollections;
@@ -55,5 +56,7 @@ public class AccountsCountriesController {
 
         // Resets the input
         textFieldNewCountry.setText("");
+
+        RefreshableData.refreshTables();
     }
 }
