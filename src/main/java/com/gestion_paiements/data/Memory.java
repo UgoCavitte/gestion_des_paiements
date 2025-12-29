@@ -20,6 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -665,32 +666,35 @@ public abstract class Memory {
     }
 
     /// Reads all saved data and sets the Instance
-    public static void generalRead (Consumer<Double> progressCallback) {
+    public static void generalRead (BiConsumer<Double, String> progressCallback) throws InterruptedException {
         double totalSteps = 8.0;
 
+        progressCallback.accept(0.0, "Lecture des produits...");
         readProducts();
-        progressCallback.accept(1.0 / totalSteps);
 
+        progressCallback.accept(1.0 / totalSteps, "Lecture des pays...");
         readCountries();
-        progressCallback.accept(2.0 / totalSteps);
 
+        progressCallback.accept(2.0 / totalSteps, "Lecture des devises...");
         readCurrencies();
-        progressCallback.accept(3.0 / totalSteps);
 
+        progressCallback.accept(3.0 / totalSteps, "Lecture des pays de travail...");
         readWorkingCountries();
-        progressCallback.accept(4.0 / totalSteps);
 
+        progressCallback.accept(4.0 / totalSteps, "Lecture des clients...");
         readClients();
-        progressCallback.accept(5.0 / totalSteps);
 
+        progressCallback.accept(5.0 / totalSteps, "Lecture des paiements...");
         readPayments();
-        progressCallback.accept(6.0 / totalSteps);
 
+        progressCallback.accept(6.0 / totalSteps, "Lecture des comptes et plateformes...");
         readDestinations();
-        progressCallback.accept(7.0 / totalSteps);
 
+        progressCallback.accept(7.0 / totalSteps, "Synchronisation des données lues...");
         bindData();
-        progressCallback.accept(8.0 / totalSteps);
+
+        progressCallback.accept(1.0, "Données chargées !");
+        Thread.sleep(300);
 
         System.out.println("Read!");
 

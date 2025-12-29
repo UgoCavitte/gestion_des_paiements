@@ -46,8 +46,9 @@ public class Main extends Application {
             @Override
             protected Void call() throws Exception {
                 updateMessage("Chargement de la configuration...");
-                Memory.generalRead(progress -> {
+                Memory.generalRead((progress, message) -> {
                     updateProgress(progress, 1.0);
+                    updateMessage(message);
                 });
                 return null;
             }
