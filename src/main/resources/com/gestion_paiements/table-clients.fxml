@@ -24,6 +24,7 @@
                     </columnResizePolicy>
 
                     <columns>
+                        <TableColumn fx:id="tableClientsColumnActive" minWidth="30.0" text="Actif"/>
                         <TableColumn fx:id="tableClientsColumnID" minWidth="75.0" text="ID" />
                         <TableColumn fx:id="tableClientsColumnName" minWidth="75.0" text="Nom" />
                         <TableColumn fx:id="tableClientsColumnCountry" minWidth="75.0" text="Pays" />

@@ -22,6 +22,8 @@ public final class Client extends Sender implements WithID {
 
     private Country country;
 
+    private boolean active;
+
     // This must be set separately when the app is being opened
     private HashSet<PaymentFromClient> payments = new HashSet<>();
 
@@ -36,11 +38,13 @@ public final class Client extends Sender implements WithID {
         this.ID = IDs.getAvailableID(Data.instance.getSetClients());
         super.setName(name);
         this.country = country;
+        this.active = true;
         this.comment = comment;
     }
 
     public Client (ToBindClient toBind) {
         this.ID = toBind.getId();
+        this.active = toBind.isActive();
         this.comment = toBind.getComment();
         this.setName(toBind.getName());
     }
@@ -55,6 +59,14 @@ public final class Client extends Sender implements WithID {
 
     public void setCountry(Country country) {
         this.country = country;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public HashSet<PaymentFromClient> getPayments() {

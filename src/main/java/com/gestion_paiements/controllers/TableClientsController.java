@@ -5,6 +5,8 @@ import com.gestion_paiements.controllers.additional_windows.ModifyClientControll
 import com.gestion_paiements.types.Client;
 import com.gestion_paiements.types.Data;
 import com.gestion_paiements.util.Refreshable;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -17,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -36,6 +39,9 @@ public class TableClientsController implements Refreshable {
     private TableView<Client> tableClients;
 
     @FXML
+    private TableColumn<Client, Boolean> tableClientsColumnActive;
+
+    @FXML
     private TableColumn<Client, Integer> tableClientsColumnID;
 
     @FXML
@@ -53,6 +59,18 @@ public class TableClientsController implements Refreshable {
     @FXML
     private void initialize() {
         // TABLE VIEW CONTENT
+        tableClientsColumnActive.setCellValueFactory(cellData -> {
+            Client client = cellData.getValue();
+
+            BooleanProperty property = new SimpleBooleanProperty(client.isActive());
+
+            property.addListener((_, _, isActive) -> {
+                client.setActive(isActive);
+            });
+
+            // TODO save ?
+            return property;
+        });
         tableClientsColumnID.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId()).asObject());
         tableClientsColumnName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
         tableClientsColumnCountry.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCountry().getName()));
@@ -62,8 +80,13 @@ public class TableClientsController implements Refreshable {
         });
         tableClientColumnComment.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getComment()));
 
+        tableClientsColumnActive.setCellFactory(CheckBoxTableCell.forTableColumn(tableClientsColumnActive));
+
+        tableClients.setEditable(true);
+        tableClientsColumnActive.setEditable(true);
+
         // SELECTION LISTENER
-        tableClients.getSelectionModel().selectedItemProperty().addListener((obs, oldS, newS) -> {
+        tableClients.getSelectionModel().selectedItemProperty().addListener((_, _, newS) -> {
             if (newS == null) {
                 buttonDeleteClient.setDisable(true);
                 buttonModifyClient.setDisable(true);

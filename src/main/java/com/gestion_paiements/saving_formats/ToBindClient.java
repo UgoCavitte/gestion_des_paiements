@@ -14,6 +14,8 @@ public final class ToBindClient {
 
     private int country;
 
+    private boolean active;
+
     private String comment;
 
     // Default constructor
@@ -25,6 +27,7 @@ public final class ToBindClient {
         this.name = client.getName();
         this.id = client.getId();
         this.country = client.getCountry().getId();
+        this.active = client.isActive();
         this.comment = client.getComment();
     }
 
@@ -50,6 +53,14 @@ public final class ToBindClient {
 
     public void setCountry(int country) {
         this.country = country;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public String getComment() {
