@@ -100,7 +100,7 @@ public class PlatformTableController implements Refreshable {
                 }
             }
 
-            return new SimpleStringProperty("Error");
+            return new SimpleStringProperty("");
 
         });
 
