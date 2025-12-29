@@ -17,6 +17,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#fermerFenetre" text="Fermer la fenêtre" />
                   <MenuItem mnemonicParsing="false" onAction="#rechargerDonnees" text="Charger les données sans sauvegarder" />
                   <MenuItem mnemonicParsing="false" onAction="#loadSampleData" text="Charger une sauvegarde de test"/>
+                  <MenuItem mnemonicParsing="false" onAction="#openFileExplorer" text="Ouvrir le dossier de sauvegarde"/>
               </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Paramètres">

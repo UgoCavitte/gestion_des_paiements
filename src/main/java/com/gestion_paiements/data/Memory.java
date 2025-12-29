@@ -39,7 +39,7 @@ public abstract class Memory {
 
     static Path clientsDirPath = Paths.get("data", "clients");
     static Path paymentsDirPath = Paths.get("data", "payments");
-    static Path dataPath = Paths.get("data");
+    public static Path dataPath = Paths.get("data");
 
     static String currenciesFileName = "currencies.json";
     static String destinationsFileName = "destinations.json";

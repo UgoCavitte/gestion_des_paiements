@@ -12,6 +12,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.IOException;
 
 /*
@@ -99,6 +100,25 @@ public class MainController {
     @FXML
     private void loadSampleData() {
         SampleData.init();
+    }
+
+    @FXML
+    private void openFileExplorer () {
+        if (Desktop.isDesktopSupported()) {
+            new Thread(() -> {
+                try {
+                    Desktop.getDesktop().open(Memory.dataPath.toFile());
+                } catch (IOException e) {
+                    System.err.println("Cannot open directory. " + e.getMessage());
+                } catch (IllegalArgumentException e) {
+                    System.err.println("Directory not existing : " + Memory.dataPath.toString());
+                }
+            }).start();
+        }
+
+        else {
+            System.err.println("It is impossible to open File Explorer or equivalent on this system.");
+        }
     }
 
     @FXML
