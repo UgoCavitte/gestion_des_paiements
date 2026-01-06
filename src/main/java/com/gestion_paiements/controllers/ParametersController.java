@@ -25,11 +25,12 @@ public class ParametersController {
 
     @FXML
     private void initialize() {
-        parametersList.getItems().addAll("Pays", "Pays de travail", "Devises", "Produits", "Colonnes des tableaux");
+        parametersList.getItems().addAll("Pays", "Pays de travail", "Comptes et plateformes", "Devises", "Produits", "Colonnes des tableaux");
 
         try {
             views.put("Pays", FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("parameters/clients-countries-view.fxml"))));
             views.put("Pays de travail", FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("parameters/accounts-countries-view.fxml"))));
+            views.put("Comptes et plateformes", FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("parameters/accounts-and-platforms-view.fxml"))));
             views.put("Devises", FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("parameters/currencies-view.fxml"))));
             views.put("Produits", FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("parameters/products-view.fxml"))));
             views.put("Colonnes des tableaux", FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("parameters/columns-to-show.fxml"))));

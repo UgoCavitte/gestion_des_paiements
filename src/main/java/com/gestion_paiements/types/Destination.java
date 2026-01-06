@@ -9,9 +9,13 @@ import com.gestion_paiements.types.payments.Payment;
 import com.gestion_paiements.util.IDs;
 import com.gestion_paiements.util.WithID;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 public final class Destination extends Sender implements WithID {
+
+    public static List<String> destinationTypeLabels = List.of("Compte en banque", "Plateforme");
 
     private int ID;
 
