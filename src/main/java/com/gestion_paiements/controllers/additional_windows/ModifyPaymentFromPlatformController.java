@@ -86,12 +86,12 @@ public class ModifyPaymentFromPlatformController {
 
     @FXML
     void accountSelected(ActionEvent event) {
-
+        // TODO
     }
 
     @FXML
     void validate(ActionEvent event) {
-
+        // TODO
     }
 
 }
