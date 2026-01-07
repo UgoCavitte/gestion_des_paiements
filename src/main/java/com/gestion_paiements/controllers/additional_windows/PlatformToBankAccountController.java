@@ -10,6 +10,7 @@ import com.gestion_paiements.types.DestinationType;
 import com.gestion_paiements.types.payments.PaymentFromClient;
 import com.gestion_paiements.types.payments.PaymentFromPlatform;
 import com.gestion_paiements.types.payments.StatusPaymentFromClient;
+import com.gestion_paiements.util.Dates;
 import com.gestion_paiements.util.Destinations;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -109,6 +110,9 @@ public class PlatformToBankAccountController {
                         .toList());
         boxBankAccount.setItems(accounts);
         boxBankAccount.setValue(accounts.getFirst());
+
+        dateSent.setConverter(Dates.dateStringConverter);
+        dateReceived.setConverter(Dates.dateStringConverter);
 
         fieldCommission.setText("0");
         labelCurrency.setText(rawAccounts.getFirst().getCurrency().getName());

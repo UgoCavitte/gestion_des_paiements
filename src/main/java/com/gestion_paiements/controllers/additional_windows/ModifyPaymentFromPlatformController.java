@@ -3,6 +3,7 @@ package com.gestion_paiements.controllers.additional_windows;
 import com.gestion_paiements.types.Destination;
 import com.gestion_paiements.types.DestinationType;
 import com.gestion_paiements.types.payments.PaymentFromPlatform;
+import com.gestion_paiements.util.Dates;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -74,6 +75,9 @@ public class ModifyPaymentFromPlatformController {
         );
         boxAccount.setValue(payment.getDestination().getName());
 
+        // Date format
+        pickerDateSent.setConverter(Dates.dateStringConverter);
+        pickerDateReceived.setConverter(Dates.dateStringConverter);
 
         // Set the other values
         areaComment.setText(payment.getComment());

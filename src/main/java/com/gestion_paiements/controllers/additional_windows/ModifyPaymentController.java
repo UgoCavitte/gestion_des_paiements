@@ -5,6 +5,7 @@ import com.gestion_paiements.data.RefreshableData;
 import com.gestion_paiements.types.*;
 import com.gestion_paiements.types.payments.PaymentFromClient;
 import com.gestion_paiements.util.Currencies;
+import com.gestion_paiements.util.Dates;
 import com.gestion_paiements.util.Destinations;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -75,6 +76,10 @@ public class ModifyPaymentController {
         boxCountry.setItems(FXCollections.observableList(Data.instance.getMapAccountsCountries().keySet().stream().sorted().toList()));
         boxAccount.setItems(FXCollections.observableList(country.getAccountsAndPlatforms().keySet().stream().toList()));
         boxCurrencySent.setItems(FXCollections.observableList(Data.instance.getSetCurrencies().stream().map(Currency::getName).sorted().toList()));
+
+        // Date format
+        pickerDateSent.setConverter(Dates.dateStringConverter);
+        pickerDateReceived.setConverter(Dates.dateStringConverter);
 
         // Adds the "add products" pane
         try {

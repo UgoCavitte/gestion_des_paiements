@@ -5,6 +5,7 @@ import com.gestion_paiements.data.RefreshableData;
 import com.gestion_paiements.types.*;
 import com.gestion_paiements.types.payments.PaymentFromClient;
 import com.gestion_paiements.util.Currencies;
+import com.gestion_paiements.util.Dates;
 import com.gestion_paiements.util.Destinations;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -71,6 +72,10 @@ public class AddNewTransferController {
         boxClient.setItems(FXCollections.observableList(Data.instance.getSetClients().stream().map(Client::getName).sorted().toList()));
         boxCountry.setItems(FXCollections.observableList(Data.instance.getMapAccountsCountries().keySet().stream().sorted().toList()));
         boxCurrencySent.setItems(FXCollections.observableList(Data.instance.getSetCurrencies().stream().map(Currency::getName).sorted().toList()));
+
+        // Date format
+        pickerDateSent.setConverter(Dates.dateStringConverter);
+        pickerDateReceived.setConverter(Dates.dateStringConverter);
 
         // Preselect country and account
         boxCountry.setValue(destination.getCountry().getName());

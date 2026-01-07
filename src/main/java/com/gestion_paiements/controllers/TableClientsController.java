@@ -4,6 +4,7 @@ import com.gestion_paiements.Main;
 import com.gestion_paiements.controllers.additional_windows.ModifyClientController;
 import com.gestion_paiements.types.Client;
 import com.gestion_paiements.types.Data;
+import com.gestion_paiements.util.Dates;
 import com.gestion_paiements.util.Refreshable;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -76,7 +77,7 @@ public class TableClientsController implements Refreshable {
         tableClientsColumnCountry.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCountry().getName()));
         tableClientColumnLastPaymentDate.setCellValueFactory(cellData -> {
             if (cellData.getValue().getPayments().isEmpty()) return new SimpleStringProperty("");
-            return new SimpleStringProperty(cellData.getValue().getPayments().stream().sorted().toList().getLast().getDateReceived().toString());
+            return new SimpleStringProperty(Dates.fromDateToString(cellData.getValue().getPayments().stream().sorted().toList().getLast().getDateReceived()));
         });
         tableClientColumnComment.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getComment()));
 
