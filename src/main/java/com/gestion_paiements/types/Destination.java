@@ -14,7 +14,7 @@ import java.util.Map;
 
 public final class Destination extends Sender implements WithID {
 
-    public static Map<DestinationType, String> destinationTypeLabels = Map.of(DestinationType.bankAccount, "Compte en banque",
+    public static final Map<DestinationType, String> destinationTypeLabels = Map.of(DestinationType.bankAccount, "Compte en banque",
             DestinationType.platform, "Plateforme");
 
     private int ID;

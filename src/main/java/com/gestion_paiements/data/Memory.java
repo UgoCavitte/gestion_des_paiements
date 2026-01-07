@@ -31,54 +31,54 @@ import java.util.stream.Stream;
 
 public abstract class Memory {
 
-    static ObjectMapper mapper = new ObjectMapper();
+    static final ObjectMapper mapper = new ObjectMapper();
 
     static List<ToBindWorkingCountry> unboundWorkingCountries = new ArrayList<>();
     static List<ToBindClient> unboundClients = new ArrayList<>();
     static List<ToBindPayment> unboundPayments = new ArrayList<>();
     static List<ToBindDestination> unboundDestinations = new ArrayList<>();
 
-    static Path clientsDirPath = Paths.get("data", "clients");
-    static Path paymentsDirPath = Paths.get("data", "payments");
-    public static Path dataPath = Paths.get("data");
+    static final Path clientsDirPath = Paths.get("data", "clients");
+    static final Path paymentsDirPath = Paths.get("data", "payments");
+    public static final Path dataPath = Paths.get("data");
 
-    static String currenciesFileName = "currencies.json";
-    static String destinationsFileName = "destinations.json";
-    static String workingCountriesFileName = "working_countries.json";
-    static String productsFileName = "products.json";
-    static String countriesFileName = "countries.json";
+    static final String currenciesFileName = "currencies.json";
+    static final String destinationsFileName = "destinations.json";
+    static final String workingCountriesFileName = "working_countries.json";
+    static final String productsFileName = "products.json";
+    static final String countriesFileName = "countries.json";
 
     ////////////////////////////////////////////////////
     /// MAPS
     ////////////////////////////////////////////////////
 
-    public static Map<Integer, DestinationType> mapFromIntegerToDestinationType = Map.of(
+    public static final Map<Integer, DestinationType> mapFromIntegerToDestinationType = Map.of(
             0, DestinationType.bankAccount,
             1, DestinationType.platform
     );
 
-    public static Map<DestinationType, Integer> mapFromDestinationTypeToInteger = Map.of(
+    public static final Map<DestinationType, Integer> mapFromDestinationTypeToInteger = Map.of(
             DestinationType.bankAccount, 0,
             DestinationType.platform, 1
     );
 
-    public static Map<Integer, Class<?>> mapFromIntegerToSenderType = Map.of(
+    public static final Map<Integer, Class<?>> mapFromIntegerToSenderType = Map.of(
             0, Client.class,
             1, Destination.class
     );
 
-    public static Map<Class<?>, Integer> mapFromSenderTypeToInteger = Map.of(
+    public static final Map<Class<?>, Integer> mapFromSenderTypeToInteger = Map.of(
             Client.class, 0,
             Destination.class, 1
     );
 
-    public static Map<StatusPaymentFromClient, Integer> mapFromStatusPaymentToInteger = Map.of(
+    public static final Map<StatusPaymentFromClient, Integer> mapFromStatusPaymentToInteger = Map.of(
             StatusPaymentFromClient.SENT_TO_THE_BANK, 0,
             StatusPaymentFromClient.SENT_TO_A_PLATFORM, 1,
             StatusPaymentFromClient.NOT_ON_A_PLATFORM, 2
     );
 
-    public static Map<Integer, StatusPaymentFromClient> mapFromIntegerToStatusPayment = Map.of(
+    public static final Map<Integer, StatusPaymentFromClient> mapFromIntegerToStatusPayment = Map.of(
             0, StatusPaymentFromClient.SENT_TO_THE_BANK,
             1, StatusPaymentFromClient.SENT_TO_A_PLATFORM,
             2, StatusPaymentFromClient.NOT_ON_A_PLATFORM
