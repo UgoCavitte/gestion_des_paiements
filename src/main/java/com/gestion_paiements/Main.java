@@ -76,7 +76,7 @@ public class Main extends Application {
         stage.show();
 
         PauseTransition delay = new PauseTransition(Duration.millis(100));
-        delay.setOnFinished(event -> {
+        delay.setOnFinished(_ -> {
             stage.setMaximized(true);
         });
         delay.play();
