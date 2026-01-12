@@ -103,6 +103,15 @@ public class BankAccountController implements Refreshable {
                 monthsByYears.put(year, monthsForThisYear);
             }
 
+            // If there are payment from last year but not this year, it crashes without this
+            int currentYear = now.getYear();
+            if (!monthsByYears.containsKey(currentYear)) {
+                monthsByYears.put(currentYear, new HashSet<>(Set.of(now.getMonth())));
+            } else {
+                // If the year exists, still make sure the current month is an option
+                monthsByYears.get(currentYear).add(now.getMonth());
+            }
+
             boxYear.setItems(FXCollections.observableList(monthsByYears.keySet().stream().toList()));
         }
 

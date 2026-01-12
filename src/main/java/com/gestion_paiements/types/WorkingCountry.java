@@ -30,6 +30,7 @@ public final class WorkingCountry implements WithID {
 
     public WorkingCountry (ToBindWorkingCountry toBind) {
         this.setName(toBind.getName());
+        this.setId(toBind.getId());
     }
 
     public String getName() {

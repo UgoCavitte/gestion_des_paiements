@@ -97,6 +97,11 @@ public class PlatformToBankAccountController {
         }
 
         // Setting other elements
+
+        System.out.println(platform.getName());
+        System.out.println(platform.getCountry().getName());
+        System.out.println(platform.getCountry().getAccountsAndPlatforms());
+
         List<Destination> rawAccounts = platform
                                             .getCountry()
                                             .getAccountsAndPlatforms()

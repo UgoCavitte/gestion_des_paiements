@@ -15,6 +15,8 @@ public final class ToBindWorkingCountry {
 
     private String name;
 
+    private int id;
+
     // Default constructor for serialization
     public ToBindWorkingCountry () {
 
@@ -23,6 +25,7 @@ public final class ToBindWorkingCountry {
     // Constructor to convert a WorkingCountry
     public ToBindWorkingCountry (WorkingCountry workingCountry) {
         this.name = workingCountry.getName();
+        this.id = workingCountry.getId();
         destinations = workingCountry.getAccountsAndPlatforms().values().stream().map(WithID::getId).collect(Collectors.toSet());
     }
 
@@ -40,5 +43,13 @@ public final class ToBindWorkingCountry {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

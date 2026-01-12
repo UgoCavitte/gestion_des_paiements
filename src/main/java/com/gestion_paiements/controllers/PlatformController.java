@@ -30,6 +30,7 @@ import java.time.Month;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -88,8 +89,8 @@ public class PlatformController implements Refreshable {
         final Set<Integer> availableYears = platform.getTransfers().stream().map(p -> p.getDateReceived().getYear()).collect(Collectors.toSet());
 
         if (platform.getTransfers().isEmpty()) {
-            int currentYear = Instant.now().atZone(ZoneId.systemDefault()).getYear();
-            Month currentMonth = Instant.now().atZone(ZoneId.systemDefault()).getMonth();
+            int currentYear = now.getYear();
+            Month currentMonth = now.getMonth();
 
             boxYear.setItems(FXCollections.observableArrayList(List.of(currentYear)));
 
@@ -107,6 +108,15 @@ public class PlatformController implements Refreshable {
                     monthsForThisYear.add(Instant.now().atZone(ZoneId.systemDefault()).getMonth());
 
                 monthsByYears.put(year, monthsForThisYear);
+            }
+
+            // If there are payment from last year but not this year, it crashes without this
+            int currentYear = now.getYear();
+            if (!monthsByYears.containsKey(currentYear)) {
+                monthsByYears.put(currentYear, new HashSet<>(Set.of(now.getMonth())));
+            } else {
+                // If the year exists, still make sure the current month is an option
+                monthsByYears.get(currentYear).add(now.getMonth());
             }
 
             boxYear.setItems(FXCollections.observableList(monthsByYears.keySet().stream().toList()));

@@ -411,6 +411,7 @@ public abstract class Memory {
         }
 
         // WorkingCountry elements only need their destination to be bound
+        Data.instance.setMapAccountsCountries(new HashMap<>());
         for (int i = 0; i < workingCountries.size(); i++) {
             int finalI = i;
 
@@ -422,7 +423,14 @@ public abstract class Memory {
                     .setAccountsAndPlatforms(
                             destinationsForThisCountry.stream()
                             .collect(Collectors.toMap(Destination::getName, e -> e, (u, v) -> u, HashMap::new)));
+
+            Data.instance.getMapAccountsCountries().put(workingCountries.get(i).getName(), workingCountries.get(i));
+
+            System.out.println(workingCountries.get(i).getName());
+            System.out.println(workingCountries.get(i).getId());
         }
+
+        System.out.println("Fin de l'initialisation des pays de travail");
 
 
         // Destination elements need their currency, type and working country
@@ -452,12 +460,17 @@ public abstract class Memory {
             }
 
             // WORKING COUNTRY
+
+
             currentDestination.setCountry(
                     Data.instance.getMapAccountsCountries() // TODO This is not set at this moment
                             .values().stream()
                             .filter(c -> c.getId() == unboundDestinations.get(finalI).getWorkingCountry())
                             .findFirst().orElse(null)
             );
+
+            Data.instance.getMapAccountsCountries().values().stream().map(WorkingCountry::getId).forEach(System.out::println);
+            System.out.println(currentDestination.getCountry().getName());
 
             if (destinations.get(i).getCountry() == null) {
                 throw new RuntimeException("WorkingCountry not found with the given ID " + unboundDestinations.get(i).getWorkingCountry() + " while binding Destination elements.");
