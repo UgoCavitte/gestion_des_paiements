@@ -105,6 +105,10 @@ public class TableClientsController implements Refreshable {
         sortedData.comparatorProperty().bind(tableClients.comparatorProperty());
         tableClients.setItems(sortedData);
 
+        // Sorting by name
+        tableClientsColumnName.setSortType(TableColumn.SortType.ASCENDING);
+        tableClients.getSortOrder().add(tableClientsColumnName);
+
     }
 
     @FXML
