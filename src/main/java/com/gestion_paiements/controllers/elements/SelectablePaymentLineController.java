@@ -7,6 +7,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 
+// TODO :
+// - add a column for the date
+// - class payments by date
+
 public class SelectablePaymentLineController {
 
     @FXML
