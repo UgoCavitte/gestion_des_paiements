@@ -41,7 +41,7 @@ public class SelectablePaymentLineController {
     @FXML
     private void initialize () {
         checkBox.setSelected(true);
-        labelAmountSent.setText(Currencies.fromAmountToString(payment.getSentAmount()));
+        labelAmountSent.setText(Currencies.fromAmountToString(payment.getReceivedAmount()));
         labelID.setText(String.valueOf(payment.getId()));
         labelProducts.setText(PurchasedProducts.fromListToString(payment.getProducts()));
         labelSender.setText(payment.getSender().getName());
