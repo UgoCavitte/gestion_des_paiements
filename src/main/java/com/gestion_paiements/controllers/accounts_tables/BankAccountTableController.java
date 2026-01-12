@@ -106,6 +106,10 @@ public class BankAccountTableController implements Refreshable {
         setItems();
         setListener();
 
+        // Default sorting
+        columnDateReceived.setSortType(TableColumn.SortType.DESCENDING);
+        table.getSortOrder().add(columnDateReceived);
+
     }
 
     private void setColumns() {

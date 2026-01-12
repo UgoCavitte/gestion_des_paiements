@@ -106,6 +106,10 @@ public class PlatformTableController implements Refreshable {
         setColumns();
         setItems();
         setListener();
+
+        // Default sorting
+        columnDateReceived.setSortType(TableColumn.SortType.DESCENDING);
+        table.getSortOrder().add(columnDateReceived);
     }
 
     private void setColumns () {
