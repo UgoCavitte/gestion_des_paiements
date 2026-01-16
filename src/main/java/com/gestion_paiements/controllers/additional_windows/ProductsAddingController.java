@@ -129,7 +129,7 @@ public class ProductsAddingController {
         ArrayList<PurchasedProduct> list = new ArrayList<>();
         for (int i = 0; i < boxes.size(); i++) {
             list.add(new PurchasedProduct(
-                    Integer.parseInt(fields.get(i).getText()),
+                    Double.parseDouble(fields.get(i).getText()),
                     Products.fromStringToProduct(boxes.get(i).getValue())
             ));
         }
