@@ -111,6 +111,18 @@ public class AddNewTransferController {
             }
         });
 
+        boxAccount.setConverter(new StringConverter<>() {
+            @Override
+            public String toString(Destination destination) {
+                return (destination == null) ? "" : destination.getName();
+            }
+
+            @Override
+            public Destination fromString(String s) {
+                return null;
+            }
+        });
+
         // Date format
         pickerDateSent.setConverter(Dates.dateStringConverter);
         pickerDateReceived.setConverter(Dates.dateStringConverter);
@@ -157,6 +169,26 @@ public class AddNewTransferController {
         fieldAmountReceived.setText(fieldAmountSent.getText());
     }
 
+    /// This takes the last client's payment and prefills everything with its information
+    @FXML
+    void clientSelected() {
+
+        if (boxClient.getValue().getPayments().isEmpty()) return;
+
+        PaymentFromClient payment = boxClient.getValue().getPayments().stream().sorted(Comparator.comparing(Payment::getDateReceived)).toList().getLast();
+
+        boxCountry.setValue(payment.getDestination().getCountry());
+        boxAccount.setValue(payment.getDestination());
+
+        fieldAmountSent.setText(String.valueOf(payment.getSentAmount().getAmount()));
+        boxCurrencySent.setValue(payment.getSentAmount().getCurrency());
+
+        fieldAmountReceived.setText(String.valueOf(payment.getReceivedAmount().getAmount()));
+
+        controller.setInitialList(payment.getProducts());
+        controller.initialize();
+
+    }
 
     @FXML
     void dateSentSelected() {

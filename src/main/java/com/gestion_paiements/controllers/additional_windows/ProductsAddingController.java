@@ -35,8 +35,13 @@ public class ProductsAddingController {
 
     private final ArrayList<ComboBox<String>> boxes = new ArrayList<>();
 
+    // This must be public
     @FXML
-    private void initialize() {
+    public void initialize() {
+        fields.clear();
+        boxes.clear();
+        hBox.getChildren().clear();
+
         // If we are creating and not modifying
         if (initialList == null) {
             ComboBox<String> firstBox = new ComboBox<>(FXCollections.observableList(Data.instance.getSetProducts().stream().map(Product::getShortName).toList()));
