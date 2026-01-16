@@ -130,7 +130,7 @@ public class AddNewTransferController {
         // Preselect country and account
         boxCountry.setValue(destination.getCountry());
         countrySelected();
-        boxAccount.setItems(FXCollections.observableList(destination.getCountry().getAccountsAndPlatforms().values().stream().toList()));
+        boxAccount.setItems(FXCollections.observableList(destination.getCountry().getAccountsAndPlatforms().values().stream().sorted(Comparator.comparing(Destination::getName)).toList()));
         boxAccount.setValue(destination);
         accountSelected();
 
@@ -148,7 +148,7 @@ public class AddNewTransferController {
 
     @FXML
     void countrySelected() {
-        boxAccount.setItems(FXCollections.observableList(boxCountry.getValue().getAccountsAndPlatforms().values().stream().toList()));
+        boxAccount.setItems(FXCollections.observableList(boxCountry.getValue().getAccountsAndPlatforms().values().stream().sorted(Comparator.comparing(Destination::getName)).toList()));
     }
 
     @FXML
