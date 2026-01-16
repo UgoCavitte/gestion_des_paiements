@@ -10,7 +10,7 @@ import java.util.Objects;
 public abstract class Currencies {
 
     public static @NotNull String fromAmountToString (@NotNull Amount amount) {
-        return amount.getAmount() + " " + amount.getCurrency().getName();
+        return Formatters.decimalsOnlyIfNecessary.format(amount.getAmount()) + " " + amount.getCurrency().getName();
     }
 
     public static Currency fromStringToCurrency(String name) {
