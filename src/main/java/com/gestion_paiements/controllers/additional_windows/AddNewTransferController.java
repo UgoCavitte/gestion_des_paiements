@@ -3,6 +3,7 @@ package com.gestion_paiements.controllers.additional_windows;
 import com.gestion_paiements.Main;
 import com.gestion_paiements.data.RefreshableData;
 import com.gestion_paiements.types.*;
+import com.gestion_paiements.types.payments.Payment;
 import com.gestion_paiements.types.payments.PaymentFromClient;
 import com.gestion_paiements.util.Currencies;
 import com.gestion_paiements.util.Dates;
@@ -34,7 +35,7 @@ public class AddNewTransferController {
     private TextArea areaComment;
 
     @FXML
-    private ComboBox<String> boxAccount;
+    private ComboBox<Destination> boxAccount;
 
     @FXML
     private ComboBox<Client> boxClient;
@@ -117,7 +118,8 @@ public class AddNewTransferController {
         // Preselect country and account
         boxCountry.setValue(destination.getCountry());
         countrySelected();
-        boxAccount.setValue(destination.getName());
+        boxAccount.setItems(FXCollections.observableList(destination.getCountry().getAccountsAndPlatforms().values().stream().toList()));
+        boxAccount.setValue(destination);
         accountSelected();
 
         // Adds the "add products" pane
@@ -134,7 +136,7 @@ public class AddNewTransferController {
 
     @FXML
     void countrySelected() {
-        boxAccount.setItems(FXCollections.observableList(Data.instance.getMapAccountsCountries().get(boxCountry.getValue().getName()).getAccountsAndPlatforms().keySet().stream().toList()));
+        boxAccount.setItems(FXCollections.observableList(boxCountry.getValue().getAccountsAndPlatforms().values().stream().toList()));
     }
 
     @FXML
@@ -144,7 +146,7 @@ public class AddNewTransferController {
             return;
         }
 
-        labelCurrencyReceived.setText(Destinations.fromStringToDestination(boxAccount.getValue()).getCurrency().getName());
+        labelCurrencyReceived.setText(boxAccount.getValue().getCurrency().getName());
 
     }
 
@@ -154,6 +156,7 @@ public class AddNewTransferController {
         if (fieldAmountSent.getText() == null) return;
         fieldAmountReceived.setText(fieldAmountSent.getText());
     }
+
 
     @FXML
     void dateSentSelected() {
@@ -183,7 +186,7 @@ public class AddNewTransferController {
         }
         Destination destination = Data.instance.
                 getMapAccountsCountries().get(boxCountry.getValue().getName()).
-                getAccountsAndPlatforms().get(boxAccount.getValue());
+                getAccountsAndPlatforms().get(boxAccount.getValue().getName());
 
         // Dates
         LocalDate dateSent = pickerDateSent.getValue();
