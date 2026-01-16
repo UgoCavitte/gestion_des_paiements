@@ -111,6 +111,13 @@ public class AddNewTransferController {
 
     }
 
+    ///  This prefills the amount received since they are often the same
+    @FXML
+    void amountFilled() {
+        if (fieldAmountSent.getText() == null) return;
+        fieldAmountReceived.setText(fieldAmountSent.getText());
+    }
+
     @FXML
     void dateSentSelected() {
         if (pickerDateReceived.getValue() == null) pickerDateReceived.setValue(pickerDateSent.getValue());
