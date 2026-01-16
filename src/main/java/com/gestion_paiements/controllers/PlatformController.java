@@ -221,7 +221,7 @@ public class PlatformController implements Refreshable {
 
         labelCount.setText(String.valueOf(count));
         labelTotal.setText(String.valueOf(total));
-        labelAverage.setText(String.valueOf(average));
+        labelAverage.setText(String.format("%.2f", average));
     }
 
     @FXML
