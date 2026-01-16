@@ -6,6 +6,7 @@ import com.gestion_paiements.util.IDs;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
 
@@ -59,8 +60,13 @@ public final class PaymentFromPlatform extends Payment {
     // Minus commission
     @Override
     public @NotNull Amount getReceivedAmount () {
+        BigDecimal total = BigDecimal.valueOf(this.getSentAmount().getAmount());
+        BigDecimal comm = BigDecimal.valueOf(commission.getAmount());
+
+        BigDecimal result = total.subtract(comm);
+
         return new Amount(
-                this.getSentAmount().getAmount() - commission.getAmount(),
+                result.doubleValue(),
                 super.getDestination().getCurrency()
         );
     }
@@ -68,12 +74,12 @@ public final class PaymentFromPlatform extends Payment {
     // Gross amount
     @Override
     public @NotNull Amount getSentAmount () {
-        double total = sentPayments.stream()
-                            .mapToDouble(a -> a.getReceivedAmount().getAmount())
-                            .sum();
+        BigDecimal total = sentPayments.stream()
+                            .map(a -> BigDecimal.valueOf(a.getReceivedAmount().getAmount()))
+                            .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         return new Amount(
-                total,
+                total.doubleValue(),
                 super.getDestination().getCurrency()
         );
     }
