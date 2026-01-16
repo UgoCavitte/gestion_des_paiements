@@ -425,24 +425,18 @@ public abstract class Memory {
                             .collect(Collectors.toMap(Destination::getName, e -> e, (u, v) -> u, HashMap::new)));
 
             Data.instance.getMapAccountsCountries().put(workingCountries.get(i).getName(), workingCountries.get(i));
-
-            System.out.println(workingCountries.get(i).getName());
-            System.out.println(workingCountries.get(i).getId());
         }
-
-        System.out.println("Fin de l'initialisation des pays de travail");
 
 
         // Destination elements need their currency, type and working country
         for (int i = 0; i < destinations.size(); i++) {
-            int finalI = i;
-
+            ToBindDestination toBindDestination = unboundDestinations.get(i);
             Destination currentDestination = destinations.get(i);
 
             // CURRENCY
             currentDestination.setCurrency(
                     Data.instance.getSetCurrencies().stream()
-                            .filter(c -> c.getId() == unboundDestinations.get(finalI).getCurrency())
+                            .filter(c -> c.getId() == toBindDestination.getCurrency())
                             .findFirst().orElse(null)
             );
 
@@ -452,7 +446,7 @@ public abstract class Memory {
 
             // TYPE
             currentDestination.setDestinationType(
-                    mapFromIntegerToDestinationType.get(unboundDestinations.get(finalI).getType())
+                    mapFromIntegerToDestinationType.get(toBindDestination.getType())
             );
 
             if (destinations.get(i).getDestinationType() == null) {
@@ -460,17 +454,12 @@ public abstract class Memory {
             }
 
             // WORKING COUNTRY
-
-
             currentDestination.setCountry(
-                    Data.instance.getMapAccountsCountries() // TODO This is not set at this moment
+                    Data.instance.getMapAccountsCountries()
                             .values().stream()
-                            .filter(c -> c.getId() == unboundDestinations.get(finalI).getWorkingCountry())
+                            .filter(testedCountry -> testedCountry.getId() == toBindDestination.getWorkingCountry())
                             .findFirst().orElse(null)
             );
-
-            Data.instance.getMapAccountsCountries().values().stream().map(WorkingCountry::getId).forEach(System.out::println);
-            System.out.println(currentDestination.getCountry().getName());
 
             if (destinations.get(i).getCountry() == null) {
                 throw new RuntimeException("WorkingCountry not found with the given ID " + unboundDestinations.get(i).getWorkingCountry() + " while binding Destination elements.");
