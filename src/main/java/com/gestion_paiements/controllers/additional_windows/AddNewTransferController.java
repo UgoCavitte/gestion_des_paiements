@@ -14,9 +14,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -35,13 +37,13 @@ public class AddNewTransferController {
     private ComboBox<String> boxAccount;
 
     @FXML
-    private ComboBox<String> boxClient;
+    private ComboBox<Client> boxClient;
 
     @FXML
-    private ComboBox<String> boxCountry;
+    private ComboBox<WorkingCountry> boxCountry;
 
     @FXML
-    private ComboBox<String> boxCurrencySent; // TODO Set this
+    private ComboBox<Currency> boxCurrencySent; // TODO Set this
 
     @FXML
     private Label labelCurrencyReceived;
@@ -68,17 +70,52 @@ public class AddNewTransferController {
 
     @FXML
     private void initialize () {
-        // Boxes
-        boxClient.setItems(FXCollections.observableList(Data.instance.getSetClients().stream().map(Client::getName).sorted().toList()));
-        boxCountry.setItems(FXCollections.observableList(Data.instance.getMapAccountsCountries().keySet().stream().sorted().toList()));
-        boxCurrencySent.setItems(FXCollections.observableList(Data.instance.getSetCurrencies().stream().map(Currency::getName).sorted().toList()));
+        // Boxes TODO remove inactive clients
+        boxClient.setItems(FXCollections.observableList(Data.instance.getSetClients().stream().sorted(Comparator.comparing(Client::getName)).toList()));
+        boxClient.setConverter(new StringConverter<>() {
+            @Override
+            public String toString(Client client) {
+                return (client == null) ? "" : client.getName();
+            }
+
+            @Override
+            public Client fromString(String s) {
+                return null;
+            }
+        });
+
+        boxCountry.setItems(FXCollections.observableList(Data.instance.getMapAccountsCountries().values().stream().sorted(Comparator.comparing(WorkingCountry::getName)).toList()));
+        boxCountry.setConverter(new StringConverter<>() {
+            @Override
+            public String toString(WorkingCountry workingCountry) {
+                return (workingCountry == null) ? "" : workingCountry.getName();
+            }
+
+            @Override
+            public WorkingCountry fromString(String s) {
+                return null;
+            }
+        });
+
+        boxCurrencySent.setItems(FXCollections.observableList(Data.instance.getSetCurrencies().stream().sorted(Comparator.comparing(Currency::getName)).toList()));
+        boxCurrencySent.setConverter(new StringConverter<Currency>() {
+            @Override
+            public String toString(Currency currency) {
+                return (currency == null) ? "" : currency.getName();
+            }
+
+            @Override
+            public Currency fromString(String s) {
+                return null;
+            }
+        });
 
         // Date format
         pickerDateSent.setConverter(Dates.dateStringConverter);
         pickerDateReceived.setConverter(Dates.dateStringConverter);
 
         // Preselect country and account
-        boxCountry.setValue(destination.getCountry().getName());
+        boxCountry.setValue(destination.getCountry());
         countrySelected();
         boxAccount.setValue(destination.getName());
         accountSelected();
@@ -97,7 +134,7 @@ public class AddNewTransferController {
 
     @FXML
     void countrySelected() {
-        boxAccount.setItems(FXCollections.observableList(Data.instance.getMapAccountsCountries().get(boxCountry.getValue()).getAccountsAndPlatforms().keySet().stream().toList()));
+        boxAccount.setItems(FXCollections.observableList(Data.instance.getMapAccountsCountries().get(boxCountry.getValue().getName()).getAccountsAndPlatforms().keySet().stream().toList()));
     }
 
     @FXML
@@ -111,7 +148,7 @@ public class AddNewTransferController {
 
     }
 
-    ///  This prefills the amount received since they are often the same
+    /// This prefills the amount received since they are often the same
     @FXML
     void amountFilled() {
         if (fieldAmountSent.getText() == null) return;
@@ -129,7 +166,7 @@ public class AddNewTransferController {
         labelError.setText("");
 
         // Client
-        Client client = Data.instance.getSetClients().stream().filter(c -> Objects.equals(c.getName(), boxClient.getValue())).findFirst().orElse(null);
+        Client client = boxClient.getValue();
         if (client == null) {
             labelError.setText("Il y a un problème avec la sélection du client.");
             return;
@@ -145,7 +182,7 @@ public class AddNewTransferController {
             return;
         }
         Destination destination = Data.instance.
-                getMapAccountsCountries().get(boxCountry.getValue()).
+                getMapAccountsCountries().get(boxCountry.getValue().getName()).
                 getAccountsAndPlatforms().get(boxAccount.getValue());
 
         // Dates
@@ -175,7 +212,7 @@ public class AddNewTransferController {
         }
         Amount amountSent = new Amount(
                 Double.parseDouble(fieldAmountSent.getText()),
-                Currencies.fromStringToCurrency(boxCurrencySent.getValue())
+                boxCurrencySent.getValue()
         );
         Amount amountReceived = new Amount(
                 Double.parseDouble(fieldAmountReceived.getText()),
