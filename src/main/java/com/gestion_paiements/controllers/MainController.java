@@ -128,14 +128,6 @@ public class MainController {
 
     @FXML
     private void generalSave () {
-        System.out.println("Saving started");
         Memory.generalSave();
-
-        System.out.println("Reading started");
-        // Memory.generalRead();
-
-        System.out.println("Resaving to check data");
-        Memory.generalSave();
-
     }
 }
