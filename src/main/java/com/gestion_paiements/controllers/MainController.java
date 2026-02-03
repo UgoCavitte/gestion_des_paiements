@@ -57,7 +57,6 @@ public class MainController {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("table-clients.fxml"));
 
             TableClientsController controller = new TableClientsController();
-            RefreshableData.getToRefresh().add(controller);
             loader.setController(controller);
 
             paneClient.getChildren().clear();

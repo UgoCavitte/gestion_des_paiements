@@ -5,13 +5,13 @@ import com.gestion_paiements.controllers.additional_windows.ModifyClientControll
 import com.gestion_paiements.types.Client;
 import com.gestion_paiements.types.Data;
 import com.gestion_paiements.util.Dates;
-import com.gestion_paiements.util.Refreshable;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.SetChangeListener;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,7 +26,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class TableClientsController implements Refreshable {
+public class TableClientsController {
 
     Client selectedClient;
 
@@ -100,7 +100,18 @@ public class TableClientsController implements Refreshable {
 
         });
 
-        ObservableList<Client> masterData = FXCollections.observableArrayList(Data.instance.getSetClients().stream().toList());
+        // DATA
+        ObservableList<Client> masterData = FXCollections.observableArrayList();
+        masterData.addAll(Data.instance.getSetClients());
+
+        Data.instance.getSetClients().addListener((SetChangeListener<? super Client>) change -> {
+            if (change.wasAdded()) {
+                masterData.add(change.getElementAdded());
+            } else if (change.wasRemoved()) {
+                masterData.remove(change.getElementRemoved());
+            }
+        });
+
         SortedList<Client> sortedData = new SortedList<>(masterData);
         sortedData.comparatorProperty().bind(tableClients.comparatorProperty());
         tableClients.setItems(sortedData);
@@ -165,7 +176,6 @@ public class TableClientsController implements Refreshable {
     private void deleteClient () {
         if (selectedClient.getPayments().isEmpty()) {
             Data.instance.getSetClients().remove(selectedClient);
-            refreshElement();
             return;
         }
 
@@ -182,12 +192,5 @@ public class TableClientsController implements Refreshable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public void refreshElement() {
-        ObservableList<Client> masterData = (ObservableList<Client>) ((SortedList<Client>) tableClients.getItems()).getSource();
-        masterData.clear();
-        masterData.addAll(Data.instance.getSetClients().stream().toList());
     }
 }

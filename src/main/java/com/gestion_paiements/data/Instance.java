@@ -2,6 +2,8 @@ package com.gestion_paiements.data;
 
 import com.gestion_paiements.types.*;
 import com.gestion_paiements.types.payments.Payment;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableSet;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -14,7 +16,7 @@ public final class Instance {
 
     private HashSet<Product> setProducts = new HashSet<>();
 
-    private HashSet<Client> setClients = new HashSet<>();
+    private ObservableSet<Client> setClients = FXCollections.observableSet(new HashSet<>());
 
     private HashSet<Destination> setDestinations = new HashSet<>();
 
@@ -24,7 +26,7 @@ public final class Instance {
 
     private HashSet<Currency> setCurrencies = new HashSet<>();
 
-    private HashSet<Payment> setPayments = new HashSet<>();
+    private ObservableSet<Payment> setPayments = FXCollections.observableSet(new HashSet<>());
 
     //////////////////////////////
     /// GETTERS AND SETTERS
@@ -38,12 +40,12 @@ public final class Instance {
         this.setProducts = Products;
     }
 
-    public HashSet<Client> getSetClients() {
+    public ObservableSet<Client> getSetClients() {
         return setClients;
     }
 
     public void setSetClients(HashSet<Client> setClients) {
-        this.setClients = setClients;
+        this.setClients = FXCollections.observableSet(setClients);
     }
 
     public HashSet<Destination> getSetDestinations() {
@@ -78,11 +80,11 @@ public final class Instance {
         this.setCurrencies = setCurrencies;
     }
 
-    public HashSet<Payment> getSetPayments() {
+    public ObservableSet<Payment> getSetPayments() {
         return setPayments;
     }
 
     public void setSetPayments(HashSet<Payment> setPayments) {
-        this.setPayments = setPayments;
+        this.setPayments = FXCollections.observableSet(setPayments);
     }
 }
