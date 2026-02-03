@@ -244,6 +244,10 @@ public class PlatformController implements Refreshable {
 
                 loader.setController(controller);
 
+                // Selection listener callback
+                controller.setCallBackSelection(this::selectionCallBack);
+                loader.setController(controller);
+
                 paneTable.getChildren().clear();
                 paneTable.getChildren().add(loader.load());
             } catch (IOException e) {
