@@ -246,6 +246,9 @@ public class PlatformController implements Refreshable {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
+            setLabels();
+
         }
     }
 
