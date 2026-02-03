@@ -25,6 +25,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.Instant;
 import java.time.Month;
 import java.time.ZoneId;
@@ -216,8 +218,9 @@ public class PlatformController implements Refreshable {
                 .toList();
 
         int count = list.size();
-        double total = list.stream().map(p -> p.getReceivedAmount().getAmount()).reduce(0.0, Double::sum);
-        double average = total / count;
+        BigDecimal total = list.stream().map(p -> BigDecimal.valueOf(p.getReceivedAmount().getAmount())).reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal average = BigDecimal.valueOf(0);
+        if (count != 0) average = total.divide(BigDecimal.valueOf(count), 2, RoundingMode.DOWN);
 
         labelCount.setText(String.valueOf(count));
         labelTotal.setText(String.valueOf(total));
