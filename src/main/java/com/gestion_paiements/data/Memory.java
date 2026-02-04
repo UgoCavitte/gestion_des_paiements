@@ -488,7 +488,9 @@ public abstract class Memory {
                 .toList();
 
         // Saves payments directly to Data.instance to let the code use it
-        Data.instance.setSetPayments(new HashSet<>(Stream.concat(paymentsFromClients.stream(), paymentsFromPlatforms.stream()).collect(Collectors.toSet())));
+        // Data.instance.setSetPayments(new HashSet<>(Stream.concat(paymentsFromClients.stream(), paymentsFromPlatforms.stream()).collect(Collectors.toSet())));
+        Data.instance.getSetPayments().clear();
+        Data.instance.getSetPayments().addAll(Stream.concat(paymentsFromClients.stream(), paymentsFromPlatforms.stream()).collect(Collectors.toSet()));
 
         // PaymentFromClient elements binding
         // Need to bind: dateSent, dateReceived, amountSent, amountReceived, destination, sender + purchasedProducts, status

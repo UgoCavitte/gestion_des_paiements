@@ -189,9 +189,6 @@ public class PlatformToBankAccountController {
 
         // TODO Write to memory
 
-        // TODO Payment doesn't appear on the LCL table
-        RefreshableData.refreshTables();
-
         // Close window
         ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
     }

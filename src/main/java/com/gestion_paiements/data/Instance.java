@@ -3,7 +3,9 @@ package com.gestion_paiements.data;
 import com.gestion_paiements.types.*;
 import com.gestion_paiements.types.payments.Payment;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
+import javafx.collections.SetChangeListener;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -26,7 +28,17 @@ public final class Instance {
 
     private HashSet<Currency> setCurrencies = new HashSet<>();
 
-    private ObservableSet<Payment> setPayments = FXCollections.observableSet(new HashSet<>());
+    private final ObservableSet<Payment> setPayments = FXCollections.observableSet(new HashSet<>());
+    private final ObservableList<Payment> listPayments = FXCollections.observableArrayList();
+
+    public Instance() {
+        listPayments.addAll(setPayments);
+
+        setPayments.addListener((SetChangeListener<Payment>) change -> {
+            if (change.wasAdded()) listPayments.add(change.getElementAdded());
+            else if (change.wasRemoved()) listPayments.remove(change.getElementRemoved());
+        });
+    }
 
     //////////////////////////////
     /// GETTERS AND SETTERS
@@ -84,7 +96,7 @@ public final class Instance {
         return setPayments;
     }
 
-    public void setSetPayments(HashSet<Payment> setPayments) {
-        this.setPayments = FXCollections.observableSet(setPayments);
+    public ObservableList<Payment> getListPayments() {
+        return listPayments;
     }
 }

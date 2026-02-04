@@ -212,8 +212,6 @@ public class ModifyPaymentController {
         // Writing
         // TODO Write to DB
 
-        RefreshableData.refreshTables();
-
         // Close window
         ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
     }

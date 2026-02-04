@@ -3,6 +3,7 @@ package com.gestion_paiements.controllers.accounts_tables;
 import com.gestion_paiements.data.Preferences;
 import com.gestion_paiements.types.Data;
 import com.gestion_paiements.types.Destination;
+import com.gestion_paiements.types.payments.Payment;
 import com.gestion_paiements.types.payments.PaymentFromClient;
 import com.gestion_paiements.types.payments.PaymentFromPlatform;
 import com.gestion_paiements.types.payments.StatusPaymentFromClient;
@@ -13,6 +14,9 @@ import com.gestion_paiements.util.Refreshable;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -43,6 +47,8 @@ public class PlatformTableController implements Refreshable {
     private Destination destination;
     private int year;
     private Month month;
+
+    private FilteredList<Payment> filteredPayments;
 
     public void setDestination(Destination destination) {
         this.destination = destination;
@@ -126,24 +132,36 @@ public class PlatformTableController implements Refreshable {
         if (Preferences.ColumnsToShow.PSentToBankID) table.getColumns().add(columnSentToBankID);
     }
 
+    @SuppressWarnings("unchecked")
     private void setItems () {
-        table.getItems().clear();
-        Set<PaymentFromClient> payments = destination
-                .getTransfers().stream()
-                .filter(p -> p.getDateReceived().getYear() == year && p.getDateReceived().getMonth() == month)
-                .map(p -> (PaymentFromClient) p)
-                .collect(Collectors.toSet());
-        table.setItems(FXCollections.observableArrayList(payments));
+        filteredPayments = new FilteredList<>(Data.instance.getListPayments());
+        updateFilter();
+        SortedList<PaymentFromClient> sortedData = new SortedList<>((ObservableList<PaymentFromClient>) (ObservableList<?>) filteredPayments);
+        sortedData.comparatorProperty().bind(table.comparatorProperty());
+
+        table.setItems(sortedData);
     }
 
     private void setListener () {
         table.getSelectionModel().selectedItemProperty().addListener((obs, oldS, newS) -> callBackSelection.apply(newS));
     }
 
+    private void updateFilter() {
+        filteredPayments.setPredicate(p -> {
+            if (!(p instanceof PaymentFromClient)) {
+                return false;
+            }
+
+            boolean matchesDestination = p.getDestination().equals(this.destination);
+            boolean matchesDate = p.getDateReceived().getYear() == this.year &&
+                    p.getDateReceived().getMonth() == this.month;
+            return matchesDestination && matchesDate;
+        });
+    }
+
     @Override
     public void refreshElement() {
-        setItems();
-        setColumns();
+        setColumns(); // TODO Check this
         table.refresh();
     }
 }

@@ -59,8 +59,6 @@ public class AddNewClientController {
         Client client = new Client(name, country, comment);
         Data.instance.getSetClients().add(client);
 
-        RefreshableData.refreshTables();
-
         // TODO Write in memory
 
         ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();

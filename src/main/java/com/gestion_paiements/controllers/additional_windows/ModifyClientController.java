@@ -76,7 +76,6 @@ public class ModifyClientController {
         selectedClient.setCountry(country);
         selectedClient.setComment(comment);
 
-        RefreshableData.refreshTables();
 
         // TODO Write in memory
 
