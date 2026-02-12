@@ -13,6 +13,8 @@ import com.gestion_paiements.types.payments.Payment;
 import com.gestion_paiements.types.payments.PaymentFromClient;
 import com.gestion_paiements.util.Refreshable;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -250,6 +252,13 @@ public class PlatformController implements Refreshable {
 
                 paneTable.getChildren().clear();
                 paneTable.getChildren().add(loader.load());
+
+                // Binds the labels to the list
+                FilteredList<Payment> list = controller.getFilteredPayments();
+                list.addListener((ListChangeListener<Payment>) c -> {
+                    setLabels();
+                });
+                setLabels();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

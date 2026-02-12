@@ -50,6 +50,10 @@ public class PlatformTableController implements Refreshable {
 
     private FilteredList<Payment> filteredPayments;
 
+    public FilteredList<Payment> getFilteredPayments() {
+        return filteredPayments;
+    }
+
     public void setDestination(Destination destination) {
         this.destination = destination;
     }
