@@ -339,4 +339,10 @@ public class BankAccountController implements Refreshable {
     public void refreshElement() {
         setLabels();
     }
+
+    /// Lets user select and unselect payments for the given period and check sums, averages...
+    @FXML
+    void createSynthesis() {
+        // TODO Implement this (and for Platforms too)
+    }
 }
